@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <title>أدوات آرك العربية - Keira Tools</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700&display=swap" rel="stylesheet">
     <style>
         :root {
             --primary: #3498db;
@@ -13,38 +14,70 @@
             --light: #ecf0f1;
             --background: #f9f9f9;
             --card-bg: #ffffff;
+            --text-color: #333;
+            --header-text: white;
+            --copy-btn-bg: #2c3e50;
+            --copy-btn-text: white;
         }
 
         body.dark-mode {
-            --background: #2c3e50;
-            --card-bg: #34495e;
+            --background: #1a1a2e;
+            --card-bg: #16213e;
             --light: #2c3e50;
             --dark: #ecf0f1;
+            --text-color: #f0f0f0;
+            --header-text: #f0f0f0;
+            --copy-btn-bg: #ecf0f1;
+            --copy-btn-text: #2c3e50;
         }
 
         body {
             font-family: 'Tajawal', 'Arial', sans-serif;
             background: var(--background);
-            color: var(--dark);
+            color: var(--text-color);
             margin: 0;
             padding: 0;
-            transition: all 0.3s ease;
+            transition: all 0.5s ease;
+            min-height: 100vh;
+            position: relative;
         }
 
         .container {
             max-width: 800px;
             margin: 0 auto;
             padding: 20px;
+            padding-bottom: 100px;
         }
 
         header {
             text-align: center;
             padding: 2rem;
-            background: linear-gradient(135deg, var(--primary), var(--secondary));
-            color: white;
+            color: var(--header-text);
             border-radius: 15px;
             margin-bottom: 2rem;
             box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            background-image: url('https://cdn.cloudflare.steamstatic.com/steam/apps/346110/ss_48009597ea5cf8ee683e0dcdc8486b5aeddb952e.1920x1080.jpg?t=1655137924');
+            background-size: cover;
+            background-position: center;
+            background-blend-mode: multiply;
+            position: relative;
+            overflow: hidden;
+        }
+
+        header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0,0,0,0.6);
+            z-index: 0;
+        }
+
+        header h1, header p, .social-buttons {
+            position: relative;
+            z-index: 1;
         }
 
         .social-buttons {
@@ -83,11 +116,34 @@
             box-shadow: 0 4px 12px rgba(0,0,0,0.08);
             overflow: hidden;
             margin-bottom: 1.5rem;
-            transition: transform 0.3s;
+            transition: all 0.4s ease;
+            border: 1px solid rgba(0,0,0,0.1);
+            background-size: cover;
+            background-position: center;
+            background-blend-mode: overlay;
+            background-color: var(--card-bg);
+        }
+
+        /* خلفيات خاصة لكل أداة */
+        .tool-card:nth-child(1) { /* أداة المستويات */
+            background-image: url('https://cdn.cloudflare.steamstatic.com/steam/apps/346110/ss_3a5a7d8aacd1a8a1d741d5e3a9805ff0a87be859.1920x1080.jpg?t=1655137924');
+        }
+        
+        .tool-card:nth-child(2) { /* أداة الإنغرام */
+            background-image: url('https://cdn.cloudflare.steamstatic.com/steam/apps/346110/ss_01cbef83fe28d64ee5a3d39a86043fb1e49abd31.1920x1080.jpg?t=1655137924');
+        }
+        
+        .tool-card:nth-child(3) { /* أداة الصنع */
+            background-image: url('https://cdn.cloudflare.steamstatic.com/steam/apps/346110/ss_164a92a53f9bcbb728b391fc0719f7609b2f3d21.1920x1080.jpg?t=1655137924');
+        }
+        
+        .tool-card:nth-child(4) { /* أداة الديناصورات */
+            background-image: url('https://cdn.cloudflare.steamstatic.com/steam/apps/346110/ss_76da9eb1e0b26d8662c8d985578a0e714d0b9c9a.1920x1080.jpg?t=1655137924');
         }
 
         .tool-card:hover {
             transform: translateY(-5px);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.15);
         }
 
         .tool-header {
@@ -98,6 +154,13 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
+            transition: all 0.3s ease;
+            background-color: rgba(0,0,0,0.5);
+            background-blend-mode: overlay;
+        }
+
+        .tool-header:hover {
+            background-color: rgba(0,0,0,0.7);
         }
 
         .tool-header h3 {
@@ -110,6 +173,18 @@
         .tool-content {
             padding: 1.5rem;
             display: block;
+            max-height: 2000px;
+            opacity: 1;
+            transition: all 0.5s ease, opacity 0.3s ease;
+            background-color: rgba(0,0,0,0.1);
+        }
+
+        .tool-content.collapsed {
+            display: none;
+            max-height: 0;
+            opacity: 0;
+            padding-top: 0;
+            padding-bottom: 0;
         }
 
         .input-group {
@@ -132,20 +207,24 @@
             display: block;
             margin-bottom: 0.5rem;
             font-weight: bold;
+            color: var(--text-color);
         }
 
         input, select {
             width: 100%;
             padding: 12px 15px;
-            border: 2px solid #ddd;
+            border: 2px solid rgba(0,0,0,0.1);
             border-radius: 8px;
             font-size: 16px;
             transition: border 0.3s;
+            background-color: rgba(255,255,255,0.1);
+            color: var(--text-color);
         }
 
         input:focus, select:focus {
             border-color: var(--primary);
             outline: none;
+            background-color: rgba(255,255,255,0.2);
         }
 
         .btn {
@@ -183,15 +262,18 @@
         .btn:hover {
             opacity: 0.9;
             transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
         }
 
         .code-container {
             position: relative;
             margin-top: 1.5rem;
+            border-radius: 8px;
+            overflow: hidden;
         }
 
         .code-box {
-            background: #f5f5f5;
+            background: rgba(0,0,0,0.2);
             padding: 1.5rem;
             border-radius: 8px;
             overflow-x: auto;
@@ -201,24 +283,29 @@
             font-size: 14px;
             line-height: 1.5;
             white-space: pre;
+            color: #f8f8f8;
+            min-height: 50px;
         }
 
         .copy-btn {
             position: absolute;
             top: 10px;
             left: 10px;
-            background: var(--dark);
-            color: white;
+            background: var(--copy-btn-bg);
+            color: var(--copy-btn-text);
             border: none;
             padding: 5px 15px;
             border-radius: 5px;
             cursor: pointer;
             font-size: 12px;
             transition: all 0.3s;
+            z-index: 2;
+            font-family: 'Tajawal', sans-serif;
         }
 
         .copy-btn:hover {
             background: var(--primary);
+            color: white;
         }
 
         .theme-toggle {
@@ -238,6 +325,36 @@
             justify-content: center;
             font-size: 20px;
             z-index: 100;
+            transition: all 0.3s;
+        }
+
+        .theme-toggle:hover {
+            transform: scale(1.1);
+        }
+
+        .stats-btn {
+            position: fixed;
+            bottom: 30px;
+            left: 30px;
+            padding: 12px 25px;
+            background: linear-gradient(135deg, #9b59b6, #8e44ad);
+            color: white;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-weight: bold;
+            z-index: 100;
+            transition: all 0.3s;
+            font-family: 'Tajawal', sans-serif;
+        }
+
+        .stats-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 12px rgba(0,0,0,0.3);
         }
 
         @media (max-width: 768px) {
@@ -247,6 +364,21 @@
             
             .input-field {
                 min-width: 100%;
+            }
+            
+            .theme-toggle {
+                bottom: 20px;
+                right: 20px;
+                width: 40px;
+                height: 40px;
+                font-size: 16px;
+            }
+            
+            .stats-btn {
+                bottom: 20px;
+                left: 20px;
+                padding: 10px 20px;
+                font-size: 14px;
             }
         }
     </style>
@@ -273,7 +405,7 @@
         <div class="tool-card">
             <div class="tool-header" onclick="toggleTool(this)">
                 <h3><i class="fas fa-level-up-alt"></i> أداة إنشاء المستويات وحساب الخبرة</h3>
-                <i class="fas fa-chevron-down"></i>
+                <i class="fas fa-chevron-up"></i>
             </div>
             <div class="tool-content">
                 <div class="input-group">
@@ -308,7 +440,7 @@
         <div class="tool-card">
             <div class="tool-header" onclick="toggleTool(this)">
                 <h3><i class="fas fa-scroll"></i> أداة نقاط الإنغرام</h3>
-                <i class="fas fa-chevron-down"></i>
+                <i class="fas fa-chevron-up"></i>
             </div>
             <div class="tool-content">
                 <div class="input-group">
@@ -346,7 +478,7 @@
         <div class="tool-card">
             <div class="tool-header" onclick="toggleTool(this)">
                 <h3><i class="fas fa-hammer"></i> أداة تعديل متطلبات الصنع</h3>
-                <i class="fas fa-chevron-down"></i>
+                <i class="fas fa-chevron-up"></i>
             </div>
             <div class="tool-content">
                 <div class="input-group">
@@ -395,7 +527,7 @@
         <div class="tool-card">
             <div class="tool-header" onclick="toggleTool(this)">
                 <h3><i class="fas fa-paw"></i> أداة استدعاء الديناصورات</h3>
-                <i class="fas fa-chevron-down"></i>
+                <i class="fas fa-chevron-up"></i>
             </div>
             <div class="tool-content">
                 <div class="input-group">
@@ -432,15 +564,30 @@
         <i class="fas fa-moon"></i>
     </button>
 
+    <button class="stats-btn" onclick="window.open('http://arksurvivalevolved.gamewalkthrough-universe.com/dedicatedservers/customizationtools/perlevelstatsmultipliertool/Default.aspx')">
+        <i class="fas fa-chart-line"></i> إنشاء كود الستاتس
+    </button>
+
     <script>
-        // توليد كود المستويات
+        // توليد كود المستويات مع XP معدل
         function generateLevelCode() {
             const maxLevel = parseInt(document.getElementById('maxLevel').value) || 100;
             let xpArray = [];
             let code = 'LevelExperienceRampOverrides=(';
             
+            // نظام XP جديد يبدأ من 5 ويتصاعد بشكل منطقي
             for(let i = 0; i <= maxLevel; i++) {
-                const xp = Math.floor(Math.pow(i, 3) * 1.5 + i * 100 + 100);
+                let xp;
+                if (i <= 10) {
+                    xp = Math.floor(5 + (i * 5)); // المستويات الأولى تزيد ببطء
+                } else if (i <= 30) {
+                    xp = Math.floor(50 + Math.pow(i-10, 2) * 0.8); // زيادة متوسطة
+                } else if (i <= 60) {
+                    xp = Math.floor(400 + Math.pow(i-30, 2) * 1.5); // زيادة سريعة
+                } else {
+                    xp = Math.floor(2000 + Math.pow(i-60, 3) * 0.5); // المستويات العالية تزيد بسرعة كبيرة
+                }
+                
                 xpArray.push(xp);
                 code += `ExperiencePointsForLevel[${i}]=${xp},`;
             }
@@ -495,12 +642,26 @@
                 </div>
             `;
             container.appendChild(newRow);
+            // إضافة تأثير حركي
+            newRow.style.opacity = '0';
+            newRow.style.transform = 'translateY(20px)';
+            setTimeout(() => {
+                newRow.style.opacity = '1';
+                newRow.style.transform = 'translateY(0)';
+                newRow.style.transition = 'all 0.3s ease';
+            }, 10);
         }
 
         // إزالة مورد من أداة الصنع
         function removeResource(btn) {
-            btn.closest('.resource-row').remove();
-            updateResourceLabels();
+            const row = btn.closest('.resource-row');
+            row.style.opacity = '0';
+            row.style.transform = 'translateY(-20px)';
+            row.style.transition = 'all 0.3s ease';
+            setTimeout(() => {
+                row.remove();
+                updateResourceLabels();
+            }, 300);
         }
 
         // تحديث تسميات الموارد
@@ -557,6 +718,20 @@
             const icon = document.querySelector('.theme-toggle i');
             icon.classList.toggle('fa-moon');
             icon.classList.toggle('fa-sun');
+            
+            // حفظ التفضيل في localStorage
+            if (document.body.classList.contains('dark-mode')) {
+                localStorage.setItem('darkMode', 'enabled');
+            } else {
+                localStorage.setItem('darkMode', 'disabled');
+            }
+            
+            // تأثير حركي للزر
+            const btn = document.querySelector('.theme-toggle');
+            btn.style.transform = 'scale(1.1)';
+            setTimeout(() => {
+                btn.style.transform = 'scale(1)';
+            }, 200);
         }
 
         // نسخ النص
@@ -568,6 +743,12 @@
             const originalText = btn.innerHTML;
             btn.innerHTML = '<i class="fas fa-check"></i> تم النسخ!';
             
+            // تأثير حركي
+            btn.style.transform = 'scale(1.1)';
+            setTimeout(() => {
+                btn.style.transform = 'scale(1)';
+            }, 200);
+            
             setTimeout(() => {
                 btn.innerHTML = originalText;
             }, 2000);
@@ -575,31 +756,60 @@
 
         // تبديل عرض الأداة
         function toggleTool(header) {
-            const content = header.parentElement.querySelector('.tool-content');
-            const icon = header.querySelector('.fa-chevron-down');
+            const toolCard = header.parentElement;
+            const content = toolCard.querySelector('.tool-content');
+            const icon = header.querySelector('.fa-chevron-up, .fa-chevron-down');
             
-            if (content.style.display === 'block') {
-                content.style.display = 'none';
-                icon.classList.replace('fa-chevron-up', 'fa-chevron-down');
-            } else {
-                content.style.display = 'block';
+            // إغلاق جميع الأدوات الأخرى
+            if (!content.classList.contains('collapsed')) {
+                document.querySelectorAll('.tool-content').forEach(otherContent => {
+                    if (otherContent !== content && !otherContent.classList.contains('collapsed')) {
+                        otherContent.classList.add('collapsed');
+                        const otherIcon = otherContent.parentElement.querySelector('.tool-header i');
+                        otherIcon.classList.replace('fa-chevron-up', 'fa-chevron-down');
+                    }
+                });
+            }
+            
+            if (content.classList.contains('collapsed')) {
+                content.classList.remove('collapsed');
                 icon.classList.replace('fa-chevron-down', 'fa-chevron-up');
+                
+                // تأثير حركي
+                toolCard.style.transform = 'translateY(-10px)';
+                setTimeout(() => {
+                    toolCard.style.transform = 'translateY(0)';
+                }, 300);
+            } else {
+                content.classList.add('collapsed');
+                icon.classList.replace('fa-chevron-up', 'fa-chevron-down');
             }
         }
 
         // تهيئة الصفحة
         document.addEventListener('DOMContentLoaded', function() {
-            // فتح جميع الأدوات تلقائيًا
-            document.querySelectorAll('.tool-content').forEach(content => {
-                content.style.display = 'block';
-            });
-            
-            document.querySelectorAll('.tool-header .fa-chevron-down').forEach(icon => {
-                icon.classList.replace('fa-chevron-down', 'fa-chevron-up');
-            });
-            
             // إضافة مورد افتراضي لأداة الصنع
             addResource();
+            
+            // تعيين الوضع الليلي إذا كان مفعلًا سابقًا
+            if (localStorage.getItem('darkMode') === 'enabled') {
+                document.body.classList.add('dark-mode');
+                const icon = document.querySelector('.theme-toggle i');
+                icon.classList.replace('fa-moon', 'fa-sun');
+            }
+            
+            // إضافة تأثيرات حركية عند التحميل
+            setTimeout(() => {
+                document.querySelectorAll('.tool-card').forEach((card, index) => {
+                    card.style.opacity = '0';
+                    card.style.transform = 'translateY(20px)';
+                    card.style.transition = 'all 0.5s ease ' + (index * 0.1) + 's';
+                    setTimeout(() => {
+                        card.style.opacity = '1';
+                        card.style.transform = 'translateY(0)';
+                    }, 10);
+                });
+            }, 100);
         });
     </script>
 </body>
