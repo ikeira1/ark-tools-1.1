@@ -5,64 +5,324 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>أدوات آرك العربية - Keira Tools</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link rel="stylesheet" href="css/style.css">
-    <!-- Firebase SDK ستضيفه أنت -->
+    <style>
+        :root {
+            --primary: #3498db;
+            --secondary: #2ecc71;
+            --accent: #e74c3c;
+            --background: #f5f7fa;
+            --card-bg: #ffffff;
+            --text: #2c3e50;
+            --border: #e0e0e0;
+        }
+
+        body {
+            font-family: 'Tahoma', sans-serif;
+            background: var(--background);
+            color: var(--text);
+            margin: 0;
+            padding: 0;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        header {
+            text-align: center;
+            padding: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .header-title {
+            color: var(--primary);
+            margin-bottom: 0.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .social-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin: 1.5rem 0;
+            flex-wrap: wrap;
+        }
+
+        .social-btn {
+            padding: 10px 20px;
+            border-radius: 50px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            text-decoration: none;
+            transition: transform 0.3s;
+        }
+
+        .social-btn:hover {
+            transform: translateY(-3px);
+        }
+
+        .youtube-btn { background: #ff0000; color: white; }
+        .discord-btn { background: #7289da; color: white; }
+        .donate-btn { background: var(--accent); color: white; }
+
+        .tool-card {
+            background: var(--card-bg);
+            border-radius: 10px;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.08);
+        }
+
+        .tool-title {
+            color: var(--primary);
+            margin-top: 0;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .input-group {
+            margin-bottom: 1rem;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: bold;
+        }
+
+        input, select {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid var(--border);
+            border-radius: 5px;
+            margin-bottom: 1rem;
+        }
+
+        .btn {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.3s;
+        }
+
+        .btn-primary {
+            background: var(--primary);
+            color: white;
+        }
+
+        .btn:hover {
+            opacity: 0.9;
+        }
+
+        .code-container {
+            position: relative;
+            margin-top: 1rem;
+        }
+
+        .code-box {
+            background: #f0f4f8;
+            padding: 1rem;
+            border-radius: 5px;
+            overflow-x: auto;
+            font-family: 'Courier New', monospace;
+            direction: ltr;
+            text-align: left;
+        }
+
+        .copy-btn {
+            position: absolute;
+            top: 5px;
+            left: 5px;
+            background: var(--text);
+            color: white;
+            border: none;
+            padding: 3px 10px;
+            border-radius: 3px;
+            cursor: pointer;
+            font-size: 12px;
+        }
+
+        @media (max-width: 600px) {
+            .container {
+                padding: 15px;
+            }
+            
+            .tool-card {
+                padding: 1rem;
+            }
+        }
+    </style>
 </head>
 <body>
-    <!-- الهيدر -->
-    <header>
-        <h1 class="header-title">
-            <i class="fas fa-dragon"></i>
-            <span>أدوات آرك العربية</span>
-        </h1>
-        <p class="header-subtitle">أدوات ذكية لمجتمع آرك العربي - من الألف إلى الياء</p>
-        <div class="social-buttons">
-            <button class="social-btn youtube-btn" id="youtubeBtn">
-                <i class="fab fa-youtube"></i> قناتي على اليوتيوب
-            </button>
-            <button class="social-btn discord-btn" id="discordBtn">
-                <i class="fab fa-discord"></i> سيرفر الديسكورد
-            </button>
-            <button class="social-btn donate-btn" id="donateBtn">
-                <i class="fas fa-heart"></i> دعم المطور
-            </button>
-        </div>
-    </header>
-
     <div class="container">
-        <!-- سيتم تحميل الأدوات هنا ديناميكيًا -->
-        <div id="toolsContainer"></div>
+        <header>
+            <h1 class="header-title">
+                <i class="fas fa-dragon"></i>
+                أدوات آرك العربية
+            </h1>
+            <p>أدوات بسيطة لمجتمع آرك العربي</p>
+            
+            <div class="social-buttons">
+                <a href="https://www.youtube.com/@ikeira1" class="social-btn youtube-btn">
+                    <i class="fab fa-youtube"></i> يوتيوب
+                </a>
+                <a href="https://discord.gg/2rMzBv6zRv" class="social-btn discord-btn">
+                    <i class="fab fa-discord"></i> ديسكورد
+                </a>
+                <a href="https://tip.dokan.sa/keira" class="social-btn donate-btn">
+                    <i class="fas fa-heart"></i> دعم
+                </a>
+            </div>
+        </header>
 
-        <!-- شريط الإحصائيات -->
-        <div class="stats-bar">
-            <div class="stat-item">
-                <span id="dailyVisitors">0</span>
-                <p>زوار اليوم</p>
+        <!-- أداة إنشاء المستويات -->
+        <div class="tool-card">
+            <h2 class="tool-title"><i class="fas fa-level-up-alt"></i> إنشاء المستويات</h2>
+            <div class="input-group">
+                <label>المستوى الأقصى</label>
+                <input type="number" id="maxLevel" min="1" max="200" placeholder="مثال: 100">
             </div>
-            <div class="stat-item">
-                <span id="totalVisitors">0</span>
-                <p>إجمالي الزوار</p>
+            <button class="btn btn-primary" onclick="generateLevelCode()">
+                <i class="fas fa-code"></i> إنشاء الكود
+            </button>
+            
+            <div class="code-container">
+                <button class="copy-btn" onclick="copyCode(this)">نسخ</button>
+                <div class="code-box" id="levelCode"></div>
             </div>
-            <div class="stat-item">
-                <button class="btn btn-primary" id="statsToolBtn">
-                    <i class="fas fa-link"></i> إنشاء كود الستاتس
-                </button>
+        </div>
+
+        <!-- أداة نقاط الإنغرام -->
+        <div class="tool-card">
+            <h2 class="tool-title"><i class="fas fa-scroll"></i> نقاط الإنغرام</h2>
+            <div class="input-group">
+                <label>المستوى المطلوب</label>
+                <input type="number" id="engramLevel" min="1" max="200" placeholder="مثال: 60">
+            </div>
+            <button class="btn btn-primary" onclick="generateEngramPoints()">
+                <i class="fas fa-code"></i> إنشاء الكود
+            </button>
+            
+            <div class="code-container">
+                <button class="copy-btn" onclick="copyCode(this)">نسخ</button>
+                <div class="code-box" id="engramOutput"></div>
+            </div>
+        </div>
+
+        <!-- أداة تعديل الصنع -->
+        <div class="tool-card">
+            <h2 class="tool-title"><i class="fas fa-hammer"></i> تعديل الصنع</h2>
+            <div class="input-group">
+                <label>ID العنصر</label>
+                <input type="text" id="itemId" placeholder="مثال: SoulTerminal_DS_C">
+            </div>
+            <div id="resourceRequirements">
+                <div class="input-group">
+                    <label>المادة 1</label>
+                    <input type="text" class="resource-id" placeholder="ID المادة">
+                    <input type="number" class="resource-amount" placeholder="الكمية" min="1">
+                </div>
+            </div>
+            <button class="btn btn-primary" onclick="generateCraftingCode()">
+                <i class="fas fa-code"></i> إنشاء الكود
+            </button>
+            
+            <div class="code-container">
+                <button class="copy-btn" onclick="copyCode(this)">نسخ</button>
+                <div class="code-box" id="craftingOutput"></div>
+            </div>
+        </div>
+
+        <!-- أداة استدعاء الديناصورات -->
+        <div class="tool-card">
+            <h2 class="tool-title"><i class="fas fa-paw"></i> استدعاء الديناصورات</h2>
+            <div class="input-group">
+                <label>ID الديناصور</label>
+                <input type="text" id="dinoId" placeholder="مثال: Gigant_Character_BP_C">
+            </div>
+            <div class="input-group">
+                <label>المستوى</label>
+                <input type="number" id="dinoLevel" min="1" placeholder="مثال: 60">
+            </div>
+            <button class="btn btn-primary" onclick="generateDinoCode()">
+                <i class="fas fa-code"></i> إنشاء الكود
+            </button>
+            
+            <div class="code-container">
+                <button class="copy-btn" onclick="copyCode(this)">نسخ</button>
+                <div class="code-box" id="dinoOutput"></div>
             </div>
         </div>
     </div>
 
-    <button class="theme-toggle" id="themeToggle">
-        <i class="fas fa-moon"></i>
-    </button>
+    <script>
+        // دالة إنشاء كود المستويات
+        function generateLevelCode() {
+            const maxLevel = parseInt(document.getElementById('maxLevel').value) || 100;
+            let code = 'LevelExperienceRampOverrides=(';
+            
+            for(let i = 0; i <= maxLevel; i++) {
+                const xp = Math.floor(Math.pow(i, 3) * 1.5 + i * 100 + 100);
+                code += `ExperiencePointsForLevel[${i}]=${xp},`;
+            }
+            
+            code = code.slice(0, -1) + ')';
+            document.getElementById('levelCode').innerHTML = code;
+        }
 
-    <!-- الأكواد الجافاسكريبت -->
-    <script src="js/main.js"></script>
-    <script src="js/level-tool.js"></script>
-    <script src="js/engram-tool.js"></script>
-    <script src="js/craft-tool.js"></script>
-    <script src="js/dino-tool.js"></script>
-    <script src="js/admin-tool.js"></script>
-    <!-- ملف Firebase ستضيفه أنت -->
-    <script src="js/firebase.js"></script>
+        // دالة إنشاء نقاط الإنغرام
+        function generateEngramPoints() {
+            const maxLevel = parseInt(document.getElementById('engramLevel').value) || 60;
+            let code = '';
+            
+            for(let i = 0; i <= maxLevel; i++) {
+                const points = i < 10 ? 8 : 14;
+                code += `OverridePlayerLevelEngramPoints=${points}\n`;
+            }
+            
+            document.getElementById('engramOutput').innerHTML = code;
+        }
+
+        // دالة إنشاء كود الصنع
+        function generateCraftingCode() {
+            const itemId = document.getElementById('itemId').value || 'PrimalItemResource_Metal_C';
+            const code = `ConfigOverrideItemCraftingCosts=(ItemClassString="${itemId}",BaseCraftingResourceRequirements=((ResourceItemTypeString="PrimalItemResource_MetalIngot_C",BaseResourceRequirement=100.0,bCraftingRequireExactResourceType=false)))`;
+            document.getElementById('craftingOutput').innerHTML = code;
+        }
+
+        // دالة إنشاء كود الديناصور
+        function generateDinoCode() {
+            const dinoId = document.getElementById('dinoId').value || 'Rex_Character_BP_C';
+            const level = document.getElementById('dinoLevel').value || 60;
+            const code = `cheat gmsummon "${dinoId}" ${level} 1 0`;
+            document.getElementById('dinoOutput').innerHTML = code;
+        }
+
+        // دالة نسخ النص
+        function copyCode(btn) {
+            const codeBox = btn.nextElementSibling;
+            const text = codeBox.innerText;
+            navigator.clipboard.writeText(text);
+            
+            const originalText = btn.innerHTML;
+            btn.innerHTML = 'تم النسخ!';
+            
+            setTimeout(() => {
+                btn.innerHTML = originalText;
+            }, 2000);
+        }
+    </script>
 </body>
 </html>
