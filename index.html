@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>أدوات آرك العربية - Keira Tools</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="css/style.css">
+    <!-- Firebase SDK ستضيفه أنت -->
+</head>
+<body>
+    <!-- الهيدر -->
+    <header>
+        <h1 class="header-title">
+            <i class="fas fa-dragon"></i>
+            <span>أدوات آرك العربية</span>
+        </h1>
+        <p class="header-subtitle">أدوات ذكية لمجتمع آرك العربي - من الألف إلى الياء</p>
+        <div class="social-buttons">
+            <button class="social-btn youtube-btn" id="youtubeBtn">
+                <i class="fab fa-youtube"></i> قناتي على اليوتيوب
+            </button>
+            <button class="social-btn discord-btn" id="discordBtn">
+                <i class="fab fa-discord"></i> سيرفر الديسكورد
+            </button>
+            <button class="social-btn donate-btn" id="donateBtn">
+                <i class="fas fa-heart"></i> دعم المطور
+            </button>
+        </div>
+    </header>
+
+    <div class="container">
+        <!-- سيتم تحميل الأدوات هنا ديناميكيًا -->
+        <div id="toolsContainer"></div>
+
+        <!-- شريط الإحصائيات -->
+        <div class="stats-bar">
+            <div class="stat-item">
+                <span id="dailyVisitors">0</span>
+                <p>زوار اليوم</p>
+            </div>
+            <div class="stat-item">
+                <span id="totalVisitors">0</span>
+                <p>إجمالي الزوار</p>
+            </div>
+            <div class="stat-item">
+                <button class="btn btn-primary" id="statsToolBtn">
+                    <i class="fas fa-link"></i> إنشاء كود الستاتس
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <button class="theme-toggle" id="themeToggle">
+        <i class="fas fa-moon"></i>
+    </button>
+
+    <!-- الأكواد الجافاسكريبت -->
+    <script src="js/main.js"></script>
+    <script src="js/level-tool.js"></script>
+    <script src="js/engram-tool.js"></script>
+    <script src="js/craft-tool.js"></script>
+    <script src="js/dino-tool.js"></script>
+    <script src="js/admin-tool.js"></script>
+    <!-- ملف Firebase ستضيفه أنت -->
+    <script src="js/firebase.js"></script>
+</body>
+</html>
