@@ -2,7 +2,6 @@
 <html lang="ar" dir="rtl">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>أدوات آرك العربية - Keira Tools</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
@@ -10,19 +9,26 @@
             --primary: #3498db;
             --secondary: #2ecc71;
             --accent: #e74c3c;
-            --background: #f5f7fa;
+            --dark: #2c3e50;
+            --light: #ecf0f1;
+            --background: #f9f9f9;
             --card-bg: #ffffff;
-            --text: #2c3e50;
-            --border: #e0e0e0;
+        }
+
+        body.dark-mode {
+            --background: #2c3e50;
+            --card-bg: #34495e;
+            --light: #2c3e50;
+            --dark: #ecf0f1;
         }
 
         body {
-            font-family: 'Tahoma', sans-serif;
+            font-family: 'Tajawal', 'Arial', sans-serif;
             background: var(--background);
-            color: var(--text);
+            color: var(--dark);
             margin: 0;
             padding: 0;
-            line-height: 1.6;
+            transition: all 0.3s ease;
         }
 
         .container {
@@ -33,39 +39,38 @@
 
         header {
             text-align: center;
-            padding: 1.5rem;
+            padding: 2rem;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            border-radius: 15px;
             margin-bottom: 2rem;
-        }
-
-        .header-title {
-            color: var(--primary);
-            margin-bottom: 0.5rem;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 10px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
         }
 
         .social-buttons {
             display: flex;
             justify-content: center;
-            gap: 10px;
-            margin: 1.5rem 0;
+            gap: 1rem;
+            margin: 2rem 0;
             flex-wrap: wrap;
         }
 
         .social-btn {
-            padding: 10px 20px;
+            padding: 12px 25px;
+            border: none;
             border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s;
             display: flex;
             align-items: center;
-            gap: 8px;
-            text-decoration: none;
-            transition: transform 0.3s;
+            gap: 10px;
+            font-weight: bold;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
         }
 
         .social-btn:hover {
             transform: translateY(-3px);
+            box-shadow: 0 6px 12px rgba(0,0,0,0.15);
         }
 
         .youtube-btn { background: #ff0000; color: white; }
@@ -74,22 +79,53 @@
 
         .tool-card {
             background: var(--card-bg);
-            border-radius: 10px;
-            padding: 1.5rem;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+            overflow: hidden;
             margin-bottom: 1.5rem;
-            box-shadow: 0 3px 10px rgba(0,0,0,0.08);
+            transition: transform 0.3s;
         }
 
-        .tool-title {
-            color: var(--primary);
-            margin-top: 0;
+        .tool-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .tool-header {
+            padding: 1.2rem 1.5rem;
+            background: linear-gradient(to right, var(--primary), var(--secondary));
+            color: white;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .tool-header h3 {
+            margin: 0;
             display: flex;
             align-items: center;
             gap: 10px;
         }
 
+        .tool-content {
+            padding: 1.5rem;
+            display: block;
+        }
+
         .input-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .input-row {
+            display: flex;
+            gap: 1rem;
             margin-bottom: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .input-field {
+            flex: 1;
+            min-width: 250px;
         }
 
         label {
@@ -100,21 +136,28 @@
 
         input, select {
             width: 100%;
-            padding: 10px;
-            border: 1px solid var(--border);
-            border-radius: 5px;
-            margin-bottom: 1rem;
+            padding: 12px 15px;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            font-size: 16px;
+            transition: border 0.3s;
+        }
+
+        input:focus, select:focus {
+            border-color: var(--primary);
+            outline: none;
         }
 
         .btn {
-            padding: 10px 20px;
+            padding: 12px 25px;
             border: none;
-            border-radius: 5px;
+            border-radius: 8px;
             cursor: pointer;
+            font-weight: bold;
+            transition: all 0.3s;
             display: inline-flex;
             align-items: center;
             gap: 8px;
-            transition: all 0.3s;
         }
 
         .btn-primary {
@@ -122,45 +165,88 @@
             color: white;
         }
 
+        .btn-secondary {
+            background: var(--secondary);
+            color: white;
+        }
+
+        .btn-accent {
+            background: var(--accent);
+            color: white;
+        }
+
+        .btn-gray {
+            background: #6c757d;
+            color: white;
+        }
+
         .btn:hover {
             opacity: 0.9;
+            transform: translateY(-2px);
         }
 
         .code-container {
             position: relative;
-            margin-top: 1rem;
+            margin-top: 1.5rem;
         }
 
         .code-box {
-            background: #f0f4f8;
-            padding: 1rem;
-            border-radius: 5px;
+            background: #f5f5f5;
+            padding: 1.5rem;
+            border-radius: 8px;
             overflow-x: auto;
-            font-family: 'Courier New', monospace;
             direction: ltr;
             text-align: left;
+            font-family: 'Courier New', monospace;
+            font-size: 14px;
+            line-height: 1.5;
+            white-space: pre;
         }
 
         .copy-btn {
             position: absolute;
-            top: 5px;
-            left: 5px;
-            background: var(--text);
+            top: 10px;
+            left: 10px;
+            background: var(--dark);
             color: white;
             border: none;
-            padding: 3px 10px;
-            border-radius: 3px;
+            padding: 5px 15px;
+            border-radius: 5px;
             cursor: pointer;
             font-size: 12px;
+            transition: all 0.3s;
         }
 
-        @media (max-width: 600px) {
-            .container {
-                padding: 15px;
+        .copy-btn:hover {
+            background: var(--primary);
+        }
+
+        .theme-toggle {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 50px;
+            height: 50px;
+            background: var(--primary);
+            color: white;
+            border: none;
+            border-radius: 50%;
+            cursor: pointer;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+            z-index: 100;
+        }
+
+        @media (max-width: 768px) {
+            .input-row {
+                flex-direction: column;
             }
             
-            .tool-card {
-                padding: 1rem;
+            .input-field {
+                min-width: 100%;
             }
         }
     </style>
@@ -168,161 +254,353 @@
 <body>
     <div class="container">
         <header>
-            <h1 class="header-title">
-                <i class="fas fa-dragon"></i>
-                أدوات آرك العربية
-            </h1>
-            <p>أدوات بسيطة لمجتمع آرك العربي</p>
-            
+            <h1><i class="fas fa-dragon"></i> أدوات آرك العربية</h1>
+            <p>أدوات ذكية لمجتمع آرك العربي - من الألف إلى الياء</p>
             <div class="social-buttons">
-                <a href="https://www.youtube.com/@ikeira1" class="social-btn youtube-btn">
-                    <i class="fab fa-youtube"></i> يوتيوب
-                </a>
-                <a href="https://discord.gg/2rMzBv6zRv" class="social-btn discord-btn">
-                    <i class="fab fa-discord"></i> ديسكورد
-                </a>
-                <a href="https://tip.dokan.sa/keira" class="social-btn donate-btn">
-                    <i class="fas fa-heart"></i> دعم
-                </a>
+                <button class="social-btn youtube-btn" onclick="window.open('https://www.youtube.com/@ikeira1')">
+                    <i class="fab fa-youtube"></i> قناتي على اليوتيوب
+                </button>
+                <button class="social-btn discord-btn" onclick="window.open('https://discord.gg/2rMzBv6zRv')">
+                    <i class="fab fa-discord"></i> سيرفر الديسكورد
+                </button>
+                <button class="social-btn donate-btn" onclick="window.open('https://tip.dokan.sa/keira')">
+                    <i class="fas fa-heart"></i> دعم المطور
+                </button>
             </div>
         </header>
 
-        <!-- أداة إنشاء المستويات -->
+        <!-- أداة إنشاء المستويات وحساب الخبرة -->
         <div class="tool-card">
-            <h2 class="tool-title"><i class="fas fa-level-up-alt"></i> إنشاء المستويات</h2>
-            <div class="input-group">
-                <label>المستوى الأقصى</label>
-                <input type="number" id="maxLevel" min="1" max="200" placeholder="مثال: 100">
+            <div class="tool-header" onclick="toggleTool(this)">
+                <h3><i class="fas fa-level-up-alt"></i> أداة إنشاء المستويات وحساب الخبرة</h3>
+                <i class="fas fa-chevron-down"></i>
             </div>
-            <button class="btn btn-primary" onclick="generateLevelCode()">
-                <i class="fas fa-code"></i> إنشاء الكود
-            </button>
-            
-            <div class="code-container">
-                <button class="copy-btn" onclick="copyCode(this)">نسخ</button>
-                <div class="code-box" id="levelCode"></div>
+            <div class="tool-content">
+                <div class="input-group">
+                    <div class="input-row">
+                        <div class="input-field">
+                            <label for="maxLevel"><i class="fas fa-layer-group"></i> المستوى الأقصى</label>
+                            <input type="number" id="maxLevel" min="1" max="200" placeholder="مثال: 100">
+                        </div>
+                    </div>
+                    <button class="btn btn-primary" onclick="generateLevelCode()">
+                        <i class="fas fa-code"></i> إنشاء كود المستويات
+                    </button>
+                </div>
+                
+                <div class="code-container">
+                    <button class="copy-btn" onclick="copyCode(this)"><i class="fas fa-copy"></i> نسخ</button>
+                    <div class="code-box" id="levelCode"></div>
+                </div>
+
+                <button class="btn btn-secondary" onclick="calculateTotalXP()">
+                    <i class="fas fa-calculator"></i> حساب الخبرة الكلية
+                </button>
+                
+                <div class="code-container">
+                    <button class="copy-btn" onclick="copyCode(this)"><i class="fas fa-copy"></i> نسخ</button>
+                    <div class="code-box" id="totalXP"></div>
+                </div>
             </div>
         </div>
 
         <!-- أداة نقاط الإنغرام -->
         <div class="tool-card">
-            <h2 class="tool-title"><i class="fas fa-scroll"></i> نقاط الإنغرام</h2>
-            <div class="input-group">
-                <label>المستوى المطلوب</label>
-                <input type="number" id="engramLevel" min="1" max="200" placeholder="مثال: 60">
+            <div class="tool-header" onclick="toggleTool(this)">
+                <h3><i class="fas fa-scroll"></i> أداة نقاط الإنغرام</h3>
+                <i class="fas fa-chevron-down"></i>
             </div>
-            <button class="btn btn-primary" onclick="generateEngramPoints()">
-                <i class="fas fa-code"></i> إنشاء الكود
-            </button>
-            
-            <div class="code-container">
-                <button class="copy-btn" onclick="copyCode(this)">نسخ</button>
-                <div class="code-box" id="engramOutput"></div>
+            <div class="tool-content">
+                <div class="input-group">
+                    <div class="input-row">
+                        <div class="input-field">
+                            <label for="engramLevel"><i class="fas fa-layer-group"></i> المستوى المطلوب</label>
+                            <input type="number" id="engramLevel" min="1" max="200" placeholder="مثال: 60">
+                        </div>
+                        <div class="input-field">
+                            <label for="engramPoints"><i class="fas fa-star"></i> النقاط لكل مستوى</label>
+                            <input type="number" id="engramPoints" min="1" value="8" placeholder="النقاط الأساسية">
+                        </div>
+                        <div class="input-field">
+                            <label for="engramBoost"><i class="fas fa-rocket"></i> تعزيز النقاط بعد مستوى</label>
+                            <input type="number" id="engramBoostLevel" min="1" max="200" value="10" placeholder="المستوى">
+                        </div>
+                        <div class="input-field">
+                            <label for="engramBoostPoints"><i class="fas fa-bolt"></i> نقاط التعزيز</label>
+                            <input type="number" id="engramBoostPoints" min="1" value="14" placeholder="نقاط إضافية">
+                        </div>
+                    </div>
+                    <button class="btn btn-primary" onclick="generateEngramPoints()">
+                        <i class="fas fa-code"></i> إنشاء كود الإنغرام
+                    </button>
+                </div>
+                
+                <div class="code-container">
+                    <button class="copy-btn" onclick="copyCode(this)"><i class="fas fa-copy"></i> نسخ</button>
+                    <div class="code-box" id="engramOutput"></div>
+                </div>
             </div>
         </div>
 
-        <!-- أداة تعديل الصنع -->
+        <!-- أداة تعديل متطلبات الصنع -->
         <div class="tool-card">
-            <h2 class="tool-title"><i class="fas fa-hammer"></i> تعديل الصنع</h2>
-            <div class="input-group">
-                <label>ID العنصر</label>
-                <input type="text" id="itemId" placeholder="مثال: SoulTerminal_DS_C">
+            <div class="tool-header" onclick="toggleTool(this)">
+                <h3><i class="fas fa-hammer"></i> أداة تعديل متطلبات الصنع</h3>
+                <i class="fas fa-chevron-down"></i>
             </div>
-            <div id="resourceRequirements">
+            <div class="tool-content">
                 <div class="input-group">
-                    <label>المادة 1</label>
-                    <input type="text" class="resource-id" placeholder="ID المادة">
-                    <input type="number" class="resource-amount" placeholder="الكمية" min="1">
+                    <div class="input-row">
+                        <div class="input-field">
+                            <label for="itemId"><i class="fas fa-cube"></i> ID العنصر</label>
+                            <input type="text" id="itemId" placeholder="مثال: SoulTerminal_DS_C">
+                        </div>
+                    </div>
+                    
+                    <div id="resourceRequirements">
+                        <div class="input-row resource-row">
+                            <div class="input-field">
+                                <label>مادة 1</label>
+                                <div class="input-row">
+                                    <input type="text" class="resource-id" placeholder="ID المادة (مثال: PrimalItemResource_MetalIngot_C)">
+                                    <input type="number" class="resource-amount" placeholder="الكمية" min="1" value="100">
+                                    <button class="btn btn-accent" onclick="removeResource(this)"><i class="fas fa-trash"></i></button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <button class="btn btn-secondary" onclick="addResource()">
+                        <i class="fas fa-plus"></i> إضافة مادة جديدة
+                    </button>
+                    
+                    <div class="input-row" style="margin-top: 20px;">
+                        <button class="btn btn-primary" onclick="generateCraftingCode()">
+                            <i class="fas fa-code"></i> إنشاء كود الصنع
+                        </button>
+                        <button class="btn btn-gray" onclick="window.open('https://ark.fandom.com/wiki/Item_IDs')">
+                            <i class="fas fa-external-link-alt"></i> البحث عن ID العناصر
+                        </button>
+                    </div>
                 </div>
-            </div>
-            <button class="btn btn-primary" onclick="generateCraftingCode()">
-                <i class="fas fa-code"></i> إنشاء الكود
-            </button>
-            
-            <div class="code-container">
-                <button class="copy-btn" onclick="copyCode(this)">نسخ</button>
-                <div class="code-box" id="craftingOutput"></div>
+                
+                <div class="code-container">
+                    <button class="copy-btn" onclick="copyCode(this)"><i class="fas fa-copy"></i> نسخ</button>
+                    <div class="code-box" id="craftingOutput"></div>
+                </div>
             </div>
         </div>
 
         <!-- أداة استدعاء الديناصورات -->
         <div class="tool-card">
-            <h2 class="tool-title"><i class="fas fa-paw"></i> استدعاء الديناصورات</h2>
-            <div class="input-group">
-                <label>ID الديناصور</label>
-                <input type="text" id="dinoId" placeholder="مثال: Gigant_Character_BP_C">
+            <div class="tool-header" onclick="toggleTool(this)">
+                <h3><i class="fas fa-paw"></i> أداة استدعاء الديناصورات</h3>
+                <i class="fas fa-chevron-down"></i>
             </div>
-            <div class="input-group">
-                <label>المستوى</label>
-                <input type="number" id="dinoLevel" min="1" placeholder="مثال: 60">
-            </div>
-            <button class="btn btn-primary" onclick="generateDinoCode()">
-                <i class="fas fa-code"></i> إنشاء الكود
-            </button>
-            
-            <div class="code-container">
-                <button class="copy-btn" onclick="copyCode(this)">نسخ</button>
-                <div class="code-box" id="dinoOutput"></div>
+            <div class="tool-content">
+                <div class="input-group">
+                    <div class="input-row">
+                        <div class="input-field">
+                            <label for="dinoId"><i class="fas fa-dragon"></i> ID الديناصور</label>
+                            <input type="text" id="dinoId" placeholder="مثال: Gigant_Character_BP_C">
+                        </div>
+                        <div class="input-field">
+                            <label for="dinoLevel"><i class="fas fa-level-up-alt"></i> المستوى</label>
+                            <input type="number" id="dinoLevel" min="1" placeholder="مثال: 60">
+                        </div>
+                    </div>
+                    
+                    <div class="input-row">
+                        <button class="btn btn-primary" onclick="generateDinoCode()">
+                            <i class="fas fa-code"></i> إنشاء كود الاستدعاء
+                        </button>
+                        <button class="btn btn-gray" onclick="window.open('https://ark.fandom.com/wiki/Item_IDs')">
+                            <i class="fas fa-external-link-alt"></i> البحث عن ID الديناصورات
+                        </button>
+                    </div>
+                </div>
+                
+                <div class="code-container">
+                    <button class="copy-btn" onclick="copyCode(this)"><i class="fas fa-copy"></i> نسخ</button>
+                    <div class="code-box" id="dinoOutput"></div>
+                </div>
             </div>
         </div>
     </div>
 
+    <button class="theme-toggle" onclick="toggleTheme()">
+        <i class="fas fa-moon"></i>
+    </button>
+
     <script>
-        // دالة إنشاء كود المستويات
+        // توليد كود المستويات
         function generateLevelCode() {
             const maxLevel = parseInt(document.getElementById('maxLevel').value) || 100;
+            let xpArray = [];
             let code = 'LevelExperienceRampOverrides=(';
             
             for(let i = 0; i <= maxLevel; i++) {
                 const xp = Math.floor(Math.pow(i, 3) * 1.5 + i * 100 + 100);
+                xpArray.push(xp);
                 code += `ExperiencePointsForLevel[${i}]=${xp},`;
             }
             
+            localStorage.setItem('currentXPArray', JSON.stringify(xpArray));
             code = code.slice(0, -1) + ')';
             document.getElementById('levelCode').innerHTML = code;
         }
 
-        // دالة إنشاء نقاط الإنغرام
+        // حساب الخبرة الكلية
+        function calculateTotalXP() {
+            const xpArray = JSON.parse(localStorage.getItem('currentXPArray')) || [];
+            const totalXP = xpArray.reduce((acc, curr) => acc + curr, 0);
+            
+            const output = `OverrideMaxExperiencePointsPlayer=70368744177664\n`
+                         + `OverrideMaxExperiencePointsPlayer=${totalXP}\n`
+                         + `OverrideMaxExperiencePointsDino=2147483647`;
+            
+            document.getElementById('totalXP').innerHTML = output;
+        }
+
+        // توليد نقاط الإنغرام
         function generateEngramPoints() {
             const maxLevel = parseInt(document.getElementById('engramLevel').value) || 60;
+            const basePoints = parseInt(document.getElementById('engramPoints').value) || 8;
+            const boostLevel = parseInt(document.getElementById('engramBoostLevel').value) || 10;
+            const boostPoints = parseInt(document.getElementById('engramBoostPoints').value) || 14;
+            
             let code = '';
             
             for(let i = 0; i <= maxLevel; i++) {
-                const points = i < 10 ? 8 : 14;
+                const points = i < boostLevel ? basePoints : boostPoints;
                 code += `OverridePlayerLevelEngramPoints=${points}\n`;
             }
             
             document.getElementById('engramOutput').innerHTML = code;
         }
 
-        // دالة إنشاء كود الصنع
+        // إضافة مورد جديد لأداة الصنع
+        function addResource() {
+            const container = document.getElementById('resourceRequirements');
+            const newRow = document.createElement('div');
+            newRow.className = 'input-row resource-row';
+            newRow.innerHTML = `
+                <div class="input-field">
+                    <label>مادة ${container.children.length + 1}</label>
+                    <div class="input-row">
+                        <input type="text" class="resource-id" placeholder="ID المادة">
+                        <input type="number" class="resource-amount" placeholder="الكمية" min="1" value="100">
+                        <button class="btn btn-accent" onclick="removeResource(this)"><i class="fas fa-trash"></i></button>
+                    </div>
+                </div>
+            `;
+            container.appendChild(newRow);
+        }
+
+        // إزالة مورد من أداة الصنع
+        function removeResource(btn) {
+            btn.closest('.resource-row').remove();
+            updateResourceLabels();
+        }
+
+        // تحديث تسميات الموارد
+        function updateResourceLabels() {
+            const rows = document.querySelectorAll('.resource-row');
+            rows.forEach((row, index) => {
+                row.querySelector('label').textContent = `مادة ${index + 1}`;
+            });
+        }
+
+        // توليد كود الصنع
         function generateCraftingCode() {
-            const itemId = document.getElementById('itemId').value || 'PrimalItemResource_Metal_C';
-            const code = `ConfigOverrideItemCraftingCosts=(ItemClassString="${itemId}",BaseCraftingResourceRequirements=((ResourceItemTypeString="PrimalItemResource_MetalIngot_C",BaseResourceRequirement=100.0,bCraftingRequireExactResourceType=false)))`;
+            const itemId = document.getElementById('itemId').value || 'SoulTerminal_DS_C';
+            const resources = [];
+            
+            document.querySelectorAll('.resource-row').forEach(row => {
+                const id = row.querySelector('.resource-id').value;
+                const amount = row.querySelector('.resource-amount').value;
+                
+                if (id && amount) {
+                    resources.push({
+                        id: id,
+                        amount: parseFloat(amount)
+                    });
+                }
+            });
+            
+            if (resources.length === 0) {
+                alert('الرجاء إضافة مواد على الأقل');
+                return;
+            }
+            
+            let requirements = '';
+            resources.forEach(res => {
+                requirements += `(ResourceItemTypeString="${res.id}",BaseResourceRequirement=${res.amount},bCraftingRequireExactResourceType=false),`;
+            });
+            
+            const code = `ConfigOverrideItemCraftingCosts=(ItemClassString="${itemId}",BaseCraftingResourceRequirements=(${requirements.slice(0, -1)}))`;
             document.getElementById('craftingOutput').innerHTML = code;
         }
 
-        // دالة إنشاء كود الديناصور
+        // توليد كود استدعاء الديناصور
         function generateDinoCode() {
-            const dinoId = document.getElementById('dinoId').value || 'Rex_Character_BP_C';
+            const dinoId = document.getElementById('dinoId').value || 'Gigant_Character_BP_C';
             const level = document.getElementById('dinoLevel').value || 60;
+            
             const code = `cheat gmsummon "${dinoId}" ${level} 1 0`;
             document.getElementById('dinoOutput').innerHTML = code;
         }
 
-        // دالة نسخ النص
+        // تبديل الوضع الليلي
+        function toggleTheme() {
+            document.body.classList.toggle('dark-mode');
+            const icon = document.querySelector('.theme-toggle i');
+            icon.classList.toggle('fa-moon');
+            icon.classList.toggle('fa-sun');
+        }
+
+        // نسخ النص
         function copyCode(btn) {
             const codeBox = btn.nextElementSibling;
             const text = codeBox.innerText;
             navigator.clipboard.writeText(text);
             
             const originalText = btn.innerHTML;
-            btn.innerHTML = 'تم النسخ!';
+            btn.innerHTML = '<i class="fas fa-check"></i> تم النسخ!';
             
             setTimeout(() => {
                 btn.innerHTML = originalText;
             }, 2000);
         }
+
+        // تبديل عرض الأداة
+        function toggleTool(header) {
+            const content = header.parentElement.querySelector('.tool-content');
+            const icon = header.querySelector('.fa-chevron-down');
+            
+            if (content.style.display === 'block') {
+                content.style.display = 'none';
+                icon.classList.replace('fa-chevron-up', 'fa-chevron-down');
+            } else {
+                content.style.display = 'block';
+                icon.classList.replace('fa-chevron-down', 'fa-chevron-up');
+            }
+        }
+
+        // تهيئة الصفحة
+        document.addEventListener('DOMContentLoaded', function() {
+            // فتح جميع الأدوات تلقائيًا
+            document.querySelectorAll('.tool-content').forEach(content => {
+                content.style.display = 'block';
+            });
+            
+            document.querySelectorAll('.tool-header .fa-chevron-down').forEach(icon => {
+                icon.classList.replace('fa-chevron-down', 'fa-chevron-up');
+            });
+            
+            // إضافة مورد افتراضي لأداة الصنع
+            addResource();
+        });
     </script>
 </body>
 </html>
