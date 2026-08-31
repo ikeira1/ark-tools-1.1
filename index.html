@@ -2,389 +2,15 @@
 <html lang="ar" dir="rtl">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>أدوات آرك العربية - Keira Tools</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700&display=swap" rel="stylesheet">
-    <style>
-        :root {
-            --primary: #3498db;
-            --secondary: #2ecc71;
-            --accent: #e74c3c;
-            --dark: #2c3e50;
-            --light: #ecf0f1;
-            --background: #f9f9f9;
-            --card-bg: #ffffff;
-            --text-color: #333;
-            --header-text: white;
-            --copy-btn-bg: #2c3e50;
-            --copy-btn-text: white;
-        }
-
-        body.dark-mode {
-            --background: #1a1a2e;
-            --card-bg: #16213e;
-            --light: #2c3e50;
-            --dark: #ecf0f1;
-            --text-color: #f0f0f0;
-            --header-text: #f0f0f0;
-            --copy-btn-bg: #ecf0f1;
-            --copy-btn-text: #2c3e50;
-        }
-
-        body {
-            font-family: 'Tajawal', 'Arial', sans-serif;
-            background: var(--background);
-            color: var(--text-color);
-            margin: 0;
-            padding: 0;
-            transition: all 0.5s ease;
-            min-height: 100vh;
-            position: relative;
-        }
-
-        .container {
-            max-width: 800px;
-            margin: 0 auto;
-            padding: 20px;
-            padding-bottom: 100px;
-        }
-
-        header {
-            text-align: center;
-            padding: 2rem;
-            color: var(--header-text);
-            border-radius: 15px;
-            margin-bottom: 2rem;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
-            background-image: url('https://cdn.cloudflare.steamstatic.com/steam/apps/346110/ss_48009597ea5cf8ee683e0dcdc8486b5aeddb952e.1920x1080.jpg?t=1655137924');
-            background-size: cover;
-            background-position: center;
-            background-blend-mode: multiply;
-            position: relative;
-            overflow: hidden;
-        }
-
-        header::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: rgba(0,0,0,0.6);
-            z-index: 0;
-        }
-
-        header h1, header p, .social-buttons {
-            position: relative;
-            z-index: 1;
-        }
-
-        .social-buttons {
-            display: flex;
-            justify-content: center;
-            gap: 1rem;
-            margin: 2rem 0;
-            flex-wrap: wrap;
-        }
-
-        .social-btn {
-            padding: 12px 25px;
-            border: none;
-            border-radius: 50px;
-            cursor: pointer;
-            transition: all 0.3s;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            font-weight: bold;
-            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-        }
-
-        .social-btn:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 6px 12px rgba(0,0,0,0.15);
-        }
-
-        .youtube-btn { background: #ff0000; color: white; }
-        .discord-btn { background: #7289da; color: white; }
-        .donate-btn { background: var(--accent); color: white; }
-
-        .tool-card {
-            background: var(--card-bg);
-            border-radius: 12px;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
-            overflow: hidden;
-            margin-bottom: 1.5rem;
-            transition: all 0.4s ease;
-            border: 1px solid rgba(0,0,0,0.1);
-            background-size: cover;
-            background-position: center;
-            background-blend-mode: overlay;
-            background-color: var(--card-bg);
-        }
-
-        /* خلفيات خاصة لكل أداة */
-        .tool-card:nth-child(1) { /* أداة المستويات */
-            background-image: url('https://cdn.cloudflare.steamstatic.com/steam/apps/346110/ss_3a5a7d8aacd1a8a1d741d5e3a9805ff0a87be859.1920x1080.jpg?t=1655137924');
-        }
-        
-        .tool-card:nth-child(2) { /* أداة الإنغرام */
-            background-image: url('https://cdn.cloudflare.steamstatic.com/steam/apps/346110/ss_01cbef83fe28d64ee5a3d39a86043fb1e49abd31.1920x1080.jpg?t=1655137924');
-        }
-        
-        .tool-card:nth-child(3) { /* أداة الصنع */
-            background-image: url('https://cdn.cloudflare.steamstatic.com/steam/apps/346110/ss_164a92a53f9bcbb728b391fc0719f7609b2f3d21.1920x1080.jpg?t=1655137924');
-        }
-        
-        .tool-card:nth-child(4) { /* أداة الديناصورات */
-            background-image: url('https://cdn.cloudflare.steamstatic.com/steam/apps/346110/ss_76da9eb1e0b26d8662c8d985578a0e714d0b9c9a.1920x1080.jpg?t=1655137924');
-        }
-
-        .tool-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 8px 20px rgba(0,0,0,0.15);
-        }
-
-        .tool-header {
-            padding: 1.2rem 1.5rem;
-            background: linear-gradient(to right, var(--primary), var(--secondary));
-            color: white;
-            cursor: pointer;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            transition: all 0.3s ease;
-            background-color: rgba(0,0,0,0.5);
-            background-blend-mode: overlay;
-        }
-
-        .tool-header:hover {
-            background-color: rgba(0,0,0,0.7);
-        }
-
-        .tool-header h3 {
-            margin: 0;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-
-        .tool-content {
-            padding: 1.5rem;
-            display: block;
-            max-height: 2000px;
-            opacity: 1;
-            transition: all 0.5s ease, opacity 0.3s ease;
-            background-color: rgba(0,0,0,0.1);
-        }
-
-        .tool-content.collapsed {
-            display: none;
-            max-height: 0;
-            opacity: 0;
-            padding-top: 0;
-            padding-bottom: 0;
-        }
-
-        .input-group {
-            margin-bottom: 1.5rem;
-        }
-
-        .input-row {
-            display: flex;
-            gap: 1rem;
-            margin-bottom: 1rem;
-            flex-wrap: wrap;
-        }
-
-        .input-field {
-            flex: 1;
-            min-width: 250px;
-        }
-
-        label {
-            display: block;
-            margin-bottom: 0.5rem;
-            font-weight: bold;
-            color: var(--text-color);
-        }
-
-        input, select {
-            width: 100%;
-            padding: 12px 15px;
-            border: 2px solid rgba(0,0,0,0.1);
-            border-radius: 8px;
-            font-size: 16px;
-            transition: border 0.3s;
-            background-color: rgba(255,255,255,0.1);
-            color: var(--text-color);
-        }
-
-        input:focus, select:focus {
-            border-color: var(--primary);
-            outline: none;
-            background-color: rgba(255,255,255,0.2);
-        }
-
-        .btn {
-            padding: 12px 25px;
-            border: none;
-            border-radius: 8px;
-            cursor: pointer;
-            font-weight: bold;
-            transition: all 0.3s;
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-        }
-
-        .btn-primary {
-            background: var(--primary);
-            color: white;
-        }
-
-        .btn-secondary {
-            background: var(--secondary);
-            color: white;
-        }
-
-        .btn-accent {
-            background: var(--accent);
-            color: white;
-        }
-
-        .btn-gray {
-            background: #6c757d;
-            color: white;
-        }
-
-        .btn:hover {
-            opacity: 0.9;
-            transform: translateY(-2px);
-            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
-        }
-
-        .code-container {
-            position: relative;
-            margin-top: 1.5rem;
-            border-radius: 8px;
-            overflow: hidden;
-        }
-
-        .code-box {
-            background: rgba(0,0,0,0.2);
-            padding: 1.5rem;
-            border-radius: 8px;
-            overflow-x: auto;
-            direction: ltr;
-            text-align: left;
-            font-family: 'Courier New', monospace;
-            font-size: 14px;
-            line-height: 1.5;
-            white-space: pre;
-            color: #f8f8f8;
-            min-height: 50px;
-        }
-
-        .copy-btn {
-            position: absolute;
-            top: 10px;
-            left: 10px;
-            background: var(--copy-btn-bg);
-            color: var(--copy-btn-text);
-            border: none;
-            padding: 5px 15px;
-            border-radius: 5px;
-            cursor: pointer;
-            font-size: 12px;
-            transition: all 0.3s;
-            z-index: 2;
-            font-family: 'Tajawal', sans-serif;
-        }
-
-        .copy-btn:hover {
-            background: var(--primary);
-            color: white;
-        }
-
-        .theme-toggle {
-            position: fixed;
-            bottom: 30px;
-            right: 30px;
-            width: 50px;
-            height: 50px;
-            background: var(--primary);
-            color: white;
-            border: none;
-            border-radius: 50%;
-            cursor: pointer;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 20px;
-            z-index: 100;
-            transition: all 0.3s;
-        }
-
-        .theme-toggle:hover {
-            transform: scale(1.1);
-        }
-
-        .stats-btn {
-            position: fixed;
-            bottom: 30px;
-            left: 30px;
-            padding: 12px 25px;
-            background: linear-gradient(135deg, #9b59b6, #8e44ad);
-            color: white;
-            border: none;
-            border-radius: 50px;
-            cursor: pointer;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            font-weight: bold;
-            z-index: 100;
-            transition: all 0.3s;
-            font-family: 'Tajawal', sans-serif;
-        }
-
-        .stats-btn:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 6px 12px rgba(0,0,0,0.3);
-        }
-
-        @media (max-width: 768px) {
-            .input-row {
-                flex-direction: column;
-            }
-            
-            .input-field {
-                min-width: 100%;
-            }
-            
-            .theme-toggle {
-                bottom: 20px;
-                right: 20px;
-                width: 40px;
-                height: 40px;
-                font-size: 16px;
-            }
-            
-            .stats-btn {
-                bottom: 20px;
-                left: 20px;
-                padding: 10px 20px;
-                font-size: 14px;
-            }
-        }
-    </style>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
     <div class="container">
+        <!-- الهيدر وروابط التواصل -->
         <header>
             <h1><i class="fas fa-dragon"></i> أدوات آرك العربية</h1>
             <p>أدوات ذكية لمجتمع آرك العربي - من الألف إلى الياء</p>
@@ -400,6 +26,54 @@
                 </button>
             </div>
         </header>
+
+        <!-- الأداة الجديدة: إعدادات ملفات السيرفر الخام والديفولت -->
+        <div class="tool-card">
+            <div class="tool-header" onclick="toggleTool(this)">
+                <h3><i class="fas fa-file-code"></i> أداة إعدادات ملفات السيرفر (Game.ini & GameUserSettings.ini)</h3>
+                <i class="fas fa-chevron-up"></i>
+            </div>
+            <div class="tool-content">
+                <div class="input-group">
+                    <div class="input-row">
+                        <div class="input-field">
+                            <label for="fileSelector"><i class="fas fa-file-alt"></i> اختر الملف للاستعراض والتعديل</label>
+                            <select id="fileSelector" onchange="loadConfigFile()">
+                                <option value="gameini">Game.ini (إعدادات اللعب والحصاد)</option>
+                                <option value="usersettings">GameUserSettings.ini (إعدادات السيرفر والعالم)</option>
+                            </select>
+                        </div>
+                    </div>
+                    
+                    <div class="config-info-box">
+                        <p id="configDescription">اختر الملف لاستعراض الإعدادات الافتراضية مع الشرح العربي وقوالب الأوفيشل المعتمدة.</p>
+                        <div class="quick-links-row">
+                            <a href="https://pastebin.com/U0LX4r6i" target="_blank" class="btn btn-gray"><i class="fas fa-external-link-alt"></i> مرجع Pastebin 1</a>
+                            <a href="https://pastebin.com/QWHcTF2p" target="_blank" class="btn btn-gray"><i class="fas fa-external-link-alt"></i> مرجع Pastebin 2</a>
+                        </div>
+                    </div>
+
+                    <!-- محتوى التعديل الديناميكي للإعدادات -->
+                    <div id="configEditorContainer" class="config-editor-area">
+                        <!-- يتم تعبئته عبر الجافاسكريبت -->
+                    </div>
+
+                    <div class="input-row" style="margin-top: 20px; gap: 10px;">
+                        <button class="btn btn-primary" onclick="copyFullConfig()">
+                            <i class="fas fa-copy"></i> نسخ الملف كامل
+                        </button>
+                        <button class="btn btn-secondary" onclick="copyModifiedConfigOnly()">
+                            <i class="fas fa-cut"></i> نسخ التعديلات المخصصة فقط
+                        </button>
+                    </div>
+                </div>
+
+                <div class="code-container">
+                    <button class="copy-btn" onclick="copyCustomCodeBox(this)"><i class="fas fa-copy"></i> نسخ</button>
+                    <div class="code-box" id="serverConfigOutput"></div>
+                </div>
+            </div>
+        </div>
 
         <!-- أداة إنشاء المستويات وحساب الخبرة -->
         <div class="tool-card">
@@ -421,7 +95,7 @@
                 </div>
                 
                 <div class="code-container">
-                    <button class="copy-btn" onclick="copyCode(this)"><i class="fas fa-copy"></i> نسخ</button>
+                    <button class="copy-btn" onclick="copyCustomCodeBox(this)"><i class="fas fa-copy"></i> نسخ</button>
                     <div class="code-box" id="levelCode"></div>
                 </div>
 
@@ -430,7 +104,7 @@
                 </button>
                 
                 <div class="code-container">
-                    <button class="copy-btn" onclick="copyCode(this)"><i class="fas fa-copy"></i> نسخ</button>
+                    <button class="copy-btn" onclick="copyCustomCodeBox(this)"><i class="fas fa-copy"></i> نسخ</button>
                     <div class="code-box" id="totalXP"></div>
                 </div>
             </div>
@@ -454,7 +128,7 @@
                             <input type="number" id="engramPoints" min="1" value="8" placeholder="النقاط الأساسية">
                         </div>
                         <div class="input-field">
-                            <label for="engramBoost"><i class="fas fa-rocket"></i> تعزيز النقاط بعد مستوى</label>
+                            <label for="engramBoostLevel"><i class="fas fa-rocket"></i> تعزيز النقاط بعد مستوى</label>
                             <input type="number" id="engramBoostLevel" min="1" max="200" value="10" placeholder="المستوى">
                         </div>
                         <div class="input-field">
@@ -468,7 +142,7 @@
                 </div>
                 
                 <div class="code-container">
-                    <button class="copy-btn" onclick="copyCode(this)"><i class="fas fa-copy"></i> نسخ</button>
+                    <button class="copy-btn" onclick="copyCustomCodeBox(this)"><i class="fas fa-copy"></i> نسخ</button>
                     <div class="code-box" id="engramOutput"></div>
                 </div>
             </div>
@@ -517,7 +191,7 @@
                 </div>
                 
                 <div class="code-container">
-                    <button class="copy-btn" onclick="copyCode(this)"><i class="fas fa-copy"></i> نسخ</button>
+                    <button class="copy-btn" onclick="copyCustomCodeBox(this)"><i class="fas fa-copy"></i> نسخ</button>
                     <div class="code-box" id="craftingOutput"></div>
                 </div>
             </div>
@@ -553,13 +227,14 @@
                 </div>
                 
                 <div class="code-container">
-                    <button class="copy-btn" onclick="copyCode(this)"><i class="fas fa-copy"></i> نسخ</button>
+                    <button class="copy-btn" onclick="copyCustomCodeBox(this)"><i class="fas fa-copy"></i> نسخ</button>
                     <div class="code-box" id="dinoOutput"></div>
                 </div>
             </div>
         </div>
     </div>
 
+    <!-- الأزرار العائمة -->
     <button class="theme-toggle" onclick="toggleTheme()">
         <i class="fas fa-moon"></i>
     </button>
@@ -568,249 +243,6 @@
         <i class="fas fa-chart-line"></i> إنشاء كود الستاتس
     </button>
 
-    <script>
-        // توليد كود المستويات مع XP معدل
-        function generateLevelCode() {
-            const maxLevel = parseInt(document.getElementById('maxLevel').value) || 100;
-            let xpArray = [];
-            let code = 'LevelExperienceRampOverrides=(';
-            
-            // نظام XP جديد يبدأ من 5 ويتصاعد بشكل منطقي
-            for(let i = 0; i <= maxLevel; i++) {
-                let xp;
-                if (i <= 10) {
-                    xp = Math.floor(5 + (i * 5)); // المستويات الأولى تزيد ببطء
-                } else if (i <= 30) {
-                    xp = Math.floor(50 + Math.pow(i-10, 2) * 0.8); // زيادة متوسطة
-                } else if (i <= 60) {
-                    xp = Math.floor(400 + Math.pow(i-30, 2) * 1.5); // زيادة سريعة
-                } else {
-                    xp = Math.floor(2000 + Math.pow(i-60, 3) * 0.5); // المستويات العالية تزيد بسرعة كبيرة
-                }
-                
-                xpArray.push(xp);
-                code += `ExperiencePointsForLevel[${i}]=${xp},`;
-            }
-            
-            localStorage.setItem('currentXPArray', JSON.stringify(xpArray));
-            code = code.slice(0, -1) + ')';
-            document.getElementById('levelCode').innerHTML = code;
-        }
-
-        // حساب الخبرة الكلية
-        function calculateTotalXP() {
-            const xpArray = JSON.parse(localStorage.getItem('currentXPArray')) || [];
-            const totalXP = xpArray.reduce((acc, curr) => acc + curr, 0);
-            
-            const output = `OverrideMaxExperiencePointsPlayer=70368744177664\n`
-                         + `OverrideMaxExperiencePointsPlayer=${totalXP}\n`
-                         + `OverrideMaxExperiencePointsDino=2147483647`;
-            
-            document.getElementById('totalXP').innerHTML = output;
-        }
-
-        // توليد نقاط الإنغرام
-        function generateEngramPoints() {
-            const maxLevel = parseInt(document.getElementById('engramLevel').value) || 60;
-            const basePoints = parseInt(document.getElementById('engramPoints').value) || 8;
-            const boostLevel = parseInt(document.getElementById('engramBoostLevel').value) || 10;
-            const boostPoints = parseInt(document.getElementById('engramBoostPoints').value) || 14;
-            
-            let code = '';
-            
-            for(let i = 0; i <= maxLevel; i++) {
-                const points = i < boostLevel ? basePoints : boostPoints;
-                code += `OverridePlayerLevelEngramPoints=${points}\n`;
-            }
-            
-            document.getElementById('engramOutput').innerHTML = code;
-        }
-
-        // إضافة مورد جديد لأداة الصنع
-        function addResource() {
-            const container = document.getElementById('resourceRequirements');
-            const newRow = document.createElement('div');
-            newRow.className = 'input-row resource-row';
-            newRow.innerHTML = `
-                <div class="input-field">
-                    <label>مادة ${container.children.length + 1}</label>
-                    <div class="input-row">
-                        <input type="text" class="resource-id" placeholder="ID المادة">
-                        <input type="number" class="resource-amount" placeholder="الكمية" min="1" value="100">
-                        <button class="btn btn-accent" onclick="removeResource(this)"><i class="fas fa-trash"></i></button>
-                    </div>
-                </div>
-            `;
-            container.appendChild(newRow);
-            // إضافة تأثير حركي
-            newRow.style.opacity = '0';
-            newRow.style.transform = 'translateY(20px)';
-            setTimeout(() => {
-                newRow.style.opacity = '1';
-                newRow.style.transform = 'translateY(0)';
-                newRow.style.transition = 'all 0.3s ease';
-            }, 10);
-        }
-
-        // إزالة مورد من أداة الصنع
-        function removeResource(btn) {
-            const row = btn.closest('.resource-row');
-            row.style.opacity = '0';
-            row.style.transform = 'translateY(-20px)';
-            row.style.transition = 'all 0.3s ease';
-            setTimeout(() => {
-                row.remove();
-                updateResourceLabels();
-            }, 300);
-        }
-
-        // تحديث تسميات الموارد
-        function updateResourceLabels() {
-            const rows = document.querySelectorAll('.resource-row');
-            rows.forEach((row, index) => {
-                row.querySelector('label').textContent = `مادة ${index + 1}`;
-            });
-        }
-
-        // توليد كود الصنع
-        function generateCraftingCode() {
-            const itemId = document.getElementById('itemId').value || 'SoulTerminal_DS_C';
-            const resources = [];
-            
-            document.querySelectorAll('.resource-row').forEach(row => {
-                const id = row.querySelector('.resource-id').value;
-                const amount = row.querySelector('.resource-amount').value;
-                
-                if (id && amount) {
-                    resources.push({
-                        id: id,
-                        amount: parseFloat(amount)
-                    });
-                }
-            });
-            
-            if (resources.length === 0) {
-                alert('الرجاء إضافة مواد على الأقل');
-                return;
-            }
-            
-            let requirements = '';
-            resources.forEach(res => {
-                requirements += `(ResourceItemTypeString="${res.id}",BaseResourceRequirement=${res.amount},bCraftingRequireExactResourceType=false),`;
-            });
-            
-            const code = `ConfigOverrideItemCraftingCosts=(ItemClassString="${itemId}",BaseCraftingResourceRequirements=(${requirements.slice(0, -1)}))`;
-            document.getElementById('craftingOutput').innerHTML = code;
-        }
-
-        // توليد كود استدعاء الديناصور
-        function generateDinoCode() {
-            const dinoId = document.getElementById('dinoId').value || 'Gigant_Character_BP_C';
-            const level = document.getElementById('dinoLevel').value || 60;
-            
-            const code = `cheat gmsummon "${dinoId}" ${level} 1 0`;
-            document.getElementById('dinoOutput').innerHTML = code;
-        }
-
-        // تبديل الوضع الليلي
-        function toggleTheme() {
-            document.body.classList.toggle('dark-mode');
-            const icon = document.querySelector('.theme-toggle i');
-            icon.classList.toggle('fa-moon');
-            icon.classList.toggle('fa-sun');
-            
-            // حفظ التفضيل في localStorage
-            if (document.body.classList.contains('dark-mode')) {
-                localStorage.setItem('darkMode', 'enabled');
-            } else {
-                localStorage.setItem('darkMode', 'disabled');
-            }
-            
-            // تأثير حركي للزر
-            const btn = document.querySelector('.theme-toggle');
-            btn.style.transform = 'scale(1.1)';
-            setTimeout(() => {
-                btn.style.transform = 'scale(1)';
-            }, 200);
-        }
-
-        // نسخ النص
-        function copyCode(btn) {
-            const codeBox = btn.nextElementSibling;
-            const text = codeBox.innerText;
-            navigator.clipboard.writeText(text);
-            
-            const originalText = btn.innerHTML;
-            btn.innerHTML = '<i class="fas fa-check"></i> تم النسخ!';
-            
-            // تأثير حركي
-            btn.style.transform = 'scale(1.1)';
-            setTimeout(() => {
-                btn.style.transform = 'scale(1)';
-            }, 200);
-            
-            setTimeout(() => {
-                btn.innerHTML = originalText;
-            }, 2000);
-        }
-
-        // تبديل عرض الأداة
-        function toggleTool(header) {
-            const toolCard = header.parentElement;
-            const content = toolCard.querySelector('.tool-content');
-            const icon = header.querySelector('.fa-chevron-up, .fa-chevron-down');
-            
-            // إغلاق جميع الأدوات الأخرى
-            if (!content.classList.contains('collapsed')) {
-                document.querySelectorAll('.tool-content').forEach(otherContent => {
-                    if (otherContent !== content && !otherContent.classList.contains('collapsed')) {
-                        otherContent.classList.add('collapsed');
-                        const otherIcon = otherContent.parentElement.querySelector('.tool-header i');
-                        otherIcon.classList.replace('fa-chevron-up', 'fa-chevron-down');
-                    }
-                });
-            }
-            
-            if (content.classList.contains('collapsed')) {
-                content.classList.remove('collapsed');
-                icon.classList.replace('fa-chevron-down', 'fa-chevron-up');
-                
-                // تأثير حركي
-                toolCard.style.transform = 'translateY(-10px)';
-                setTimeout(() => {
-                    toolCard.style.transform = 'translateY(0)';
-                }, 300);
-            } else {
-                content.classList.add('collapsed');
-                icon.classList.replace('fa-chevron-up', 'fa-chevron-down');
-            }
-        }
-
-        // تهيئة الصفحة
-        document.addEventListener('DOMContentLoaded', function() {
-            // إضافة مورد افتراضي لأداة الصنع
-            addResource();
-            
-            // تعيين الوضع الليلي إذا كان مفعلًا سابقًا
-            if (localStorage.getItem('darkMode') === 'enabled') {
-                document.body.classList.add('dark-mode');
-                const icon = document.querySelector('.theme-toggle i');
-                icon.classList.replace('fa-moon', 'fa-sun');
-            }
-            
-            // إضافة تأثيرات حركية عند التحميل
-            setTimeout(() => {
-                document.querySelectorAll('.tool-card').forEach((card, index) => {
-                    card.style.opacity = '0';
-                    card.style.transform = 'translateY(20px)';
-                    card.style.transition = 'all 0.5s ease ' + (index * 0.1) + 's';
-                    setTimeout(() => {
-                        card.style.opacity = '1';
-                        card.style.transform = 'translateY(0)';
-                    }, 10);
-                });
-            }, 100);
-        });
-    </script>
+    <script src="app.js"></script>
 </body>
 </html>
