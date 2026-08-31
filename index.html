@@ -7,100 +7,90 @@
     <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700&display=swap" rel="stylesheet">
     <style>
         :root {
-            --primary: #3498db;
-            --secondary: #2ecc71;
-            --accent: #e74c3c;
-            --dark: #2c3e50;
-            --light: #f1f2f6;
-            --background: #f4f7f6;
-            --card-bg: #ffffff;
-            --text-color: #333333;
+            --primary: #00d2ff;
+            --secondary: #3a7bd5;
+            --accent: #ff4757;
+            --dark: #0f172a;
+            --light: #f8fafc;
+            --card-bg: rgba(15, 23, 42, 0.75);
+            --text-color: #ffffff;
             --header-text: white;
-            --copy-btn-bg: #2c3e50;
-            --copy-btn-text: white;
-            --border-color: #e1e8ed;
-        }
-
-        body.dark-mode {
-            --background: #12121a;
-            --card-bg: #1a1a2e;
-            --light: #16213e;
-            --dark: #ecf0f1;
-            --text-color: #f0f0f0;
-            --header-text: #f0f0f0;
-            --copy-btn-bg: #0f3460;
-            --copy-btn-text: #f0f0f0;
-            --border-color: #2a2a40;
+            --border-color: rgba(255, 255, 255, 0.15);
         }
 
         body {
             font-family: 'Tajawal', 'Arial', sans-serif;
-            background: var(--background);
+            background: linear-gradient(rgba(5, 10, 25, 0.85), rgba(5, 10, 25, 0.92)), url('https://cdn.cloudflare.steamstatic.com/steam/apps/346110/ss_48009597ea5cf8ee683e0dcdc8486b5aeddb952e.1920x1080.jpg?t=1655137924');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
             color: var(--text-color);
             margin: 0;
             padding: 0;
-            transition: background 0.4s ease, color 0.4s ease;
             min-height: 100vh;
-            position: relative;
         }
 
         .container {
             max-width: 850px;
             margin: 0 auto;
-            padding: 20px;
+            padding: 25px;
             padding-bottom: 100px;
         }
 
         header {
             text-align: center;
-            padding: 2.5rem 2rem;
+            padding: 3rem 2rem;
             color: var(--header-text);
-            border-radius: 16px;
-            margin-bottom: 2rem;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.15);
-            background-image: linear-gradient(rgba(0,0,0,0.65), rgba(0,0,0,0.65)), url('https://cdn.cloudflare.steamstatic.com/steam/apps/346110/ss_48009597ea5cf8ee683e0dcdc8486b5aeddb952e.1920x1080.jpg?t=1655137924');
+            border-radius: 20px;
+            margin-bottom: 2.5rem;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            background-image: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.75)), url('https://cdn.cloudflare.steamstatic.com/steam/apps/346110/ss_01cbef83fe28d64ee5a3d39a86043fb1e49abd31.1920x1080.jpg?t=1655137924');
             background-size: cover;
             background-position: center;
+            border: 1px solid var(--border-color);
             position: relative;
             overflow: hidden;
         }
 
         header h1 {
             margin: 0 0 10px 0;
-            font-size: 2.2rem;
+            font-size: 2.5rem;
+            text-shadow: 0 2px 10px rgba(0,0,0,0.8);
+            color: #00ffff;
         }
 
         header p {
             margin: 0;
-            opacity: 0.9;
-            font-size: 1.1rem;
+            opacity: 0.95;
+            font-size: 1.2rem;
+            text-shadow: 0 2px 5px rgba(0,0,0,0.8);
         }
 
         .social-buttons {
             display: flex;
             justify-content: center;
             gap: 1rem;
-            margin-top: 1.5rem;
+            margin-top: 1.8rem;
             flex-wrap: wrap;
         }
 
         .social-btn {
-            padding: 10px 22px;
+            padding: 12px 26px;
             border: none;
             border-radius: 50px;
             cursor: pointer;
             transition: all 0.3s ease;
             display: flex;
             align-items: center;
-            gap: 8px;
+            gap: 10px;
             font-weight: bold;
             font-family: 'Tajawal', sans-serif;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
         }
 
         .social-btn:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 6px 15px rgba(0,0,0,0.3);
+            transform: translateY(-4px);
+            box-shadow: 0 6px 20px rgba(0,210,255,0.4);
         }
 
         .youtube-btn { background: #ff0000; color: white; }
@@ -109,32 +99,44 @@
 
         .tool-card {
             background: var(--card-bg);
-            border-radius: 14px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border-radius: 16px;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.4);
             overflow: hidden;
-            margin-bottom: 1.2rem;
-            transition: all 0.3s ease;
+            margin-bottom: 1.5rem;
+            transition: all 0.4s ease;
             border: 1px solid var(--border-color);
+            background-size: cover;
+            background-position: center;
+            background-blend-mode: overlay;
         }
 
+        /* خلفيات مخصصة لكل أداة من جو آرك */
+        .tool-card:nth-of-type(1) { background-image: linear-gradient(rgba(15,23,42,0.9), rgba(15,23,42,0.95)), url('https://cdn.cloudflare.steamstatic.com/steam/apps/346110/ss_3a5a7d8aacd1a8a1d741d5e3a9805ff0a87be859.1920x1080.jpg?t=1655137924'); }
+        .tool-card:nth-of-type(2) { background-image: linear-gradient(rgba(15,23,42,0.9), rgba(15,23,42,0.95)), url('https://cdn.cloudflare.steamstatic.com/steam/apps/346110/ss_01cbef83fe28d64ee5a3d39a86043fb1e49abd31.1920x1080.jpg?t=1655137924'); }
+        .tool-card:nth-of-type(3) { background-image: linear-gradient(rgba(15,23,42,0.9), rgba(15,23,42,0.95)), url('https://cdn.cloudflare.steamstatic.com/steam/apps/346110/ss_164a92a53f9bcbb728b391fc0719f7609b2f3d21.1920x1080.jpg?t=1655137924'); }
+        .tool-card:nth-of-type(4) { background-image: linear-gradient(rgba(15,23,42,0.9), rgba(15,23,42,0.95)), url('https://cdn.cloudflare.steamstatic.com/steam/apps/346110/ss_76da9eb1e0b26d8662c8d985578a0e714d0b9c9a.1920x1080.jpg?t=1655137924'); }
+
         .tool-card:hover {
-            box-shadow: 0 6px 22px rgba(0,0,0,0.08);
+            box-shadow: 0 12px 35px rgba(0, 210, 255, 0.2);
+            border-color: rgba(0, 210, 255, 0.4);
         }
 
         .tool-header {
-            padding: 1.2rem 1.5rem;
-            background: var(--card-bg);
-            color: var(--text-color);
+            padding: 1.4rem 1.8rem;
+            background: linear-gradient(135deg, rgba(0, 210, 255, 0.15), rgba(58, 123, 213, 0.25));
+            color: white;
             cursor: pointer;
             display: flex;
             justify-content: space-between;
             align-items: center;
             transition: background 0.3s ease;
-            border-bottom: 1px solid transparent;
+            border-bottom: 1px solid var(--border-color);
         }
 
         .tool-header:hover {
-            background: rgba(52, 152, 219, 0.05);
+            background: linear-gradient(135deg, rgba(0, 210, 255, 0.25), rgba(58, 123, 213, 0.35));
         }
 
         .tool-header h3 {
@@ -142,18 +144,19 @@
             display: flex;
             align-items: center;
             gap: 12px;
-            font-size: 1.15rem;
-            color: var(--text-color);
+            font-size: 1.25rem;
+            color: #ffffff;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.5);
         }
 
         .tool-header h3 i {
-            color: var(--primary);
+            color: #00ffff;
         }
 
         .tool-content {
-            padding: 1.5rem;
-            display: none; /* مغلقة افتراضياً تماماً كما طلبت */
-            background-color: var(--card-bg);
+            padding: 1.8rem;
+            display: none; /* مغلقة افتراضياً كما طلبت */
+            background-color: rgba(10, 15, 30, 0.6);
             border-top: 1px solid var(--border-color);
         }
 
@@ -164,7 +167,7 @@
         .input-row {
             display: flex;
             gap: 1rem;
-            margin-bottom: 1rem;
+            margin-bottom: 1.2rem;
             flex-wrap: wrap;
         }
 
@@ -175,35 +178,40 @@
 
         label {
             display: block;
-            margin-bottom: 0.5rem;
+            margin-bottom: 0.6rem;
             font-weight: 500;
-            font-size: 0.95rem;
-            color: var(--text-color);
+            font-size: 1rem;
+            color: #e2e8f0;
         }
 
         input, select {
             width: 100%;
-            padding: 11px 14px;
-            border: 1px solid var(--border-color);
-            border-radius: 8px;
+            padding: 12px 16px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 10px;
             font-size: 15px;
-            transition: border-color 0.3s, background 0.3s;
-            background-color: var(--background);
-            color: var(--text-color);
+            transition: all 0.3s;
+            background-color: rgba(15, 23, 42, 0.8);
+            color: white;
             font-family: 'Tajawal', sans-serif;
             box-sizing: border-box;
         }
 
         input:focus, select:focus {
-            border-color: var(--primary);
+            border-color: #00ffff;
             outline: none;
-            box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.15);
+            box-shadow: 0 0 10px rgba(0, 210, 255, 0.3);
+            background-color: rgba(15, 23, 42, 0.95);
+        }
+
+        input::placeholder {
+            color: #64748b;
         }
 
         .btn {
-            padding: 11px 20px;
+            padding: 12px 24px;
             border: none;
-            border-radius: 8px;
+            border-radius: 10px;
             cursor: pointer;
             font-weight: bold;
             transition: all 0.3s;
@@ -211,38 +219,39 @@
             align-items: center;
             gap: 8px;
             font-family: 'Tajawal', sans-serif;
-            font-size: 0.95rem;
+            font-size: 1rem;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
         }
 
-        .btn-primary { background: var(--primary); color: white; }
-        .btn-secondary { background: var(--secondary); color: white; }
-        .btn-accent { background: var(--accent); color: white; }
-        .btn-gray { background: #6c757d; color: white; }
+        .btn-primary { background: linear-gradient(135deg, #00d2ff, #3a7bd5); color: white; }
+        .btn-secondary { background: linear-gradient(135deg, #11998e, #38ef7d); color: white; }
+        .btn-accent { background: linear-gradient(135deg, #ff416c, #ff4b2b); color: white; }
+        .btn-gray { background: #475569; color: white; }
 
         .btn:hover {
-            opacity: 0.92;
+            opacity: 0.95;
             transform: translateY(-2px);
-            box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+            box-shadow: 0 6px 15px rgba(0, 210, 255, 0.3);
         }
 
         .code-container {
             position: relative;
-            margin-top: 1.2rem;
-            border-radius: 8px;
+            margin-top: 1.5rem;
+            border-radius: 10px;
             overflow: hidden;
-            border: 1px solid var(--border-color);
+            border: 1px solid rgba(255,255,255,0.15);
         }
 
         .code-box {
-            background: #0f172a;
-            padding: 1.2rem;
-            border-radius: 8px;
+            background: #020617;
+            padding: 1.4rem;
+            border-radius: 10px;
             overflow-x: auto;
             direction: ltr;
             text-align: left;
             font-family: 'Courier New', monospace;
             font-size: 14px;
-            line-height: 1.5;
+            line-height: 1.6;
             white-space: pre-wrap;
             color: #38bdf8;
             min-height: 40px;
@@ -250,13 +259,13 @@
 
         .copy-btn {
             position: absolute;
-            top: 10px;
-            left: 10px;
-            background: var(--copy-btn-bg);
-            color: var(--copy-btn-text);
-            border: none;
-            padding: 5px 12px;
-            border-radius: 5px;
+            top: 12px;
+            left: 12px;
+            background: #1e293b;
+            color: #38bdf8;
+            border: 1px solid rgba(255,255,255,0.2);
+            padding: 6px 14px;
+            border-radius: 6px;
             cursor: pointer;
             font-size: 12px;
             transition: all 0.3s;
@@ -265,26 +274,26 @@
         }
 
         .copy-btn:hover {
-            background: var(--primary);
-            color: white;
+            background: #00d2ff;
+            color: #0f172a;
         }
 
         .theme-toggle {
             position: fixed;
             bottom: 25px;
             right: 25px;
-            width: 48px;
-            height: 48px;
-            background: var(--primary);
+            width: 52px;
+            height: 52px;
+            background: linear-gradient(135deg, #00d2ff, #3a7bd5);
             color: white;
             border: none;
             border-radius: 50%;
             cursor: pointer;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.25);
+            box-shadow: 0 6px 20px rgba(0,0,0,0.4);
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 18px;
+            font-size: 20px;
             z-index: 100;
             transition: transform 0.3s;
         }
@@ -297,13 +306,13 @@
             position: fixed;
             bottom: 25px;
             left: 25px;
-            padding: 10px 20px;
-            background: linear-gradient(135deg, #9b59b6, #8e44ad);
+            padding: 12px 22px;
+            background: linear-gradient(135deg, #8a2be2, #4b0082);
             color: white;
             border: none;
             border-radius: 50px;
             cursor: pointer;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.25);
+            box-shadow: 0 6px 20px rgba(0,0,0,0.4);
             display: flex;
             align-items: center;
             gap: 8px;
@@ -312,17 +321,18 @@
             transition: all 0.3s;
             font-family: 'Tajawal', sans-serif;
             font-size: 14px;
+            border: 1px solid rgba(255,255,255,0.2);
         }
 
         .stats-btn:hover {
             transform: translateY(-3px);
-            box-shadow: 0 6px 15px rgba(0,0,0,0.3);
+            box-shadow: 0 8px 25px rgba(138,43,226,0.5);
         }
 
         @media (max-width: 768px) {
             .input-row {
                 flex-direction: column;
-                gap: 0.8rem;
+                gap: 1rem;
             }
             .input-field {
                 min-width: 100%;
@@ -330,18 +340,18 @@
             .theme-toggle {
                 bottom: 15px;
                 right: 15px;
-                width: 42px;
-                height: 42px;
-                font-size: 15px;
+                width: 44px;
+                height: 44px;
+                font-size: 16px;
             }
             .stats-btn {
                 bottom: 15px;
                 left: 15px;
-                padding: 8px 15px;
+                padding: 10px 16px;
                 font-size: 13px;
             }
             header {
-                padding: 1.8rem 1rem;
+                padding: 2rem 1rem;
             }
         }
     </style>
@@ -528,7 +538,7 @@
     </div>
 
     <button class="theme-toggle" onclick="toggleTheme()" title="تغيير المظهر">
-        <i class="fas fa-moon"></i>
+        <i class="fas fa-sun"></i>
     </button>
 
     <button class="stats-btn" onclick="window.open('http://arksurvivalevolved.gamewalkthrough-universe.com/dedicatedservers/customizationtools/perlevelstatsmultipliertool/Default.aspx')">
@@ -665,18 +675,10 @@
             document.getElementById('dinoOutput').innerHTML = code;
         }
 
-        // تبديل الوضع الليلي
+        // تبديل المظهر (خلفيات فاتحة/داكنة أو تأثيرات إضافية)
         function toggleTheme() {
-            document.body.classList.toggle('dark-mode');
-            const icon = document.querySelector('.theme-toggle i');
-            
-            if (document.body.classList.contains('dark-mode')) {
-                icon.classList.replace('fa-moon', 'fa-sun');
-                localStorage.setItem('darkMode', 'enabled');
-            } else {
-                icon.classList.replace('fa-sun', 'fa-moon');
-                localStorage.setItem('darkMode', 'disabled');
-            }
+            // حالياً الموقع صُمم خصيصاً بالثيم الاحترافي الليلي العالي الجودة الذي يبرز جمال آرك
+            alert('الموقع يعمل بأفضل ثيم بصري مبهر ومتناسق مع أجواء لعبة آرك!');
         }
 
         // نسخ النص
@@ -709,15 +711,7 @@
 
         // تهيئة الصفحة
         document.addEventListener('DOMContentLoaded', function() {
-            // إضافة مورد افتراضي واحد لأداة الصنع عند البدء
             addResource();
-            
-            // استرجاع تفضيل الوضع الليلي
-            if (localStorage.getItem('darkMode') === 'enabled') {
-                document.body.classList.add('dark-mode');
-                const icon = document.querySelector('.theme-toggle i');
-                icon.classList.replace('fa-moon', 'fa-sun');
-            }
         });
     </script>
 </body>
