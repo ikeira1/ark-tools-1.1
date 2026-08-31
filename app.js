@@ -1,60 +1,106 @@
-// بيانات أداة ملفات السيرفر (Game.ini و GameUserSettings.ini) مع الشرح العربي والقيم الافتراضية
+let currentActiveConfigType = 'usersettings';
+
 const arkConfigs = {
-    gameini: {
-        title: "إعدادات Game.ini (الحصاد، الخبرة، وتكديس العناصر)",
-        description: "هذا الملف يتحكم بخصائص اللعب العميقة، معدلات الحصاد، ترويض الديناصورات، والخبرة.",
+    usersettings: {
+        title: "GameUserSettings.ini",
+        description: "إعدادات السيرفر، الصعوبة، الحفظ التلقائي، والاتصال (مرجع Pastebin 1)",
+        pastebinUrl: "https://pastebin.com/U0LX4r6i",
+        headerTag: "[ServerSettings]",
         settings: [
-            { key: "HarvestResourceMultiplier", default: "2.0", label: "معدل الحصاد العام (Harvest Resource Multiplier)", desc: "يتحكم بكمية الموارد المستخرجة عند ضرب الأشجار أو الصخور." },
-            { key: "TamingSpeedMultiplier", default: "3.0", label: "سرعة الترويض (Taming Speed Multiplier)", desc: "يحدد مدى سرعة ترويض الديناصورات والوحوش." },
-            { key: "XPMultiplier", default: "2.0", label: "معدل اكتساب الخبرة (XP Multiplier)", desc: "يضاعف سرعة حصول اللاعب والديناصور على نقاط الخبرة." },
-            { key: "BabyMatureSpeedMultiplier", default: "10.0", label: "سرعة نضج الصغار (Baby Mature Speed)", desc: "يتحكم بسرعة نمو وتربية صغار الديناصورات حتى تصبح بالغة." },
-            { key: "MatingIntervalMultiplier", default: "0.5", label: "فترة الانتظار للتزاوج (Mating Interval)", desc: "يقلل الوقت اللازم بين كل عملية تزاوج للديناصورات." }
+            { key: "SessionName", default: "PUT YOUR SERVER NAME HERE!!!!!!!!!", label: "SessionName", desc: "اسم السيرفر الذي يظهر للاعبين في قائمة السيرفرات." },
+            { key: "ServerAdminPassword", default: "PUT YOUR PASSWORD HERE!!!!!!!!!", label: "ServerAdminPassword", desc: "كلمة مرور الأدمن (للحصول على صلاحيات المشرف بالسيرفر)." },
+            { key: "ServerPassword", default: "PUT YOUR PASSWORD HERE!!!!!!", label: "ServerPassword", desc: "كلمة مرور خاصة لدخول السيرفر (اختيارية)." },
+            { key: "DifficultyOffset", default: "1.0", label: "DifficultyOffset", desc: "مستوى صعوبة ظهور الديناصورات البرية بالعالم." },
+            { key: "ServerDifficulty", default: "5.0", label: "ServerDifficulty", desc: "مستوى الصعوبة الرقمي لتحديد أقصى لفل للديناصورات (مثال: 5 يعني لفل 150)." },
+            { key: "DayCycleSpeedScale", default: "1.0", label: "DayCycleSpeedScale", desc: "سرعة مرور الوقت ودورة النهار والليل داخل اللعبة." },
+            { key: "NightTimeSpeedScale", default: "1.0", label: "NightTimeSpeedScale", desc: "سرعة مرور فترة الليل مقارنة بالنهار." },
+            { key: "AutoSavePeriodMinutes", default: "15.0", label: "AutoSavePeriodMinutes", desc: "الفترة الزمنية بالدقائق بين كل حفظ تلقائي لعالم السيرفر." },
+            { key: "MaxTamedDinos", default: "5000.0", label: "MaxTamedDinos", desc: "الحد الأقصى لعدد الديناصورات المروضة المسموحة في السيرفر." },
+            { key: "HarvestAmountMultiplier", default: "1.0", label: "HarvestAmountMultiplier", desc: "مضاعف كمية الموارد المكتسبة عند تجميعها." },
+            { key: "HarvestHealthMultiplier", default: "1.0", label: "HarvestHealthMultiplier", desc: "مضاعف صحة الموارد (كمية ضربات الصخرة أو الشجرة قبل أن تختفي)." },
+            { key: "TamingSpeedMultiplier", default: "1.0", label: "TamingSpeedMultiplier", desc: "مضاعف سرعة ترويض الديناصورات." },
+            { key: "XPMultiplier", default: "1.0", label: "XPMultiplier", desc: "مضاعف نقاط الخبرة المكتسبة للاعبين والديناصورات." },
+            { key: "AllowThirdPersonPlayer", default: "true", label: "AllowThirdPersonPlayer", desc: "السماح للاعبين باستخدام منظور الشخص الثالث (الكميرا البعيدة)." },
+            { key: "ShowMapPlayerLocation", default: "true", label: "ShowMapPlayerLocation", desc: "إظهار موقع اللاعب الحالي على الخريطة." },
+            { key: "ServerCrosshair", default: "true", label: "ServerCrosshair", desc: "تفعيل علامة التصويب (الخصية) في منتصف الشاشة." },
+            { key: "PvEAllowStructuresAtSupplyDrops", default: "false", label: "PvEAllowStructuresAtSupplyDrops", desc: "السماح بالبناء بالقرب من مناطق دروبات الإمداد." },
+            { key: "PreventOfflinePvP", default: "false", label: "PreventOfflinePvP", desc: "حماية القواعد والديناصورات من التدمير عندما يكون التباين أوفلاين." }
         ]
     },
-    usersettings: {
-        title: "إعدادات GameUserSettings.ini (خيارات السيرفر والعالم)",
-        description: "هذا الملف يتحكم بإعدادات الخريطة، الصعوبة، ظهور اللاعبين، ومنع أو السماح ببناء أشياء معينة.",
+    gameini: {
+        title: "game.ini",
+        description: "إعدادات اللعب المتقدمة، الحصاد، التزاوج، وتربية الصغار (مرجع Pastebin 2)",
+        pastebinUrl: "https://pastebin.com/QWHcTF2p",
+        headerTag: "[/script/shootergame.shootergamemode]",
         settings: [
-            { key: "DifficultyOffset", default: "1.0", label: "مستوى الصعوبة (Difficulty Offset)", desc: "يحدد مستوى صعوبة الديناصورات البرية وظهور المستويات العالية." },
-            { key: "ServerDifficulty", default: "5.0", label: "صعوبة السيرفر الرقمية (Server Difficulty)", desc: "يحدد الحد الأقصى لمستوى الديناصورات البرية (مثال: 5 يعني لفل 150 كحد أقصى)." },
-            { key: "DayCycleSpeedScale", default: "1.0", label: "سرعة دورة اليوم والليلة", desc: "يتحكم بسرعة مرور الوقت داخل اللعبة (الليل والنهار)." },
-            { key: "PvPStructureDecal", default: "True", label: "تآكل الهياكل والبناء", desc: "تحديد ما إذا كانت المباني تتأثر بالتآكل بمرور الوقت أم لا." },
-            { key: "GlobalVoiceChat", default: "True", label: "الدردشة الصوتية العامة", desc: "تفعيل أو تعطيل الدردشة الصوتية المرئية للجميع." }
+            { key: "BabyMatureSpeedMultiplier", default: "1.0", label: "BabyMatureSpeedMultiplier", desc: "سرعة نمو وتربية صغار الديناصورات حتى تصبح بالغة." },
+            { key: "EggHatchSpeedMultiplier", default: "1.0", label: "EggHatchSpeedMultiplier", desc: "سرعة فقس البيض." },
+            { key: "MatingIntervalMultiplier", default: "1.0", label: "MatingIntervalMultiplier", desc: "الفترة الزمنية الفاصلة بين عمليات تزاوج الديناصورات." },
+            { key: "MatingSpeedMultiplier", default: "1.0", label: "MatingSpeedMultiplier", desc: "سرعة عملية التزاوج نفسه." },
+            { key: "BabyCuddleIntervalMultiplier", default: "1.0", label: "BabyCuddleIntervalMultiplier", desc: "الفاصل الزمني بين طلبات الرعاية والعناية (Cuddle) للصغار." },
+            { key: "BabyImprintAmountMultiplier", default: "1.0", label: "BabyImprintAmountMultiplier", desc: "نسبة زيادة الإمبرنت (البصمة) في كل مرة يتم الاعتناء بالصغير." },
+            { key: "BabyFoodConsumptionSpeedMultiplier", default: "1.0", label: "BabyFoodConsumptionSpeedMultiplier", desc: "سرعة استهلاك صغار الديناصورات للطعام." },
+            { key: "DinoHarvestingDamageMultiplier", default: "3.2", label: "DinoHarvestingDamageMultiplier", desc: "قوة حصاد الديناصورات للموارد عند جمعها." },
+            { key: "CropGrowthSpeedMultiplier", default: "1.0", label: "CropGrowthSpeedMultiplier", desc: "سرعة نمو المحاصيل الزراعية في الحقول." },
+            { key: "CropDecaySpeedMultiplier", default: "1.0", label: "CropDecaySpeedMultiplier", desc: "سرعة تلف المحاصيل والموارد في الحقول." },
+            { key: "GlobalSpoilingTimeMultiplier", default: "1.0", label: "GlobalSpoilingTimeMultiplier", desc: "وقت فساد الأكل واللحوم (كلما زاد الرقم تأخر فساد الطعام)." },
+            { key: "FuelConsumptionIntervalMultiplier", default: "1.0", label: "FuelConsumptionIntervalMultiplier", desc: "معدل استهلاك الوقود في الشناور والمولدات (كلما زاد، قل استهلاك الوقود)." },
+            { key: "bAllowFlyerSpeedLeveling", default: "false", label: "bAllowFlyerSpeedLeveling", desc: "السماح بتطوير وزيادة سرعة الديناصورات الطائرة بنقاط اللفل." },
+            { key: "bAllowUnlimitedRespecs", default: "false", label: "bAllowUnlimitedRespecs", desc: "السماح بإعادة توزيع نقاط مهارات اللاعب بلا حدود." },
+            { key: "bUseCorpseLocator", default: "true", label: "bUseCorpseLocator", desc: "إظهار مؤشر أو علامة على الخريطة لمكان وفاة اللاعب." }
         ]
     }
 };
 
-// تحميل وتشغيل إعدادات ملفات السيرفر
-function loadConfigFile() {
-    const selectedType = document.getElementById('fileSelector').value;
-    const configData = arkConfigs[selectedType];
+// تبديل نوع الملف عند الضغط على الأزرار العلوية
+function switchConfigFile(type) {
+    currentActiveConfigType = type;
     
+    const btnUS = document.getElementById('btnUserSettings');
+    const btnGI = document.getElementById('btnGameIni');
+    
+    if (type === 'usersettings') {
+        btnUS.className = "btn btn-primary";
+        btnGI.className = "btn btn-gray";
+    } else {
+        btnGI.className = "btn btn-primary";
+        btnUS.className = "btn btn-gray";
+    }
+    
+    const configData = arkConfigs[type];
     document.getElementById('configDescription').innerText = configData.description;
+    
+    const pbLink = document.getElementById('pastebinLink');
+    pbLink.href = configData.pastebinUrl;
+    pbLink.innerHTML = `<i class="fas fa-external-link-alt"></i> مرجع Pastebin (${type === 'usersettings' ? '1' : '2'})`;
     
     const container = document.getElementById('configEditorContainer');
     container.innerHTML = '';
     
-    configData.settings.forEach((item, index) => {
+    configData.settings.forEach((item) => {
         const row = document.createElement('div');
         row.className = 'config-option-item';
         row.innerHTML = `
             <label>${item.label}</label>
             <div class="config-desc">${item.desc}</div>
-            <input type="text" class="config-input-field" data-key="${item.key}" data-default="${item.default}" value="${item.default}" placeholder="القيمة الافتراضية: ${item.default}" oninput="updateServerConfigOutput()">
+            <input type="text" class="config-input-field" data-key="${item.key}" data-default="${item.default}" value="${item.default}" placeholder="القيمة: ${item.default}">
         `;
         container.appendChild(row);
     });
     
-    updateServerConfigOutput();
+    // إفراغ صندوق المخرجات بالبداية تماماً
+    document.getElementById('serverConfigOutput').innerText = "";
+    window.currentFullConfigText = "";
+    window.currentModifiedConfigText = "";
 }
 
-// تحديث معاينة الكود في الصندوق بناءً على التعديلات
-function updateServerConfigOutput() {
-    const selectedType = document.getElementById('fileSelector').value;
+// تحضير النصوص عند الضغط على أزرار النسخ
+function prepareConfigTexts() {
+    const configData = arkConfigs[currentActiveConfigType];
     const inputs = document.querySelectorAll('#configEditorContainer .config-input-field');
     
-    let fullOutput = `[/script/shootergame.shootergamegamemode]\n`;
-    let modifiedOutput = `/* التعديلات المخصصة فقط */\n`;
+    let fullOutput = `${configData.headerTag}\n`;
+    let modifiedOutput = `/* التعديلات المخصصة فقط (${currentActiveConfigType}) */\n`;
     let hasChanges = false;
     
     inputs.forEach(input => {
@@ -71,67 +117,50 @@ function updateServerConfigOutput() {
     });
     
     if (!hasChanges) {
-        modifiedOutput += `; لم يتم تعديل أي قيمة، جميع القيم على وضعها الافتراضي.\n`;
+        modifiedOutput += `; لم يتم تعديل أي قيمة عن الوضع الافتراضي.\n`;
     }
     
-    // تخزين مؤقت للنسخ المزدوج
     window.currentFullConfigText = fullOutput;
     window.currentModifiedConfigText = modifiedOutput;
-    
-    document.getElementById('serverConfigOutput').innerText = fullOutput;
 }
 
-// خيار نسخ الملف كامل
 function copyFullConfig() {
+    prepareConfigTexts();
     navigator.clipboard.writeText(window.currentFullConfigText || '');
-    alert('تم نسخ الملف كاملاً بنجاح!');
+    document.getElementById('serverConfigOutput').innerText = window.currentFullConfigText;
+    alert('تم نسخ الملف كاملاً وعرضه في الصندوق بنجاح!');
 }
 
-// خيار نسخ التعديلات فقط
 function copyModifiedConfigOnly() {
+    prepareConfigTexts();
     navigator.clipboard.writeText(window.currentModifiedConfigText || '');
-    alert('تم نسخ التعديلات المخصصة فقط بنجاح!');
+    document.getElementById('serverConfigOutput').innerText = window.currentModifiedConfigText;
+    alert('تم نسخ التعديلات المخصصة فقط وعرضها في الصندوق بنجاح!');
 }
 
-// توليد كود المستويات
+// باقي دوال الأدوات الأخرى
 function generateLevelCode() {
     const maxLevel = parseInt(document.getElementById('maxLevel').value) || 100;
     let xpArray = [];
     let code = 'LevelExperienceRampOverrides=(';
     
     for(let i = 0; i <= maxLevel; i++) {
-        let xp;
-        if (i <= 10) {
-            xp = Math.floor(5 + (i * 5));
-        } else if (i <= 30) {
-            xp = Math.floor(50 + Math.pow(i-10, 2) * 0.8);
-        } else if (i <= 60) {
-            xp = Math.floor(400 + Math.pow(i-30, 2) * 1.5);
-        } else {
-            xp = Math.floor(2000 + Math.pow(i-60, 3) * 0.5);
-        }
+        let xp = i <= 10 ? Math.floor(5 + (i * 5)) : Math.floor(50 + Math.pow(i-10, 2) * 0.8);
         xpArray.push(xp);
         code += `ExperiencePointsForLevel[${i}]=${xp},`;
     }
-    
     localStorage.setItem('currentXPArray', JSON.stringify(xpArray));
     code = code.slice(0, -1) + ')';
     document.getElementById('levelCode').innerText = code;
 }
 
-// حساب الخبرة الكلية
 function calculateTotalXP() {
     const xpArray = JSON.parse(localStorage.getItem('currentXPArray')) || [];
     const totalXP = xpArray.reduce((acc, curr) => acc + curr, 0);
-    
-    const output = `OverrideMaxExperiencePointsPlayer=70368744177664\n`
-                 + `OverrideMaxExperiencePointsPlayer=${totalXP}\n`
-                 + `OverrideMaxExperiencePointsDino=2147483647`;
-    
+    const output = `OverrideMaxExperiencePointsPlayer=70368744177664\nOverrideMaxExperiencePointsPlayer=${totalXP}\nOverrideMaxExperiencePointsDino=2147483647`;
     document.getElementById('totalXP').innerText = output;
 }
 
-// توليد نقاط الإنغرام
 function generateEngramPoints() {
     const maxLevel = parseInt(document.getElementById('engramLevel').value) || 60;
     const basePoints = parseInt(document.getElementById('engramPoints').value) || 8;
@@ -143,11 +172,9 @@ function generateEngramPoints() {
         const points = i < boostLevel ? basePoints : boostPoints;
         code += `OverridePlayerLevelEngramPoints=${points}\n`;
     }
-    
     document.getElementById('engramOutput').innerText = code;
 }
 
-// إدارة متطلبات الصنع
 function addResource() {
     const container = document.getElementById('resourceRequirements');
     const newRow = document.createElement('div');
@@ -167,19 +194,11 @@ function addResource() {
 
 function removeResource(btn) {
     btn.closest('.resource-row').remove();
-    updateResourceLabels();
-}
-
-function updateResourceLabels() {
-    document.querySelectorAll('.resource-row').forEach((row, index) => {
-        row.querySelector('label').textContent = `مادة ${index + 1}`;
-    });
 }
 
 function generateCraftingCode() {
     const itemId = document.getElementById('itemId').value || 'SoulTerminal_DS_C';
     let requirements = '';
-    
     document.querySelectorAll('.resource-row').forEach(row => {
         const id = row.querySelector('.resource-id').value;
         const amount = row.querySelector('.resource-amount').value;
@@ -187,58 +206,56 @@ function generateCraftingCode() {
             requirements += `(ResourceItemTypeString="${id}",BaseResourceRequirement=${amount},bCraftingRequireExactResourceType=false),`;
         }
     });
-    
-    if (!requirements) {
-        alert('الرجاء إضافة مواد على الأقل');
-        return;
-    }
-    
     const code = `ConfigOverrideItemCraftingCosts=(ItemClassString="${itemId}",BaseCraftingResourceRequirements=(${requirements.slice(0, -1)}))`;
     document.getElementById('craftingOutput').innerText = code;
 }
 
-// كود استدعاء الديناصورات
 function generateDinoCode() {
     const dinoId = document.getElementById('dinoId').value || 'Gigant_Character_BP_C';
     const level = document.getElementById('dinoLevel').value || 60;
     document.getElementById('dinoOutput').innerText = `cheat gmsummon "${dinoId}" ${level} 1 0`;
 }
 
-// تبديل الثيم الليلي والنهاري
 function toggleTheme() {
     document.body.classList.toggle('dark-mode');
     const icon = document.querySelector('.theme-toggle i');
     icon.classList.toggle('fa-moon');
     icon.classList.toggle('fa-sun');
-    
     localStorage.setItem('darkMode', document.body.classList.contains('dark-mode') ? 'enabled' : 'disabled');
 }
 
-// زر النسخ السريع للمربعات البرمجية
 function copyCustomCodeBox(btn) {
     const codeBox = btn.nextElementSibling;
+    if (!codeBox.innerText.trim()) {
+        alert('الصندوق فارغ! الرجاء الضغط على أحد أزرار النسخ بالأعلى أولاً.');
+        return;
+    }
     navigator.clipboard.writeText(codeBox.innerText);
-    
     const originalText = btn.innerHTML;
     btn.innerHTML = '<i class="fas fa-check"></i> تم النسخ!';
     setTimeout(() => { btn.innerHTML = originalText; }, 2000);
 }
 
-// طي وتوسيع الكروت
 function toggleTool(header) {
     const content = header.parentElement.querySelector('.tool-content');
     const icon = header.querySelector('.fa-chevron-up, .fa-chevron-down');
-    
     content.classList.toggle('collapsed');
     icon.classList.toggle('fa-chevron-up');
     icon.classList.toggle('fa-chevron-down');
 }
 
-// تهيئة أولية عند فتح الصفحة
 document.addEventListener('DOMContentLoaded', function() {
     addResource();
-    loadConfigFile();
+    switchConfigFile('usersettings');
     
+    // إغلاق جميع الأقسام تلقائياً عند فتح الموقع لأول مرة
+    document.querySelectorAll('.tool-content').forEach(content => {
+        content.classList.add('collapsed');
+    });
+    document.querySelectorAll('.tool-header i.fa-chevron-up').forEach(icon => {
+        icon.classList.replace('fa-chevron-up', 'fa-chevron-down');
+    });
+
     if (localStorage.getItem('darkMode') === 'enabled') {
         document.body.classList.add('dark-mode');
         document.querySelector('.theme-toggle i').classList.replace('fa-moon', 'fa-sun');

@@ -27,36 +27,33 @@
             </div>
         </header>
 
-        <!-- الأداة الجديدة: إعدادات ملفات السيرفر الخام والديفولت -->
+        <!-- أداة إعدادات ملفات السيرفر الشاملة -->
         <div class="tool-card">
             <div class="tool-header" onclick="toggleTool(this)">
                 <h3><i class="fas fa-file-code"></i> أداة إعدادات ملفات السيرفر (Game.ini & GameUserSettings.ini)</h3>
-                <i class="fas fa-chevron-up"></i>
+                <i class="fas fa-chevron-down"></i>
             </div>
-            <div class="tool-content">
+            <div class="tool-content collapsed">
                 <div class="input-group">
-                    <div class="input-row">
-                        <div class="input-field">
-                            <label for="fileSelector"><i class="fas fa-file-alt"></i> اختر الملف للاستعراض والتعديل</label>
-                            <select id="fileSelector" onchange="loadConfigFile()">
-                                <option value="gameini">Game.ini (إعدادات اللعب والحصاد)</option>
-                                <option value="usersettings">GameUserSettings.ini (إعدادات السيرفر والعالم)</option>
-                            </select>
-                        </div>
+                    <!-- أزرار التبويبات العلوية -->
+                    <div class="input-row" style="gap: 15px; margin-bottom: 15px;">
+                        <button id="btnUserSettings" class="btn btn-primary" style="flex: 1;" onclick="switchConfigFile('usersettings')">
+                            <i class="fas fa-file-alt"></i> GameUserSettings.ini
+                        </button>
+                        <button id="btnGameIni" class="btn btn-gray" style="flex: 1;" onclick="switchConfigFile('gameini')">
+                            <i class="fas fa-file-alt"></i> game.ini
+                        </button>
                     </div>
                     
                     <div class="config-info-box">
-                        <p id="configDescription">اختر الملف لاستعراض الإعدادات الافتراضية مع الشرح العربي وقوالب الأوفيشل المعتمدة.</p>
+                        <p id="configDescription">استعرض الإعدادات الكاملة مع الشرح العربي وأسماء الإعدادات الأصلية.</p>
                         <div class="quick-links-row">
-                            <a href="https://pastebin.com/U0LX4r6i" target="_blank" class="btn btn-gray"><i class="fas fa-external-link-alt"></i> مرجع Pastebin 1</a>
-                            <a href="https://pastebin.com/QWHcTF2p" target="_blank" class="btn btn-gray"><i class="fas fa-external-link-alt"></i> مرجع Pastebin 2</a>
+                            <a id="pastebinLink" href="https://pastebin.com/U0LX4r6i" target="_blank" class="btn btn-gray"><i class="fas fa-external-link-alt"></i> مرجع Pastebin</a>
                         </div>
                     </div>
 
-                    <!-- محتوى التعديل الديناميكي للإعدادات -->
-                    <div id="configEditorContainer" class="config-editor-area">
-                        <!-- يتم تعبئته عبر الجافاسكريبت -->
-                    </div>
+                    <!-- محتوى التعديل الديناميكي -->
+                    <div id="configEditorContainer" class="config-editor-area"></div>
 
                     <div class="input-row" style="margin-top: 20px; gap: 10px;">
                         <button class="btn btn-primary" onclick="copyFullConfig()">
@@ -68,6 +65,7 @@
                     </div>
                 </div>
 
+                <!-- صندوق المخرجات (فارغ تماماً بالبداية) -->
                 <div class="code-container">
                     <button class="copy-btn" onclick="copyCustomCodeBox(this)"><i class="fas fa-copy"></i> نسخ</button>
                     <div class="code-box" id="serverConfigOutput"></div>
@@ -79,13 +77,13 @@
         <div class="tool-card">
             <div class="tool-header" onclick="toggleTool(this)">
                 <h3><i class="fas fa-level-up-alt"></i> أداة إنشاء المستويات وحساب الخبرة</h3>
-                <i class="fas fa-chevron-up"></i>
+                <i class="fas fa-chevron-down"></i>
             </div>
-            <div class="tool-content">
+            <div class="tool-content collapsed">
                 <div class="input-group">
                     <div class="input-row">
                         <div class="input-field">
-                            <label for="maxLevel"><i class="fas fa-layer-group"></i> المستوى الأقصى</label>
+                            <label for="maxLevel">المستوى الأقصى</label>
                             <input type="number" id="maxLevel" min="1" max="200" placeholder="مثال: 100">
                         </div>
                     </div>
@@ -99,7 +97,7 @@
                     <div class="code-box" id="levelCode"></div>
                 </div>
 
-                <button class="btn btn-secondary" onclick="calculateTotalXP()">
+                <button class="btn btn-secondary" onclick="calculateTotalXP()" style="margin-top: 15px;">
                     <i class="fas fa-calculator"></i> حساب الخبرة الكلية
                 </button>
                 
@@ -114,26 +112,26 @@
         <div class="tool-card">
             <div class="tool-header" onclick="toggleTool(this)">
                 <h3><i class="fas fa-scroll"></i> أداة نقاط الإنغرام</h3>
-                <i class="fas fa-chevron-up"></i>
+                <i class="fas fa-chevron-down"></i>
             </div>
-            <div class="tool-content">
+            <div class="tool-content collapsed">
                 <div class="input-group">
                     <div class="input-row">
                         <div class="input-field">
-                            <label for="engramLevel"><i class="fas fa-layer-group"></i> المستوى المطلوب</label>
+                            <label for="engramLevel">المستوى المطلوب</label>
                             <input type="number" id="engramLevel" min="1" max="200" placeholder="مثال: 60">
                         </div>
                         <div class="input-field">
-                            <label for="engramPoints"><i class="fas fa-star"></i> النقاط لكل مستوى</label>
-                            <input type="number" id="engramPoints" min="1" value="8" placeholder="النقاط الأساسية">
+                            <label for="engramPoints">النقاط لكل مستوى</label>
+                            <input type="number" id="engramPoints" min="1" value="8">
                         </div>
                         <div class="input-field">
-                            <label for="engramBoostLevel"><i class="fas fa-rocket"></i> تعزيز النقاط بعد مستوى</label>
-                            <input type="number" id="engramBoostLevel" min="1" max="200" value="10" placeholder="المستوى">
+                            <label for="engramBoostLevel">تعزيز النقاط بعد مستوى</label>
+                            <input type="number" id="engramBoostLevel" min="1" max="200" value="10">
                         </div>
                         <div class="input-field">
-                            <label for="engramBoostPoints"><i class="fas fa-bolt"></i> نقاط التعزيز</label>
-                            <input type="number" id="engramBoostPoints" min="1" value="14" placeholder="نقاط إضافية">
+                            <label for="engramBoostPoints">نقاط التعزيز</label>
+                            <input type="number" id="engramBoostPoints" min="1" value="14">
                         </div>
                     </div>
                     <button class="btn btn-primary" onclick="generateEngramPoints()">
@@ -152,13 +150,13 @@
         <div class="tool-card">
             <div class="tool-header" onclick="toggleTool(this)">
                 <h3><i class="fas fa-hammer"></i> أداة تعديل متطلبات الصنع</h3>
-                <i class="fas fa-chevron-up"></i>
+                <i class="fas fa-chevron-down"></i>
             </div>
-            <div class="tool-content">
+            <div class="tool-content collapsed">
                 <div class="input-group">
                     <div class="input-row">
                         <div class="input-field">
-                            <label for="itemId"><i class="fas fa-cube"></i> ID العنصر</label>
+                            <label for="itemId">ID العنصر</label>
                             <input type="text" id="itemId" placeholder="مثال: SoulTerminal_DS_C">
                         </div>
                     </div>
@@ -168,7 +166,7 @@
                             <div class="input-field">
                                 <label>مادة 1</label>
                                 <div class="input-row">
-                                    <input type="text" class="resource-id" placeholder="ID المادة (مثال: PrimalItemResource_MetalIngot_C)">
+                                    <input type="text" class="resource-id" placeholder="ID المادة">
                                     <input type="number" class="resource-amount" placeholder="الكمية" min="1" value="100">
                                     <button class="btn btn-accent" onclick="removeResource(this)"><i class="fas fa-trash"></i></button>
                                 </div>
@@ -201,17 +199,17 @@
         <div class="tool-card">
             <div class="tool-header" onclick="toggleTool(this)">
                 <h3><i class="fas fa-paw"></i> أداة استدعاء الديناصورات</h3>
-                <i class="fas fa-chevron-up"></i>
+                <i class="fas fa-chevron-down"></i>
             </div>
-            <div class="tool-content">
+            <div class="tool-content collapsed">
                 <div class="input-group">
                     <div class="input-row">
                         <div class="input-field">
-                            <label for="dinoId"><i class="fas fa-dragon"></i> ID الديناصور</label>
+                            <label for="dinoId">ID الديناصور</label>
                             <input type="text" id="dinoId" placeholder="مثال: Gigant_Character_BP_C">
                         </div>
                         <div class="input-field">
-                            <label for="dinoLevel"><i class="fas fa-level-up-alt"></i> المستوى</label>
+                            <label for="dinoLevel">المستوى</label>
                             <input type="number" id="dinoLevel" min="1" placeholder="مثال: 60">
                         </div>
                     </div>
