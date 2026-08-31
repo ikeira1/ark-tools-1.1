@@ -3,243 +3,157 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>أدوات آرك العربية - Keira Tools</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700&display=swap" rel="stylesheet">
+    <title>أداة إعدادات ملفات السيرفر (Game.ini & GameUserSettings.ini)</title>
     <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body>
+
+    <div class="theme-toggle" onclick="toggleTheme()">
+        <i class="fas fa-moon"></i>
+    </div>
+
     <div class="container">
-        <!-- الهيدر وروابط التواصل -->
-        <header>
-            <h1><i class="fas fa-dragon"></i> أدوات آرك العربية</h1>
-            <p>أدوات ذكية لمجتمع آرك العربي - من الألف إلى الياء</p>
-            <div class="social-buttons">
-                <button class="social-btn youtube-btn" onclick="window.open('https://www.youtube.com/@ikeira1')">
-                    <i class="fab fa-youtube"></i> قناتي على اليوتيوب
-                </button>
-                <button class="social-btn discord-btn" onclick="window.open('https://discord.gg/2rMzBv6zRv')">
-                    <i class="fab fa-discord"></i> سيرفر الديسكورد
-                </button>
-                <button class="social-btn donate-btn" onclick="window.open('https://tip.dokan.sa/keira')">
-                    <i class="fas fa-heart"></i> دعم المطور
-                </button>
-            </div>
-        </header>
-
-        <!-- أداة إعدادات ملفات السيرفر الشاملة -->
+        <!-- أداة إعدادات السيرفر الرئيسية -->
         <div class="tool-card">
             <div class="tool-header" onclick="toggleTool(this)">
-                <h3><i class="fas fa-file-code"></i> أداة إعدادات ملفات السيرفر (Game.ini & GameUserSettings.ini)</h3>
-                <i class="fas fa-chevron-down"></i>
+                <h2><i class="fas fa-file-code"></i> أداة إعدادات ملفات السيرفر (Game.ini & GameUserSettings.ini)</h2>
+                <i class="fas fa-chevron-up"></i>
             </div>
-            <div class="tool-content collapsed">
-                <div class="input-group">
-                    <!-- أزرار التبويبات العلوية -->
-                    <div class="input-row" style="gap: 15px; margin-bottom: 15px;">
-                        <button id="btnUserSettings" class="btn btn-primary" style="flex: 1;" onclick="switchConfigFile('usersettings')">
-                            <i class="fas fa-file-alt"></i> GameUserSettings.ini
-                        </button>
-                        <button id="btnGameIni" class="btn btn-gray" style="flex: 1;" onclick="switchConfigFile('gameini')">
-                            <i class="fas fa-file-alt"></i> game.ini
-                        </button>
-                    </div>
-                    
-                    <div class="config-info-box">
-                        <p id="configDescription">استعرض الإعدادات الكاملة مع الشرح العربي وأسماء الإعدادات الأصلية.</p>
-                        <div class="quick-links-row">
-                            <a id="pastebinLink" href="https://pastebin.com/U0LX4r6i" target="_blank" class="btn btn-gray"><i class="fas fa-external-link-alt"></i> مرجع Pastebin</a>
-                        </div>
-                    </div>
+            <div class="tool-content">
+                <div class="config-tabs">
+                    <button id="btnGameIni" class="btn btn-gray" onclick="switchConfigFile('gameini')">game.ini <i class="fas fa-file-lines"></i></button>
+                    <button id="btnUserSettings" class="btn btn-primary" onclick="switchConfigFile('usersettings')">GameUserSettings.ini <i class="fas fa-file-lines"></i></button>
+                </div>
+                
+                <p id="configDescription" class="config-desc-header">إعدادات السيرفر والصعوبة والتحكم الكامل</p>
 
-                    <!-- محتوى التعديل الديناميكي -->
-                    <div id="configEditorContainer" class="config-editor-area"></div>
-
-                    <div class="input-row" style="margin-top: 20px; gap: 10px;">
-                        <button class="btn btn-primary" onclick="copyFullConfig()">
-                            <i class="fas fa-copy"></i> نسخ الملف كامل
-                        </button>
-                        <button class="btn btn-secondary" onclick="copyModifiedConfigOnly()">
-                            <i class="fas fa-cut"></i> نسخ التعديلات المخصصة فقط
-                        </button>
-                    </div>
+                <div id="configEditorContainer" class="config-editor-grid">
+                    <!-- سيتم تعبئة الحقول ديناميكياً عبر الجافاسكريبت -->
                 </div>
 
-                <!-- صندوق المخرجات (فارغ تماماً بالبداية) -->
-                <div class="code-container">
-                    <button class="copy-btn" onclick="copyCustomCodeBox(this)"><i class="fas fa-copy"></i> نسخ</button>
-                    <div class="code-box" id="serverConfigOutput"></div>
+                <div class="config-actions">
+                    <button class="btn btn-primary" onclick="copyFullConfig()"><i class="fas fa-copy"></i> نسخ الملف كاملاً</button>
+                    <button class="btn btn-accent" onclick="copyModifiedConfigOnly()"><i class="fas fa-scissors"></i> نسخ التعديلات المخصصة فقط</button>
                 </div>
+
+                <div class="output-box" id="serverConfigOutput"></div>
             </div>
         </div>
 
-        <!-- أداة إنشاء المستويات وحساب الخبرة -->
+        <!-- أداة توليد مستويات اللاعبين -->
         <div class="tool-card">
             <div class="tool-header" onclick="toggleTool(this)">
-                <h3><i class="fas fa-level-up-alt"></i> أداة إنشاء المستويات وحساب الخبرة</h3>
-                <i class="fas fa-chevron-down"></i>
+                <h2><i class="fas fa-layer-group"></i> مولد مستويات اللاعبين (Level Experience Ramp)</h2>
+                <i class="fas fa-chevron-up"></i>
             </div>
-            <div class="tool-content collapsed">
-                <div class="input-group">
-                    <div class="input-row">
-                        <div class="input-field">
-                            <label for="maxLevel">المستوى الأقصى</label>
-                            <input type="number" id="maxLevel" min="1" max="200" placeholder="مثال: 100">
-                        </div>
+            <div class="tool-content">
+                <div class="input-row">
+                    <div class="input-field">
+                        <label>الحد الأقصى للمستوى (Max Level)</label>
+                        <input type="number" id="maxLevel" value="100" min="1">
                     </div>
-                    <button class="btn btn-primary" onclick="generateLevelCode()">
-                        <i class="fas fa-code"></i> إنشاء كود المستويات
-                    </button>
+                    <button class="btn btn-primary" onclick="generateLevelCode()"><i class="fas fa-cogs"></i> توليد الكود</button>
                 </div>
-                
-                <div class="code-container">
-                    <button class="copy-btn" onclick="copyCustomCodeBox(this)"><i class="fas fa-copy"></i> نسخ</button>
-                    <div class="code-box" id="levelCode"></div>
-                </div>
-
-                <button class="btn btn-secondary" onclick="calculateTotalXP()" style="margin-top: 15px;">
-                    <i class="fas fa-calculator"></i> حساب الخبرة الكلية
-                </button>
-                
-                <div class="code-container">
-                    <button class="copy-btn" onclick="copyCustomCodeBox(this)"><i class="fas fa-copy"></i> نسخ</button>
-                    <div class="code-box" id="totalXP"></div>
-                </div>
+                <button class="btn btn-accent" onclick="copyCustomCodeBox(this)"><i class="fas fa-copy"></i> نسخ الكود</button>
+                <div class="output-box" id="levelCode"></div>
             </div>
         </div>
 
-        <!-- أداة نقاط الإنغرام -->
+        <!-- أداة تجاوز الحد الأقصى للخبرة -->
         <div class="tool-card">
             <div class="tool-header" onclick="toggleTool(this)">
-                <h3><i class="fas fa-scroll"></i> أداة نقاط الإنغرام</h3>
-                <i class="fas fa-chevron-down"></i>
+                <h2><i class="fas fa-star"></i> أداة تجاوز الحد الأقصى للخبرة (Max Experience)</h2>
+                <i class="fas fa-chevron-up"></i>
             </div>
-            <div class="tool-content collapsed">
-                <div class="input-group">
-                    <div class="input-row">
-                        <div class="input-field">
-                            <label for="engramLevel">المستوى المطلوب</label>
-                            <input type="number" id="engramLevel" min="1" max="200" placeholder="مثال: 60">
-                        </div>
-                        <div class="input-field">
-                            <label for="engramPoints">النقاط لكل مستوى</label>
-                            <input type="number" id="engramPoints" min="1" value="8">
-                        </div>
-                        <div class="input-field">
-                            <label for="engramBoostLevel">تعزيز النقاط بعد مستوى</label>
-                            <input type="number" id="engramBoostLevel" min="1" max="200" value="10">
-                        </div>
-                        <div class="input-field">
-                            <label for="engramBoostPoints">نقاط التعزيز</label>
-                            <input type="number" id="engramBoostPoints" min="1" value="14">
-                        </div>
-                    </div>
-                    <button class="btn btn-primary" onclick="generateEngramPoints()">
-                        <i class="fas fa-code"></i> إنشاء كود الإنغرام
-                    </button>
-                </div>
-                
-                <div class="code-container">
-                    <button class="copy-btn" onclick="copyCustomCodeBox(this)"><i class="fas fa-copy"></i> نسخ</button>
-                    <div class="code-box" id="engramOutput"></div>
-                </div>
+            <div class="tool-content">
+                <button class="btn btn-primary" onclick="calculateTotalXP()"><i class="fas fa-calculator"></i> حساب وحفظ كود الخبرة الإجمالي</button>
+                <button class="btn btn-accent" onclick="copyCustomCodeBox(this)"><i class="fas fa-copy"></i> نسخ الكود</button>
+                <div class="output-box" id="totalXP"></div>
             </div>
         </div>
 
-        <!-- أداة تعديل متطلبات الصنع -->
+        <!-- أداة نقاط الإنغرامات -->
         <div class="tool-card">
             <div class="tool-header" onclick="toggleTool(this)">
-                <h3><i class="fas fa-hammer"></i> أداة تعديل متطلبات الصنع</h3>
-                <i class="fas fa-chevron-down"></i>
+                <h2><i class="fas fa-brain"></i> أداة نقاط الإنغرامات لكل مستوى</h2>
+                <i class="fas fa-chevron-up"></i>
             </div>
-            <div class="tool-content collapsed">
-                <div class="input-group">
-                    <div class="input-row">
-                        <div class="input-field">
-                            <label for="itemId">ID العنصر</label>
-                            <input type="text" id="itemId" placeholder="مثال: SoulTerminal_DS_C">
-                        </div>
+            <div class="tool-content">
+                <div class="input-row">
+                    <div class="input-field">
+                        <label>إلى مستوى</label>
+                        <input type="number" id="engramLevel" value="60">
                     </div>
-                    
-                    <div id="resourceRequirements">
-                        <div class="input-row resource-row">
-                            <div class="input-field">
-                                <label>مادة 1</label>
-                                <div class="input-row">
-                                    <input type="text" class="resource-id" placeholder="ID المادة">
-                                    <input type="number" class="resource-amount" placeholder="الكمية" min="1" value="100">
-                                    <button class="btn btn-accent" onclick="removeResource(this)"><i class="fas fa-trash"></i></button>
-                                </div>
-                            </div>
-                        </div>
+                    <div class="input-field">
+                        <label>النقاط الأساسية</label>
+                        <input type="number" id="engramPoints" value="8">
                     </div>
-                    
-                    <button class="btn btn-secondary" onclick="addResource()">
-                        <i class="fas fa-plus"></i> إضافة مادة جديدة
-                    </button>
-                    
-                    <div class="input-row" style="margin-top: 20px;">
-                        <button class="btn btn-primary" onclick="generateCraftingCode()">
-                            <i class="fas fa-code"></i> إنشاء كود الصنع
-                        </button>
-                        <button class="btn btn-gray" onclick="window.open('https://ark.fandom.com/wiki/Item_IDs')">
-                            <i class="fas fa-external-link-alt"></i> البحث عن ID العناصر
-                        </button>
+                </div>
+                <div class="input-row">
+                    <div class="input-field">
+                        <label>بدءاً من مستوى (Boost Level)</label>
+                        <input type="number" id="engramBoostLevel" value="10">
                     </div>
+                    <div class="input-field">
+                        <label>النقاط بعد البوست</label>
+                        <input type="number" id="engramBoostPoints" value="14">
+                    </div>
+                    <button class="btn btn-primary" onclick="generateEngramPoints()"><i class="fas fa-cogs"></i> توليد</button>
+                </div>
+                <button class="btn btn-accent" onclick="copyCustomCodeBox(this)"><i class="fas fa-copy"></i> نسخ الكود</button>
+                <div class="output-box" id="engramOutput"></div>
+            </div>
+        </div>
+
+        <!-- أداة تخصيص تكلفة صناعة العناصر -->
+        <div class="tool-card">
+            <div class="tool-header" onclick="toggleTool(this)">
+                <h2><i class="fas fa-hammer"></i> أداة تخصيص تكلفة صناعة العناصر (Crafting Costs)</h2>
+                <i class="fas fa-chevron-up"></i>
+            </div>
+            <div class="tool-content">
+                <div class="input-field">
+                    <label>معرف العنصر المراد تعديل تكلفته (Item ID / ClassString)</label>
+                    <input type="text" id="itemId" value="SoulTerminal_DS_C" placeholder="مثال: SoulTerminal_DS_C">
                 </div>
                 
-                <div class="code-container">
-                    <button class="copy-btn" onclick="copyCustomCodeBox(this)"><i class="fas fa-copy"></i> نسخ</button>
-                    <div class="code-box" id="craftingOutput"></div>
+                <div id="resourceRequirements" class="resources-container">
+                    <!-- الصفوف تضاف ديناميكياً هنا -->
                 </div>
+
+                <div class="config-actions">
+                    <button class="btn btn-primary" onclick="addResource()"><i class="fas fa-plus"></i> إضافة مادة مطلوبة</button>
+                    <button class="btn btn-accent" onclick="generateCraftingCode()"><i class="fas fa-code"></i> توليد الكود</button>
+                </div>
+                <button class="btn btn-accent" onclick="copyCustomCodeBox(this)"><i class="fas fa-copy"></i> نسخ الكود</button>
+                <div class="output-box" id="craftingOutput"></div>
             </div>
         </div>
 
         <!-- أداة استدعاء الديناصورات -->
         <div class="tool-card">
             <div class="tool-header" onclick="toggleTool(this)">
-                <h3><i class="fas fa-paw"></i> أداة استدعاء الديناصورات</h3>
-                <i class="fas fa-chevron-down"></i>
+                <h2><i class="fas fa-dragon"></i> أداة استدعاء الديناصورات المروضة (GMSummon)</h2>
+                <i class="fas fa-chevron-up"></i>
             </div>
-            <div class="tool-content collapsed">
-                <div class="input-group">
-                    <div class="input-row">
-                        <div class="input-field">
-                            <label for="dinoId">ID الديناصور</label>
-                            <input type="text" id="dinoId" placeholder="مثال: Gigant_Character_BP_C">
-                        </div>
-                        <div class="input-field">
-                            <label for="dinoLevel">المستوى</label>
-                            <input type="number" id="dinoLevel" min="1" placeholder="مثال: 60">
-                        </div>
+            <div class="tool-content">
+                <div class="input-row">
+                    <div class="input-field">
+                        <label>معرف الديناصور (Blueprint)</label>
+                        <input type="text" id="dinoId" value="Gigant_Character_BP_C">
                     </div>
-                    
-                    <div class="input-row">
-                        <button class="btn btn-primary" onclick="generateDinoCode()">
-                            <i class="fas fa-code"></i> إنشاء كود الاستدعاء
-                        </button>
-                        <button class="btn btn-gray" onclick="window.open('https://ark.fandom.com/wiki/Item_IDs')">
-                            <i class="fas fa-external-link-alt"></i> البحث عن ID الديناصورات
-                        </button>
+                    <div class="input-field">
+                        <label>مستوى الديناصور (Level)</label>
+                        <input type="number" id="dinoLevel" value="60">
                     </div>
+                    <button class="btn btn-primary" onclick="generateDinoCode()"><i class="fas fa-terminal"></i> توليد الأمر</button>
                 </div>
-                
-                <div class="code-container">
-                    <button class="copy-btn" onclick="copyCustomCodeBox(this)"><i class="fas fa-copy"></i> نسخ</button>
-                    <div class="code-box" id="dinoOutput"></div>
-                </div>
+                <button class="btn btn-accent" onclick="copyCustomCodeBox(this)"><i class="fas fa-copy"></i> نسخ الأمر</button>
+                <div class="output-box" id="dinoOutput"></div>
             </div>
         </div>
     </div>
-
-    <!-- الأزرار العائمة -->
-    <button class="theme-toggle" onclick="toggleTheme()">
-        <i class="fas fa-moon"></i>
-    </button>
-
-    <button class="stats-btn" onclick="window.open('http://arksurvivalevolved.gamewalkthrough-universe.com/dedicatedservers/customizationtools/perlevelstatsmultipliertool/Default.aspx')">
-        <i class="fas fa-chart-line"></i> إنشاء كود الستاتس
-    </button>
 
     <script src="app.js"></script>
 </body>
