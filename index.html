@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>أداة إعدادات ملفات السيرفر (Game.ini & GameUserSettings.ini)</title>
+    <title>أدوات سيرفر أرك</title>
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
@@ -14,33 +14,6 @@
     </div>
 
     <div class="container">
-        <!-- أداة إعدادات السيرفر الرئيسية -->
-        <div class="tool-card">
-            <div class="tool-header" onclick="toggleTool(this)">
-                <h2><i class="fas fa-file-code"></i> أداة إعدادات ملفات السيرفر (Game.ini & GameUserSettings.ini)</h2>
-                <i class="fas fa-chevron-up"></i>
-            </div>
-            <div class="tool-content">
-                <div class="config-tabs">
-                    <button id="btnGameIni" class="btn btn-gray" onclick="switchConfigFile('gameini')">game.ini <i class="fas fa-file-lines"></i></button>
-                    <button id="btnUserSettings" class="btn btn-primary" onclick="switchConfigFile('usersettings')">GameUserSettings.ini <i class="fas fa-file-lines"></i></button>
-                </div>
-                
-                <p id="configDescription" class="config-desc-header">إعدادات السيرفر والصعوبة والتحكم الكامل</p>
-
-                <div id="configEditorContainer" class="config-editor-grid">
-                    <!-- سيتم تعبئة الحقول ديناميكياً عبر الجافاسكريبت -->
-                </div>
-
-                <div class="config-actions">
-                    <button class="btn btn-primary" onclick="copyFullConfig()"><i class="fas fa-copy"></i> نسخ الملف كاملاً</button>
-                    <button class="btn btn-accent" onclick="copyModifiedConfigOnly()"><i class="fas fa-scissors"></i> نسخ التعديلات المخصصة فقط</button>
-                </div>
-
-                <div class="output-box" id="serverConfigOutput"></div>
-            </div>
-        </div>
-
         <!-- أداة توليد مستويات اللاعبين -->
         <div class="tool-card">
             <div class="tool-header" onclick="toggleTool(this)">
