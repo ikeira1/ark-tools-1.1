@@ -240,6 +240,21 @@
                     <h3>تصفح مشاكل وحلول اللاعبين</h3>
                     <p>ابحث وتصفح أحدث الحلول والخبرات المطروحة</p>
                 </div>
+                <div class="action-card ask-card" onclick="openAskQuestionView()">
+                    <i class="fas fa-question-circle"></i>
+                    <h3>قسم الأسئلة والاستفسارات</h3>
+                    <p>طرح سؤالك وانتظر مساعدة اللاعبين</p>
+                </div>
+            </div>
+
+            <!-- تبويبات التصفح -->
+            <div class="community-tabs" id="communityTabs">
+                <button class="tab-btn active" id="tabSolutions" onclick="switchCommunityTab('solutions')">
+                    <i class="fas fa-check-circle"></i> الحلول والخبرات المعتمدة
+                </button>
+                <button class="tab-btn" id="tabQuestions" onclick="switchCommunityTab('questions')">
+                    <i class="fas fa-comments-question"></i> الأسئلة والحرّة (<span id="questionsCount">0</span>)
+                </button>
             </div>
 
             <!-- نموذج إضافة مشكلة وحل -->
@@ -266,14 +281,42 @@
                 </div>
             </div>
 
+            <!-- نموذج اطرح سؤالك -->
+            <div id="addQuestionForm" class="tool-card" style="display: none; padding: 20px; margin-bottom: 25px;">
+                <h3 style="color: #00ffff; margin-top:0;"><i class="fas fa-question-circle"></i> اطرح سؤالك ليساعدك اللاعبون</h3>
+                <div class="input-group">
+                    <div class="input-row">
+                        <div class="input-field">
+                            <label>اسمك أو لقبك</label>
+                            <input type="text" id="qAuthorName" placeholder="مثال: أحمد / Keira">
+                        </div>
+                        <div class="input-field">
+                            <label>عنوان السؤال أو المشكلة</label>
+                            <input type="text" id="qTitle" placeholder="مثال: كيف أعدل سرعة ترويض الديناصورات؟">
+                        </div>
+                    </div>
+                    <div class="input-field" style="margin-bottom: 15px;">
+                        <label>شرح واستفسار المشكلة بالتفصيل</label>
+                        <textarea id="qBody" rows="4" placeholder="اكتب تفاصيل الاستفسار ليتمكن اللاعبون من مساعدتك بالإجابات..."></textarea>
+                    </div>
+                    <button class="btn btn-primary" onclick="submitNewQuestion()">
+                        <i class="fas fa-paper-plane"></i> نشر السؤال
+                    </button>
+                </div>
+            </div>
+
             <div id="browseContainer">
                 <div style="margin-bottom: 20px;">
                     <input type="text" id="searchInput" oninput="filterIssues()" placeholder="🔍 ابحث عن أي كلمة مفتاحية (مثال: نيترادو، كراش، بورت، مودات)...">
                 </div>
 
-                <div id="issuesList">
-                    <p style="text-align: center; color: #94a3b8;"><i class="fas fa-spinner fa-spin"></i> جاري تحميل بنك المشاكل والحلول...</p>
+                <!-- حاوية بطاقات الشبكة -->
+                <div id="issuesList" class="issues-grid">
+                    <p style="text-align: center; color: #94a3b8; grid-column: 1/-1;"><i class="fas fa-spinner fa-spin"></i> جاري تحميل بنك المشاكل والحلول...</p>
                 </div>
+
+                <!-- أدوات تقسيم الصفحات (Pagination) -->
+                <div class="pagination-container" id="paginationControls"></div>
             </div>
         </div>
 
@@ -289,6 +332,27 @@
         </div>
         <div class="stat-item online-stat">
             <i class="fas fa-circle online-pulse"></i> المتواجدون الآن: <span id="onlineUsersCount">...</span>
+        </div>
+    </div>
+
+    <!-- نافذة منبثقة للسؤال غير المحلول للتنبيه تلقائياً -->
+    <div class="modal-overlay" id="unresolvedQuestionModal">
+        <div class="modal-box">
+            <i class="fas fa-question-circle" style="font-size: 3rem; color: #00ffff; margin-bottom: 10px;"></i>
+            <h3 style="color:#00ffff; margin-top:0;">مرحباً بك مجدداً!</h3>
+            <p style="color:#cbd5e1; font-size:14px; line-height: 1.5;">
+                لديك سؤال سابق مطروح:<br>
+                <strong id="unresolvedQTitle" style="color:#ffeaa7;">...</strong>
+            </p>
+            <p style="color:#ffffff; font-weight:bold; font-size:15px; margin-top: 15px;">هل تم حل مشكلتك أو إجابة سؤالك؟</p>
+            <div style="display:flex; gap:10px; justify-content:center; margin-top:20px;">
+                <button class="btn btn-secondary" onclick="confirmResolveQuestionModal(true)">
+                    <i class="fas fa-check"></i> نعم، تم الحل!
+                </button>
+                <button class="btn btn-gray" onclick="confirmResolveQuestionModal(false)">
+                    <i class="fas fa-times"></i> لا، ما زلت أبحث
+                </button>
+            </div>
         </div>
     </div>
 

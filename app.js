@@ -16,6 +16,10 @@ const db = getFirestore(app);
 
 let allIssues = [];
 let isAdminLoggedIn = false;
+let currentTab = 'solutions'; // 'solutions' أو 'questions'
+let currentPage = 1;
+const itemsPerPage = 6;
+let activeUnresolvedQuestion = null;
 
 // جلب وتعيين معرف الجهاز
 function getDeviceId() {
@@ -48,14 +52,32 @@ window.showToolsSection = function() {
 
 window.openAddIssueView = function() {
     document.getElementById('addIssueForm').style.display = 'block';
+    document.getElementById('addQuestionForm').style.display = 'none';
     document.getElementById('browseContainer').style.display = 'none';
     document.getElementById('addIssueForm').scrollIntoView({ behavior: 'smooth' });
 };
 
+window.openAskQuestionView = function() {
+    document.getElementById('addQuestionForm').style.display = 'block';
+    document.getElementById('addIssueForm').style.display = 'none';
+    document.getElementById('browseContainer').style.display = 'none';
+    document.getElementById('addQuestionForm').scrollIntoView({ behavior: 'smooth' });
+};
+
 window.openBrowseIssuesView = function() {
     document.getElementById('addIssueForm').style.display = 'none';
+    document.getElementById('addQuestionForm').style.display = 'none';
     document.getElementById('browseContainer').style.display = 'block';
     document.getElementById('browseContainer').scrollIntoView({ behavior: 'smooth' });
+};
+
+window.switchCommunityTab = function(tab) {
+    currentTab = tab;
+    currentPage = 1;
+    document.getElementById('tabSolutions').classList.toggle('active', tab === 'solutions');
+    document.getElementById('tabQuestions').classList.toggle('active', tab === 'questions');
+    openBrowseIssuesView();
+    renderIssues(allIssues);
 };
 
 window.copySiteLink = function() {
@@ -71,7 +93,7 @@ async function checkIfBanned() {
     return banSnap.exists();
 }
 
-// إضافة مشكلة وحل
+// إضافة مشكلة وحل معتمد
 window.submitNewIssue = async function() {
     if (await checkIfBanned()) {
         alert('عذراً، تم حظر جهازك من المشاركة بسبب مخالفة الأنظمة.');
@@ -95,13 +117,54 @@ window.submitNewIssue = async function() {
             deviceId: getDeviceId(),
             likes: 0,
             comments: [],
+            isQuestion: false,
+            isResolved: true,
             timestamp: Date.now()
         });
 
         document.getElementById('issueTitle').value = '';
         document.getElementById('issueBody').value = '';
         alert('تم نشر المشكلة والحل بنجاح!');
-        openBrowseIssuesView();
+        switchCommunityTab('solutions');
+    } catch (error) {
+        console.error("خطأ في النشر: ", error);
+        alert('حدث خطأ أثناء النشر، حاول مجدداً.');
+    }
+};
+
+// إضافة سؤال واستفسار جديد
+window.submitNewQuestion = async function() {
+    if (await checkIfBanned()) {
+        alert('عذراً، تم حظر جهازك من المشاركة بسبب مخالفة الأنظمة.');
+        return;
+    }
+
+    const author = document.getElementById('qAuthorName').value.trim() || 'لاعب مجهول';
+    const title = document.getElementById('qTitle').value.trim();
+    const body = document.getElementById('qBody').value.trim();
+
+    if (!title || !body) {
+        alert('يرجى ملء عنوان الاستفسار والتفاصيل!');
+        return;
+    }
+
+    try {
+        await addDoc(collection(db, "ark_issues"), {
+            author: author,
+            title: title,
+            body: body,
+            deviceId: getDeviceId(),
+            likes: 0,
+            comments: [],
+            isQuestion: true,
+            isResolved: false,
+            timestamp: Date.now()
+        });
+
+        document.getElementById('qTitle').value = '';
+        document.getElementById('qBody').value = '';
+        alert('تم نشر سؤالك بنجاح! سيتم تنبيهك فور دخولك عند الإجابة عليه.');
+        switchCommunityTab('questions');
     } catch (error) {
         console.error("خطأ في النشر: ", error);
         alert('حدث خطأ أثناء النشر، حاول مجدداً.');
@@ -116,21 +179,87 @@ onSnapshot(issuesQuery, (snapshot) => {
         allIssues.push({ id: doc.id, ...doc.data() });
     });
 
-    allIssues.sort((a, b) => (b.likes || 0) - (a.likes || 0));
+    allIssues.sort((a, b) => (b.timestamp || 0) - (a.timestamp || 0));
+    
+    // فحص إذا كان هناك سؤال غير محلول للزائر لمنحه التنبيه المنبثق
+    checkUserUnresolvedQuestion();
     renderIssues(allIssues);
 });
 
+function checkUserUnresolvedQuestion() {
+    const currentDeviceId = getDeviceId();
+    activeUnresolvedQuestion = allIssues.find(i => i.deviceId === currentDeviceId && i.isQuestion && !i.isResolved);
+
+    if (activeUnresolvedQuestion) {
+        document.getElementById('unresolvedQTitle').innerText = activeUnresolvedQuestion.title;
+        document.getElementById('unresolvedQuestionModal').style.display = 'flex';
+    }
+}
+
+window.confirmResolveQuestionModal = async function(isSolved) {
+    document.getElementById('unresolvedQuestionModal').style.display = 'none';
+    if (isSolved && activeUnresolvedQuestion) {
+        await markQuestionAsResolved(activeUnresolvedQuestion.id);
+    }
+};
+
+window.markQuestionAsResolved = async function(issueId) {
+    try {
+        const issueRef = doc(db, "ark_issues", issueId);
+        await updateDoc(issueRef, {
+            isQuestion: false,
+            isResolved: true
+        });
+        alert("رائع! تم تحويل سؤالك إلى قسم الحلول والخبرات المعتمدة بنجاح 🎉");
+        switchCommunityTab('solutions');
+    } catch (e) {
+        console.error("خطأ في التحديث:", e);
+    }
+};
+
 function renderIssues(issues) {
     const listContainer = document.getElementById('issuesList');
+    const paginationContainer = document.getElementById('paginationControls');
     if (!listContainer) return;
-    
-    if (issues.length === 0) {
-        listContainer.innerHTML = '<p style="text-align: center; color: #94a3b8;">لا توجد مشاكل أو حلول مطروحة حالياً. كن أول من يضيف حل!</p>';
+
+    const term = (document.getElementById('searchInput')?.value || '').toLowerCase();
+    const currentDeviceId = getDeviceId();
+
+    // تصفية حسب التبويب النشط
+    let filtered = issues.filter(i => {
+        const matchesTerm = i.title.toLowerCase().includes(term) || 
+                            i.body.toLowerCase().includes(term) || 
+                            i.author.toLowerCase().includes(term);
+        
+        if (currentTab === 'solutions') {
+            return matchesTerm && (!i.isQuestion || i.isResolved);
+        } else {
+            return matchesTerm && (i.isQuestion && !i.isResolved);
+        }
+    });
+
+    // تحديث عدد الأسئلة غير المحلولة في العداد
+    const questionsCount = issues.filter(i => i.isQuestion && !i.isResolved).length;
+    if (document.getElementById('questionsCount')) {
+        document.getElementById('questionsCount').innerText = questionsCount;
+    }
+
+    if (filtered.length === 0) {
+        listContainer.innerHTML = `<p style="text-align: center; color: #94a3b8; grid-column: 1/-1;">
+            ${currentTab === 'solutions' ? 'لا توجد حلول مطروحة حالياً.' : 'لا توجد أسئلة معلقة حالياً!'}
+        </p>`;
+        if (paginationContainer) paginationContainer.innerHTML = '';
         return;
     }
 
+    // حساب تقسيم الصفحات
+    const totalPages = Math.ceil(filtered.length / itemsPerPage);
+    if (currentPage > totalPages) currentPage = totalPages;
+    const startIndex = (currentPage - 1) * itemsPerPage;
+    const paginatedItems = filtered.slice(startIndex, startIndex + itemsPerPage);
+
     let html = '';
-    issues.forEach(issue => {
+    paginatedItems.forEach(issue => {
         const commentsHtml = (issue.comments || []).map(c => `
             <div class="comment-item">
                 <span class="comment-author"><i class="fas fa-user-circle"></i> ${c.author}:</span>
@@ -138,37 +267,63 @@ function renderIssues(issues) {
             </div>
         `).join('');
 
-        const adminButtonsHtml = isAdminLoggedIn ? `
-            <button class="admin-action-btn delete-btn" onclick="deleteIssue('${issue.id}')">
-                <i class="fas fa-trash"></i> حذف
-            </button>
-            <button class="admin-action-btn ban-btn" onclick="banUserDevice('${issue.deviceId || ''}', '${issue.id}')">
-                <i class="fas fa-ban"></i> تبنيد الجهاز
+        const isOwner = issue.deviceId === currentDeviceId;
+        const resolveButtonHtml = (issue.isQuestion && !issue.isResolved && isOwner) ? `
+            <button class="resolve-btn" onclick="markQuestionAsResolved('${issue.id}')">
+                <i class="fas fa-check-double"></i> تم الحل لي
             </button>
         ` : '';
 
+        const adminButtonsHtml = isAdminLoggedIn ? `
+            <button class="admin-action-btn delete-btn" onclick="deleteIssue('${issue.id}')">
+                <i class="fas fa-trash"></i>
+            </button>
+            <button class="admin-action-btn ban-btn" onclick="banUserDevice('${issue.deviceId || ''}', '${issue.id}')">
+                <i class="fas fa-ban"></i>
+            </button>
+            ${issue.isQuestion && !issue.isResolved ? `
+                <button class="admin-action-btn convert-btn" onclick="markQuestionAsResolved('${issue.id}')">
+                    <i class="fas fa-check"></i> تحويل لحل
+                </button>
+            ` : ''}
+        ` : '';
+
+        const badgeHtml = issue.isQuestion && !issue.isResolved ? 
+            `<span class="issue-badge badge-question"><i class="fas fa-question"></i> سؤال غير محلول</span>` : 
+            `<span class="issue-badge badge-resolved"><i class="fas fa-check"></i> حل معتمد</span>`;
+
         html += `
-            <div class="issue-card" id="issue-${issue.id}">
-                <div class="issue-header">
-                    <div>
-                        <h4 class="issue-title">${issue.title}</h4>
-                        <span class="issue-author"><i class="fas fa-user"></i> بواسطة: ${issue.author}</span>
+            <div class="issue-card ${issue.isQuestion && !issue.isResolved ? 'question-style' : ''}" id="issue-${issue.id}">
+                <div>
+                    ${badgeHtml}
+                    <div class="issue-header">
+                        <div>
+                            <h4 class="issue-title">${issue.title}</h4>
+                            <span class="issue-author"><i class="fas fa-user"></i> بواسطة: ${issue.author}</span>
+                        </div>
                     </div>
-                </div>
-                <div class="issue-body">${issue.body}</div>
-                <div class="issue-actions">
-                    <button class="like-btn" onclick="addLike('${issue.id}')">
-                        <i class="fas fa-heart"></i> ${issue.likes || 0} لايك
-                    </button>
-                    ${adminButtonsHtml}
+                    <div class="issue-body">${issue.body}</div>
                 </div>
 
-                <div class="comments-section">
-                    <h5 style="margin: 0 0 10px 0; color: #00ffff;"><i class="fas fa-comments"></i> النقاشات والردود (${(issue.comments || []).length})</h5>
-                    <div>${commentsHtml}</div>
-                    <div style="display: flex; gap: 8px; margin-top: 10px;">
-                        <input type="text" id="comment-input-${issue.id}" placeholder="اكتب تعليقك أو إضافتك هنا..." style="padding: 8px 12px; font-size: 13px;">
-                        <button class="btn btn-primary" onclick="addComment('${issue.id}')" style="padding: 8px 15px; font-size: 13px;">رد</button>
+                <div>
+                    <div class="issue-actions">
+                        <button class="like-btn" onclick="addLike('${issue.id}')">
+                            <i class="fas fa-heart"></i> ${issue.likes || 0}
+                        </button>
+                        <button class="toggle-comments-btn" onclick="toggleCommentsSection('${issue.id}')">
+                            <i class="fas fa-comments"></i> الردود (${(issue.comments || []).length})
+                        </button>
+                        ${resolveButtonHtml}
+                        ${adminButtonsHtml}
+                    </div>
+
+                    <div class="comments-section" id="comments-${issue.id}">
+                        <h5 style="margin: 0 0 8px 0; color: #00ffff; font-size: 12px;"><i class="fas fa-comments"></i> النقاشات والردود</h5>
+                        <div>${commentsHtml.length ? commentsHtml : '<p style="font-size: 11px; color: #64748b; margin: 5px 0;">لا توجد ردود بعد.</p>'}</div>
+                        <div style="display: flex; gap: 6px; margin-top: 8px;">
+                            <input type="text" id="comment-input-${issue.id}" placeholder="اكتب ردك أو مساعدتك..." style="padding: 6px 10px; font-size: 12px;">
+                            <button class="btn btn-primary" onclick="addComment('${issue.id}')" style="padding: 6px 12px; font-size: 12px;">رد</button>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -176,7 +331,31 @@ function renderIssues(issues) {
     });
 
     listContainer.innerHTML = html;
+
+    // رندر أزرار التحكم بالصفحات
+    if (totalPages > 1 && paginationContainer) {
+        let pageBtnsHtml = '';
+        for (let i = 1; i <= totalPages; i++) {
+            pageBtnsHtml += `<button class="page-btn ${i === currentPage ? 'active' : ''}" onclick="goToPage(${i})">${i}</button>`;
+        }
+        paginationContainer.innerHTML = pageBtnsHtml;
+    } else if (paginationContainer) {
+        paginationContainer.innerHTML = '';
+    }
 }
+
+window.goToPage = function(page) {
+    currentPage = page;
+    renderIssues(allIssues);
+    window.scrollTo({ top: 300, behavior: 'smooth' });
+};
+
+window.toggleCommentsSection = function(id) {
+    const section = document.getElementById(`comments-${id}`);
+    if (section) {
+        section.style.display = (section.style.display === 'block') ? 'none' : 'block';
+    }
+};
 
 window.addLike = async function(id) {
     const issueRef = doc(db, "ark_issues", id);
@@ -204,13 +383,8 @@ window.addComment = async function(id) {
 };
 
 window.filterIssues = function() {
-    const term = document.getElementById('searchInput').value.toLowerCase();
-    const filtered = allIssues.filter(i => 
-        i.title.toLowerCase().includes(term) || 
-        i.body.toLowerCase().includes(term) || 
-        i.author.toLowerCase().includes(term)
-    );
-    renderIssues(filtered);
+    currentPage = 1;
+    renderIssues(allIssues);
 };
 
 // إجراءات الأدمن
