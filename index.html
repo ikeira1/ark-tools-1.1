@@ -66,6 +66,34 @@
             text-shadow: 0 2px 5px rgba(0,0,0,0.8);
         }
 
+        /* --- زر بنك المشاكل في أعلى الهيدر يساراً --- */
+        .top-community-btn {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            padding: 12px 22px;
+            background: linear-gradient(135deg, #00f2fe, #4facfe);
+            color: #0f172a;
+            border: 1px solid rgba(255, 255, 255, 0.5);
+            border-radius: 12px;
+            cursor: pointer;
+            box-shadow: 0 0 20px rgba(0, 242, 254, 0.5);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-weight: bold;
+            font-family: 'Tajawal', sans-serif;
+            font-size: 16px;
+            transition: all 0.3s ease;
+            z-index: 10;
+        }
+
+        .top-community-btn:hover {
+            transform: translateY(-3px) scale(1.03);
+            box-shadow: 0 0 30px rgba(0, 242, 254, 0.8);
+            background: linear-gradient(135deg, #4facfe, #00f2fe);
+        }
+
         .social-buttons {
             display: flex;
             justify-content: center;
@@ -265,28 +293,7 @@
 
         .copy-btn:hover { background: #00d2ff; color: #0f172a; }
 
-        .theme-toggle {
-            position: fixed;
-            bottom: 25px;
-            right: 25px;
-            width: 52px;
-            height: 52px;
-            background: linear-gradient(135deg, #00d2ff, #3a7bd5);
-            color: white;
-            border: none;
-            border-radius: 50%;
-            cursor: pointer;
-            box-shadow: 0 6px 20px rgba(0,0,0,0.4);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 20px;
-            z-index: 100;
-            transition: transform 0.3s;
-        }
-
-        .theme-toggle:hover { transform: scale(1.1); }
-
+        /* --- زر الستاتس العائم المتموضع بشكل آمن أسفل اليسار --- */
         .stats-btn {
             position: fixed;
             bottom: 25px;
@@ -314,36 +321,7 @@
             box-shadow: 0 8px 25px rgba(138,43,226,0.5);
         }
 
-        /* --- تصميم الزر العائم للتنقل للبنك --- */
-        .community-float-btn {
-            position: fixed;
-            bottom: 25px;
-            left: 200px;
-            padding: 12px 24px;
-            background: linear-gradient(135deg, #00f2fe, #4facfe);
-            color: #0f172a;
-            border: 1px solid rgba(255, 255, 255, 0.4);
-            border-radius: 50px;
-            cursor: pointer;
-            box-shadow: 0 8px 25px rgba(0, 242, 254, 0.4);
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            font-weight: bold;
-            z-index: 999;
-            transition: all 0.3s ease;
-            font-family: 'Tajawal', sans-serif;
-            font-size: 15px;
-            backdrop-filter: blur(10px);
-        }
-
-        .community-float-btn:hover {
-            transform: translateY(-4px) scale(1.05);
-            box-shadow: 0 12px 30px rgba(0, 242, 254, 0.6);
-            background: linear-gradient(135deg, #4facfe, #00f2fe);
-        }
-
-        /* --- تصميم قسم المنتدى (بنك المشاكل والحلول) --- */
+        /* --- تصميم قسم المنتدى --- */
         #communitySection {
             display: none;
             animation: fadeIn 0.4s ease-in-out;
@@ -383,7 +361,7 @@
 
         .action-card:hover {
             border-color: #00ffff;
-            transform: translateY(-50px);
+            transform: translateY(-5px);
             box-shadow: 0 10px 25px rgba(0, 210, 255, 0.2);
         }
 
@@ -404,7 +382,6 @@
             font-size: 0.95rem;
         }
 
-        /* كروت المشاكل المطروحة */
         .issue-card {
             background: var(--card-bg);
             border: 1px solid var(--border-color);
@@ -475,7 +452,6 @@
             color: white;
         }
 
-        /* قسم التعليقات */
         .comments-section {
             margin-top: 15px;
             background: rgba(0,0,0,0.25);
@@ -506,9 +482,8 @@
         @media (max-width: 768px) {
             .input-row { flex-direction: column; gap: 1rem; }
             .input-field { min-width: 100%; }
-            .theme-toggle { bottom: 15px; right: 15px; width: 44px; height: 44px; font-size: 16px; }
             .stats-btn { bottom: 15px; left: 15px; padding: 10px 16px; font-size: 13px; }
-            .community-float-btn { bottom: 70px; left: 15px; padding: 10px 18px; font-size: 13px; }
+            .top-community-btn { position: relative; top: 0; left: 0; margin: 0 auto 15px auto; width: fit-content; }
             .main-action-cards { grid-template-columns: 1fr; }
             header { padding: 2rem 1rem; }
         }
@@ -516,16 +491,16 @@
 </head>
 <body>
 
-    <!-- زر عائم رئيسي للانتقال لبنك المشاكل -->
-    <button class="community-float-btn" onclick="showCommunitySection()">
-        <i class="fas fa-users-cog"></i> بنك حلول ومشاكل آرك
-    </button>
-
     <div class="container">
         
         <!-- الواجهة الأساسية (الأدوات) -->
         <div id="toolsSection">
             <header>
+                <!-- زر بنك المشاكل الكبيرة والبارزة أعلى اليسار -->
+                <button class="top-community-btn" onclick="showCommunitySection()">
+                    <i class="fas fa-users-cog"></i> بنك حلول ومشاكل آرك
+                </button>
+
                 <h1><i class="fas fa-dragon"></i> أدوات آرك العربية</h1>
                 <p>أدوات ذكية لمجتمع آرك العربي - من الألف إلى الياء</p>
                 <div class="social-buttons">
@@ -704,7 +679,7 @@
             </div>
         </div>
 
-        <!-- ==================== قسم مجتمع بنك المشاكل والحلول (Single Page Application) ==================== -->
+        <!-- ==================== قسم مجتمع بنك المشاكل والحلول ==================== -->
         <div id="communitySection">
             <div class="section-header">
                 <button class="btn btn-secondary" onclick="showToolsSection()">
@@ -715,19 +690,19 @@
 
             <!-- الخيارات الرئيسية -->
             <div class="main-action-cards">
-                <div class="action-card" onclick="toggleAddIssueForm()">
+                <div class="action-card" onclick="openAddIssueView()">
                     <i class="fas fa-plus-circle"></i>
                     <h3>أضف مشكلتك وحلها</h3>
                     <p>شارك مجتمع آرك بحل مشكلة واجهتك لتساعد غيرك</p>
                 </div>
-                <div class="action-card" onclick="scrollToIssues()">
+                <div class="action-card" onclick="openBrowseIssuesView()">
                     <i class="fas fa-search"></i>
                     <h3>تصفح مشاكل وحلول اللاعبين</h3>
                     <p>ابحث وتصفح أحدث الحلول والخبرات المطروحة</p>
                 </div>
             </div>
 
-            <!-- نموذج إضافة مشكلة وحل (مخفي افتراضياً) -->
+            <!-- نموذج إضافة مشكلة وحل -->
             <div id="addIssueForm" class="tool-card" style="display: none; padding: 20px; margin-bottom: 25px;">
                 <h3 style="color: #00ffff; margin-top:0;"><i class="fas fa-edit"></i> نشر مشكلة مع الحل التفصيلي</h3>
                 <div class="input-group">
@@ -751,33 +726,32 @@
                 </div>
             </div>
 
-            <!-- حقل البحث السريع الفوري -->
-            <div style="margin-bottom: 20px;">
-                <input type="text" id="searchInput" oninput="filterIssues()" placeholder="🔍 ابحث عن أي كلمة مفتاحية (مثال: نيترادو، كراش، بورت، مودات)...">
-            </div>
+            <!-- الحاوية المجمعة للبحث والمشاكل المطروحة -->
+            <div id="browseContainer">
+                <!-- حقل البحث السريع الفوري -->
+                <div style="margin-bottom: 20px;">
+                    <input type="text" id="searchInput" oninput="filterIssues()" placeholder="🔍 ابحث عن أي كلمة مفتاحية (مثال: نيترادو، كراش، بورت، مودات)...">
+                </div>
 
-            <!-- قائمة عرض المشاكل المطروحة -->
-            <div id="issuesList">
-                <p style="text-align: center; color: #94a3b8;"><i class="fas fa-spinner fa-spin"></i> جاري تحميل بنك المشاكل والحلول...</p>
+                <!-- قائمة عرض المشاكل المطروحة -->
+                <div id="issuesList">
+                    <p style="text-align: center; color: #94a3b8;"><i class="fas fa-spinner fa-spin"></i> جاري تحميل بنك المشاكل والحلول...</p>
+                </div>
             </div>
         </div>
 
     </div>
 
-    <button class="theme-toggle" onclick="toggleTheme()" title="تغيير المظهر">
-        <i class="fas fa-sun"></i>
-    </button>
-
-    <button class="stats-btn" onclick="window.open('http://arksurvivalevolved.gamewalkthrough-universe.com/dedicatedservers/customizationtools/perlevelstatsmultipliertool/Default.aspx')">
+    <!-- زر الستاتس الجانبي (يختفي عند دخول بنك المشاكل) -->
+    <button class="stats-btn" id="statsBtn" onclick="window.open('http://arksurvivalevolved.gamewalkthrough-universe.com/dedicatedservers/customizationtools/perlevelstatsmultipliertool/Default.aspx')">
         <i class="fas fa-chart-line"></i> إنشاء كود الستاتس
     </button>
 
     <!-- ربط مكتبات Firebase سحابياً -->
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
-        import { getFirestore, collection, addDoc, onSnapshot, doc, updateDoc, increment, arrayUnion, query, orderBy } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+        import { getFirestore, collection, addDoc, onSnapshot, doc, updateDoc, increment, arrayUnion, query } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
 
-        // إعدادات Firebase الخاصة بمشروعك
         const firebaseConfig = {
             apiKey: "AIzaSyD27a-WhhKdvblKUduPrZkBcmUr-uYkED4",
             authDomain: "ark-tools.firebaseapp.com",
@@ -788,38 +762,41 @@
             measurementId: "G-4LD2YGH0TW"
         };
 
-        // تهيئة Firebase
         const app = initializeApp(firebaseConfig);
         const db = getFirestore(app);
 
         let allIssues = [];
 
-        // التبديل بين صفحة الأدوات وصفحة المنتدى (SPA)
+        // التبديل بين صفحة الأدوات وصفحة المنتدى
         window.showCommunitySection = function() {
             document.getElementById('toolsSection').style.display = 'none';
             document.getElementById('communitySection').style.display = 'block';
+            document.getElementById('statsBtn').style.display = 'none'; // إخفاء زر الستاتس
             window.scrollTo({ top: 0, behavior: 'smooth' });
         };
 
         window.showToolsSection = function() {
             document.getElementById('communitySection').style.display = 'none';
             document.getElementById('toolsSection').style.display = 'block';
+            document.getElementById('statsBtn').style.display = 'flex'; // إظهار زر الستاتس
             window.scrollTo({ top: 0, behavior: 'smooth' });
         };
 
-        window.toggleAddIssueForm = function() {
-            const form = document.getElementById('addIssueForm');
-            form.style.display = form.style.display === 'none' ? 'block' : 'none';
-            if (form.style.display === 'block') {
-                form.scrollIntoView({ behavior: 'smooth' });
-            }
+        // إظهار نموذج الإضافة وإخفاء قسم التصفح والبحث
+        window.openAddIssueView = function() {
+            document.getElementById('addIssueForm').style.display = 'block';
+            document.getElementById('browseContainer').style.display = 'none';
+            document.getElementById('addIssueForm').scrollIntoView({ behavior: 'smooth' });
         };
 
-        window.scrollToIssues = function() {
-            document.getElementById('issuesList').scrollIntoView({ behavior: 'smooth' });
+        // إظهار قسم التصفح والبحث وإخفاء نموذج الإضافة
+        window.openBrowseIssuesView = function() {
+            document.getElementById('addIssueForm').style.display = 'none';
+            document.getElementById('browseContainer').style.display = 'block';
+            document.getElementById('browseContainer').scrollIntoView({ behavior: 'smooth' });
         };
 
-        // إضافة مشكلة وحل جديد لقاعدة البيانات
+        // إضافة مشكلة وحل جديد
         window.submitNewIssue = async function() {
             const author = document.getElementById('authorName').value.trim() || 'لاعب مجهول';
             const title = document.getElementById('issueTitle').value.trim();
@@ -842,15 +819,17 @@
 
                 document.getElementById('issueTitle').value = '';
                 document.getElementById('issueBody').value = '';
-                document.getElementById('addIssueForm').style.display = 'none';
                 alert('تم نشر المشكلة والحل بنجاح!');
+                
+                // الانتقال تلقائياً لعرض الحل بعد النشر
+                openBrowseIssuesView();
             } catch (error) {
                 console.error("خطأ في النشر: ", error);
                 alert('حدث خطأ أثناء النشر، حاول مجدداً.');
             }
         };
 
-        // المتابعة الحية واستجلاب المشاكل بفرز تلقائي للعلى لايكات
+        // جلب البيانات مع الفرز التلقائي
         const issuesQuery = query(collection(db, "ark_issues"));
         onSnapshot(issuesQuery, (snapshot) => {
             allIssues = [];
@@ -858,12 +837,10 @@
                 allIssues.push({ id: doc.id, ...doc.data() });
             });
 
-            // الفرز التلقائي: الأكبر لايكات بالأعلى
             allIssues.sort((a, b) => (b.likes || 0) - (a.likes || 0));
             renderIssues(allIssues);
         });
 
-        // عرض المشاكل في الصفحة
         function renderIssues(issues) {
             const listContainer = document.getElementById('issuesList');
             if (issues.length === 0) {
@@ -895,7 +872,6 @@
                             </button>
                         </div>
 
-                        <!-- قسم الردود والتعليقات -->
                         <div class="comments-section">
                             <h5 style="margin: 0 0 10px 0; color: #00ffff;"><i class="fas fa-comments"></i> النقاشات والردود (${(issue.comments || []).length})</h5>
                             <div>${commentsHtml}</div>
@@ -911,7 +887,6 @@
             listContainer.innerHTML = html;
         }
 
-        // إضافة لايك للمشكلة
         window.addLike = async function(id) {
             const issueRef = doc(db, "ark_issues", id);
             await updateDoc(issueRef, {
@@ -919,7 +894,6 @@
             });
         };
 
-        // إضافة تعليق للمشكلة
         window.addComment = async function(id) {
             const input = document.getElementById(`comment-input-${id}`);
             const text = input.value.trim();
@@ -935,7 +909,6 @@
             input.value = '';
         };
 
-        // التصفية والبحث الفوري
         window.filterIssues = function() {
             const term = document.getElementById('searchInput').value.toLowerCase();
             const filtered = allIssues.filter(i => 
@@ -948,7 +921,6 @@
     </script>
 
     <script>
-        // الأكواد الأساسية لأدوات آرك
         function generateLevelCode() {
             const maxLevel = parseInt(document.getElementById('maxLevel').value) || 100;
             let xpArray = [];
@@ -1035,8 +1007,6 @@
             const level = document.getElementById('dinoLevel').value || 60;
             document.getElementById('dinoOutput').innerHTML = `cheat gmsummon "${dinoId}" ${level} 1 0`;
         }
-
-        function toggleTheme() { alert('الموقع يعمل بأفضل ثيم بصري مبهر ومتناسق مع أجواء لعبة آرك!'); }
 
         function copyCode(btn) {
             const text = btn.nextElementSibling.innerText;
