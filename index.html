@@ -1,115 +1,399 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Keira Tools - أدوات واستضافات ARK</title>
-  
-  <!-- Google Fonts -->
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800&display=swap" rel="stylesheet">
-  
-  <!-- FontAwesome Icons -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-  
-  <!-- Custom CSS -->
-  <link rel="stylesheet" href="style.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>أدوات آرك العربية - Keira Tools</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-  <!-- Top Navbar -->
-  <nav class="navbar">
-    <div class="nav-container">
-      <div class="brand">
-        <i class="fas fa-dragon brand-icon"></i>
-        <span>Keira Tools</span>
-      </div>
-      <button id="adminBtn" class="admin-lock-btn" title="لوحة التحكم">
-        <i class="fas fa-lock"></i>
-      </button>
-    </div>
-  </nav>
-
-  <!-- Main Container -->
-  <main class="main-content">
-    
-    <!-- Hero Banner -->
-    <header class="hero-section">
-      <h1>مرحباً بك في <span class="highlight">Keira Tools</span></h1>
-      <p>دليلك الشامل ومساعدك في حل مشاكل استضافات وسيرفرات لعبة ARK</p>
-    </header>
-
-    <!-- Navigation Tabs -->
-    <div class="tabs-wrapper">
-      <button class="tab-btn active" data-tab="issuesTab">
-        <i class="fas fa-bug"></i> المشاكل والحلول
-      </button>
-      <button class="tab-btn" data-tab="faqTab">
-        <i class="fas fa-question-circle"></i> الأسئلة الشائعة
-      </button>
+    <!-- بطاقة مشاركة الموقع في الجهة اليمنى -->
+    <div class="side-card side-card-right" id="sideShareCard">
+        <i class="fas fa-rocket main-icon"></i>
+        <h3>شارك الموقع ونكْبر سوا!</h3>
+        <p>انشر الرابط لأخوياك ، دعمك بالمشاركة يساعدنا نطور أدوات أكثر ونحل مشاكل الاستضافات للجميع!</p>
+        <button class="btn-side" onclick="copySiteLink()">
+            <i class="fas fa-share-alt"></i> نسخ رابط الموقع
+        </button>
     </div>
 
-    <!-- Content Sections -->
-    <div class="sections-container">
-      
-      <!-- Issues Section -->
-      <section id="issuesTab" class="tab-content active">
-        <div class="section-header">
-          <h2><i class="fas fa-list-check"></i> قائمة المشاكل الشائعة</h2>
-          <button id="openAddIssueModal" class="primary-btn">
-            <i class="fas fa-plus"></i> إضافة مشكلة جديدة
-          </button>
-        </div>
+    <!-- بطاقة بنك المشاكل في الجهة اليسرى -->
+    <div class="side-card side-card-left" id="sideCommunityCard">
+        <i class="fas fa-users-cog main-icon"></i>
+        <h3>بنك المشاكل والحلول</h3>
+        <p>تصفح أحدث حلول سيرفرات واستضافات آرك أو أضف حلولك ليراها الجميع!</p>
+        <button class="btn-side" onclick="showCommunitySection()">
+            <i class="fas fa-external-link-alt"></i> دخول البنك
+        </button>
+    </div>
+
+    <div class="container">
         
-        <div id="issuesList" class="issues-grid">
-          <div class="loading-spinner">
-            <i class="fas fa-spinner fa-spin"></i> جاري تحميل المشاكل...
-          </div>
-        </div>
-      </section>
+        <!-- الواجهة الأساسية (الأدوات) -->
+        <div id="toolsSection">
+            <header>
+                <h1><i class="fas fa-dragon"></i> أدوات آرك العربية</h1>
+                <p>أدوات ذكية لمجتمع آرك العربي - نبني ونحل المشاكل يداً بيد</p>
+                
+                <!-- رسالة تحفيزية على الدعم -->
+                <div class="support-banner">
+                    <i class="fas fa-heartbeat pulse"></i>
+                    <span>دعمك يستمر بصلابتنا! بدعمكم ووقفتكم نستمر في تطوير أدوات أكثر وخدمة سيرفراتكم. عندك سؤال؟ شرفنا بالديسكورد، ولا تنسَ متابعة القناة!</span>
+                </div>
 
-      <!-- FAQ Section -->
-      <section id="faqTab" class="tab-content">
-        <div class="section-header">
-          <h2><i class="fas fa-lightbulb"></i> الأسئلة والإرشادات العامة</h2>
+                <div class="social-buttons">
+                    <button class="social-btn youtube-btn" onclick="window.open('https://www.youtube.com/@ikeira1')">
+                        <i class="fab fa-youtube"></i> قناتي على اليوتيوب
+                    </button>
+                    <button class="social-btn discord-btn" onclick="window.open('https://discord.gg/2rMzBv6zRv')">
+                        <i class="fab fa-discord"></i> سيرفر الديسكورد (للأسئلة)
+                    </button>
+                    <button class="social-btn donate-btn" onclick="window.open('https://tip.dokan.sa/keira')">
+                        <i class="fas fa-hand-holding-heart"></i> دعم المطور (Donation)
+                    </button>
+                </div>
+            </header>
+
+            <!-- أداة إنشاء المستويات وحساب الخبرة -->
+            <div class="tool-card">
+                <div class="tool-header" onclick="toggleTool(this)">
+                    <h3><i class="fas fa-level-up-alt"></i> أداة إنشاء المستويات وحساب الخبرة</h3>
+                    <i class="fas fa-chevron-down"></i>
+                </div>
+                <div class="tool-content">
+                    <div class="input-group">
+                        <div class="input-row">
+                            <div class="input-field">
+                                <label for="maxLevel"><i class="fas fa-layer-group"></i> المستوى الأقصى</label>
+                                <input type="number" id="maxLevel" min="1" max="200" placeholder="مثال: 100">
+                            </div>
+                        </div>
+                        <button class="btn btn-primary" onclick="generateLevelCode()">
+                            <i class="fas fa-code"></i> إنشاء كود المستويات
+                        </button>
+                    </div>
+                    
+                    <div class="code-container">
+                        <button class="copy-btn" onclick="copyCode(this)"><i class="fas fa-copy"></i> نسخ</button>
+                        <div class="code-box" id="levelCode"></div>
+                    </div>
+
+                    <div style="margin-top: 15px;">
+                        <button class="btn btn-secondary" onclick="calculateTotalXP()">
+                            <i class="fas fa-calculator"></i> حساب الخبرة الكلية
+                        </button>
+                    </div>
+                    
+                    <div class="code-container">
+                        <button class="copy-btn" onclick="copyCode(this)"><i class="fas fa-copy"></i> نسخ</button>
+                        <div class="code-box" id="totalXP"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- أداة نقاط الإنغرام -->
+            <div class="tool-card">
+                <div class="tool-header" onclick="toggleTool(this)">
+                    <h3><i class="fas fa-scroll"></i> أداة نقاط الإنغرام</h3>
+                    <i class="fas fa-chevron-down"></i>
+                </div>
+                <div class="tool-content">
+                    <div class="input-group">
+                        <div class="input-row">
+                            <div class="input-field">
+                                <label for="engramLevel"><i class="fas fa-layer-group"></i> المستوى المطلوب</label>
+                                <input type="number" id="engramLevel" min="1" max="200" placeholder="مثال: 60">
+                            </div>
+                            <div class="input-field">
+                                <label for="engramPoints"><i class="fas fa-star"></i> النقاط لكل مستوى</label>
+                                <input type="number" id="engramPoints" min="1" value="8" placeholder="النقاط الأساسية">
+                            </div>
+                            <div class="input-field">
+                                <label for="engramBoostLevel"><i class="fas fa-rocket"></i> تعزيز النقاط بعد مستوى</label>
+                                <input type="number" id="engramBoostLevel" min="1" max="200" value="10" placeholder="المستوى">
+                            </div>
+                            <div class="input-field">
+                                <label for="engramBoostPoints"><i class="fas fa-bolt"></i> نقاط التعزيز</label>
+                                <input type="number" id="engramBoostPoints" min="1" value="14" placeholder="نقاط إضافية">
+                            </div>
+                        </div>
+                        <button class="btn btn-primary" onclick="generateEngramPoints()">
+                            <i class="fas fa-code"></i> إنشاء كود الإنغرام
+                        </button>
+                    </div>
+                    
+                    <div class="code-container">
+                        <button class="copy-btn" onclick="copyCode(this)"><i class="fas fa-copy"></i> نسخ</button>
+                        <div class="code-box" id="engramOutput"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- أداة تعديل متطلبات الصنع -->
+            <div class="tool-card">
+                <div class="tool-header" onclick="toggleTool(this)">
+                    <h3><i class="fas fa-hammer"></i> أداة تعديل متطلبات الصنع</h3>
+                    <i class="fas fa-chevron-down"></i>
+                </div>
+                <div class="tool-content">
+                    <div class="input-group">
+                        <div class="input-row">
+                            <div class="input-field">
+                                <label for="itemId"><i class="fas fa-cube"></i> ID العنصر</label>
+                                <input type="text" id="itemId" placeholder="مثال: SoulTerminal_DS_C">
+                            </div>
+                        </div>
+                        
+                        <div id="resourceRequirements">
+                            <div class="input-row resource-row">
+                                <div class="input-field">
+                                    <label>مادة 1</label>
+                                    <div class="input-row">
+                                        <input type="text" class="resource-id" placeholder="ID المادة (مثال: PrimalItemResource_MetalIngot_C)">
+                                        <input type="number" class="resource-amount" placeholder="الكمية" min="1" value="100">
+                                        <button class="btn btn-accent" onclick="removeResource(this)"><i class="fas fa-trash"></i></button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div style="margin-bottom: 15px;">
+                            <button class="btn btn-secondary" onclick="addResource()">
+                                <i class="fas fa-plus"></i> إضافة مادة جديدة
+                            </button>
+                        </div>
+                        
+                        <div class="input-row">
+                            <button class="btn btn-primary" onclick="generateCraftingCode()">
+                                <i class="fas fa-code"></i> إنشاء كود الصنع
+                            </button>
+                            <button class="btn btn-gray" onclick="window.open('https://ark.fandom.com/wiki/Item_IDs')">
+                                <i class="fas fa-external-link-alt"></i> البحث عن ID العناصر
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <div class="code-container">
+                        <button class="copy-btn" onclick="copyCode(this)"><i class="fas fa-copy"></i> نسخ</button>
+                        <div class="code-box" id="craftingOutput"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- أداة استدعاء الديناصورات -->
+            <div class="tool-card">
+                <div class="tool-header" onclick="toggleTool(this)">
+                    <h3><i class="fas fa-paw"></i> أداة استدعاء الديناصورات</h3>
+                    <i class="fas fa-chevron-down"></i>
+                </div>
+                <div class="tool-content">
+                    <div class="input-group">
+                        <div class="input-row">
+                            <div class="input-field">
+                                <label for="dinoId"><i class="fas fa-dragon"></i> ID الديناصور</label>
+                                <input type="text" id="dinoId" placeholder="مثال: Gigant_Character_BP_C">
+                            </div>
+                            <div class="input-field">
+                                <label for="dinoLevel"><i class="fas fa-level-up-alt"></i> المستوى</label>
+                                <input type="number" id="dinoLevel" min="1" placeholder="مثال: 60">
+                            </div>
+                        </div>
+                        
+                        <div class="input-row">
+                            <button class="btn btn-primary" onclick="generateDinoCode()">
+                                <i class="fas fa-code"></i> إنشاء كود الاستدعاء
+                            </button>
+                            <button class="btn btn-gray" onclick="window.open('https://ark.fandom.com/wiki/Item_IDs')">
+                                <i class="fas fa-external-link-alt"></i> البحث عن ID الديناصورات
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <div class="code-container">
+                        <button class="copy-btn" onclick="copyCode(this)"><i class="fas fa-copy"></i> نسخ</button>
+                        <div class="code-box" id="dinoOutput"></div>
+                    </div>
+                </div>
+            </div>
         </div>
-        <div class="faq-list">
-          <div class="faq-card">
-            <h3>كيف أقوم بربط الاستضافة بالسيرفر؟</h3>
-            <p>يمكنك التوجه إلى إعدادات السيرفر ورابط الـ IP المخصص للحساب ثم إدخال معلومات الاتصال المطلوبة.</p>
-          </div>
-          <div class="faq-card">
-            <h3>ماذا أفعل في حال توقف السيرفر عن الاستجابة؟</h3>
-            <p>قم بعمل إعادة تشغيل (Restart) للسيرفر من لوحة التحكم واكتشف السجلات (Logs) لمعرفة سبب التوقف.</p>
-          </div>
+
+        <!-- ==================== قسم مجتمع بنك المشاكل والحلول ==================== -->
+        <div id="communitySection">
+            <div class="section-header">
+                <button class="btn btn-secondary" onclick="showToolsSection()">
+                    <i class="fas fa-arrow-right"></i> العودة لأدوات الموقع
+                </button>
+                <h2 style="margin:0; color:#00ffff;"><i class="fas fa-database"></i> بنك حلول ومشاكل استضافات آرك</h2>
+            </div>
+
+            <div class="main-action-cards">
+                <div class="action-card" onclick="openAddIssueView()">
+                    <i class="fas fa-plus-circle"></i>
+                    <h3>أضف مشكلتك وحلها</h3>
+                    <p>شارك مجتمع آرك بحل مشكلة واجهتك لتساعد غيرك</p>
+                </div>
+                <div class="action-card" onclick="openBrowseIssuesView()">
+                    <i class="fas fa-search"></i>
+                    <h3>تصفح مشاكل وحلول اللاعبين</h3>
+                    <p>ابحث وتصفح أحدث الحلول والخبرات المطروحة</p>
+                </div>
+                <div class="action-card ask-card" onclick="openAskQuestionView()">
+                    <i class="fas fa-question-circle"></i>
+                    <h3>قسم الأسئلة والاستفسارات</h3>
+                    <p>طرح سؤالك وانتظر مساعدة اللاعبين</p>
+                </div>
+            </div>
+
+            <!-- تبويبات التصفح -->
+            <div class="community-tabs" id="communityTabs">
+                <button class="tab-btn active" id="tabSolutions" onclick="switchCommunityTab('solutions')">
+                    <i class="fas fa-check-circle"></i> الحلول والخبرات المعتمدة
+                </button>
+                <button class="tab-btn" id="tabQuestions" onclick="switchCommunityTab('questions')">
+                    <i class="fas fa-comments-question"></i> الأسئلة والحرّة (<span id="questionsCount">0</span>)
+                </button>
+            </div>
+
+            <!-- نموذج إضافة مشكلة وحل -->
+            <div id="addIssueForm" class="tool-card" style="display: none; padding: 20px; margin-bottom: 25px;">
+                <h3 style="color: #00ffff; margin-top:0;"><i class="fas fa-edit"></i> نشر مشكلة مع الحل التفصيلي</h3>
+                <div class="input-group">
+                    <div class="input-row">
+                        <div class="input-field">
+                            <label>اسمك أو لقبك</label>
+                            <input type="text" id="authorName" placeholder="مثال: أحمد / Keira">
+                        </div>
+                        <div class="input-field">
+                            <label>عنوان المشكلة</label>
+                            <input type="text" id="issueTitle" placeholder="مثال: حل مشكلة الكراش عند دخول سيرفر نيترادو">
+                        </div>
+                    </div>
+                    <div class="input-field" style="margin-bottom: 15px;">
+                        <label>تفاصيل المشكلة والحل الشامل</label>
+                        <textarea id="issueBody" rows="5" placeholder="اكتب هنا الخطوات والحل التفصيلي ليقرأه جميع اللاعبين..."></textarea>
+                    </div>
+                    <button class="btn btn-primary" onclick="submitNewIssue()">
+                        <i class="fas fa-paper-plane"></i> نشر الحل فوراً
+                    </button>
+                </div>
+            </div>
+
+            <!-- نموذج اطرح سؤالك -->
+            <div id="addQuestionForm" class="tool-card" style="display: none; padding: 20px; margin-bottom: 25px;">
+                <h3 style="color: #00ffff; margin-top:0;"><i class="fas fa-question-circle"></i> اطرح سؤالك ليساعدك اللاعبون</h3>
+                <div class="input-group">
+                    <div class="input-row">
+                        <div class="input-field">
+                            <label>اسمك أو لقبك</label>
+                            <input type="text" id="qAuthorName" placeholder="مثال: أحمد / Keira">
+                        </div>
+                        <div class="input-field">
+                            <label>عنوان السؤال أو المشكلة</label>
+                            <input type="text" id="qTitle" placeholder="مثال: كيف أعدل سرعة ترويض الديناصورات؟">
+                        </div>
+                    </div>
+                    <div class="input-field" style="margin-bottom: 15px;">
+                        <label>شرح واستفسار المشكلة بالتفصيل</label>
+                        <textarea id="qBody" rows="4" placeholder="اكتب تفاصيل الاستفسار ليتمكن اللاعبون من مساعدتك بالإجابات..."></textarea>
+                    </div>
+                    <button class="btn btn-primary" onclick="submitNewQuestion()">
+                        <i class="fas fa-paper-plane"></i> نشر السؤال
+                    </button>
+                </div>
+            </div>
+
+            <div id="browseContainer">
+                <div style="margin-bottom: 20px;">
+                    <input type="text" id="searchInput" oninput="filterIssues()" placeholder="🔍 ابحث عن أي كلمة مفتاحية (مثال: نيترادو، كراش، بورت، مودات)...">
+                </div>
+
+                <!-- حاوية بطاقات الشبكة -->
+                <div id="issuesList" class="issues-grid">
+                    <p style="text-align: center; color: #94a3b8; grid-column: 1/-1;"><i class="fas fa-spinner fa-spin"></i> جاري تحميل بنك المشاكل والحلول...</p>
+                </div>
+
+                <!-- أدوات تقسيم الصفحات (Pagination) -->
+                <div class="pagination-container" id="paginationControls"></div>
+            </div>
         </div>
-      </section>
 
     </div>
-  </main>
 
-  <!-- Floating Stats Button -->
-  <button id="toggleStatsBtn" class="stats-btn" title="الإحصائيات">
-    <i class="fas fa-chart-line"></i>
-  </button>
-
-  <!-- Footer / Analytics Bar -->
-  <footer class="analytics-bar">
-    <div class="analytics-container">
-      <div class="stat-item">
-        <i class="fas fa-users"></i>
-        <span>المتواجدون الآن: <strong id="onlineCount">1</strong></span>
-      </div>
-      <div class="stat-item">
-        <i class="fas fa-eye"></i>
-        <span>إجمالي الزيارات: <strong id="totalViews">0</strong></span>
-      </div>
+    <!-- شريط إحصائيات الزوار (Analytics Bar) -->
+    <div class="analytics-bar" id="analyticsBar">
+        <div class="stat-item">
+            <i class="fas fa-globe"></i> إجمالي الزيارات: <span id="totalVisitsCount">...</span>
+        </div>
+        <div class="stat-item">
+            <i class="fas fa-calendar-day"></i> زيارات اليوم: <span id="todayVisitsCount">...</span>
+        </div>
+        <div class="stat-item online-stat">
+            <i class="fas fa-circle online-pulse"></i> المتواجدون الآن: <span id="onlineUsersCount">...</span>
+        </div>
     </div>
-  </footer>
 
-  <!-- Firebase & App Scripts -->
-  <script type="module" src="app.js"></script>
-  <script type="module" src="analytics.js"></script>
+    <!-- نافذة منبثقة للسؤال غير المحلول للتنبيه تلقائياً -->
+    <div class="modal-overlay" id="unresolvedQuestionModal">
+        <div class="modal-box">
+            <i class="fas fa-question-circle" style="font-size: 3rem; color: #00ffff; margin-bottom: 10px;"></i>
+            <h3 style="color:#00ffff; margin-top:0;">مرحباً بك مجدداً!</h3>
+            <p style="color:#cbd5e1; font-size:14px; line-height: 1.5;">
+                لديك سؤال سابق مطروح:<br>
+                <strong id="unresolvedQTitle" style="color:#ffeaa7;">...</strong>
+            </p>
+            <p style="color:#ffffff; font-weight:bold; font-size:15px; margin-top: 15px;">هل تم حل مشكلتك أو إجابة سؤالك؟</p>
+            <div style="display:flex; gap:10px; justify-content:center; margin-top:20px;">
+                <button class="btn btn-secondary" onclick="confirmResolveQuestionModal(true)">
+                    <i class="fas fa-check"></i> نعم، تم الحل!
+                </button>
+                <button class="btn btn-gray" onclick="confirmResolveQuestionModal(false)">
+                    <i class="fas fa-times"></i> لا، ما زلت أبحث
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- نافذة لوحة تحكم الأدمن -->
+    <div class="modal-overlay" id="adminModal">
+        <div class="modal-box">
+            <div id="adminLoginState">
+                <h3 style="color:#00ffff; margin-top:0;"><i class="fas fa-user-shield"></i> تسجيل دخول الأدمن</h3>
+                <p style="color:#cbd5e1; font-size:14px;">أدخل كلمة السر لتفعيل صلاحيات التحكم:</p>
+                <input type="password" id="adminPasswordInput" placeholder="كلمة السر..." style="margin-bottom: 15px; text-align:center;">
+                <div style="display:flex; gap:10px; justify-content:center;">
+                    <button class="btn btn-primary" onclick="verifyAdminPass()"><i class="fas fa-check"></i> دخول</button>
+                    <button class="btn btn-gray" onclick="closeAdminModal()"><i class="fas fa-times"></i> إغلاق</button>
+                </div>
+            </div>
+
+            <div id="adminControlState" style="display: none;">
+                <h3 style="color:#38ef7d; margin-top:0;"><i class="fas fa-user-check"></i> لوحة الأدمن مفعلة</h3>
+                <p style="color:#cbd5e1; font-size:13px;">تستطيع الآن الحذف، التبنيد، وتغيير كلمة السر مباشرة.</p>
+                
+                <div style="margin: 15px 0; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 15px;">
+                    <label style="font-size: 13px; text-align: right;">تعديل كلمة السر الأدمن:</label>
+                    <input type="text" id="newAdminPasswordInput" placeholder="كلمة السر الجديدة..." style="margin-bottom: 10px; text-align:center;">
+                    <button class="btn btn-secondary" onclick="updateAdminPassword()" style="width: 100%;"><i class="fas fa-key"></i> حفظ كلمة السر الجديدة</button>
+                </div>
+
+                <div style="display:flex; gap:10px; justify-content:center; margin-top: 15px;">
+                    <button class="btn btn-accent" onclick="logoutAdmin()"><i class="fas fa-sign-out-alt"></i> تسجيل الخروج</button>
+                    <button class="btn btn-gray" onclick="closeAdminModal()"><i class="fas fa-times"></i> إغلاق النافذة</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- زر الستاتس الجانبي -->
+    <button class="stats-btn" id="statsBtn" onclick="window.open('http://arksurvivalevolved.gamewalkthrough-universe.com/dedicatedservers/customizationtools/perlevelstatsmultipliertool/Default.aspx')">
+        <i class="fas fa-chart-line"></i> إنشاء كود الستاتس
+    </button>
+
+    <!-- الربط بالملفات المستقلة البرمجية -->
+    <script type="module" src="app.js"></script>
+    <script type="module" src="analytics.js"></script>
 </body>
 </html>
