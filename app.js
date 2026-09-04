@@ -2,7 +2,7 @@ import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebas
 import { getFirestore, collection, addDoc, onSnapshot, doc, updateDoc, increment, arrayUnion, query, deleteDoc, getDoc, setDoc, deleteField } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
 
 const firebaseConfig = {
-    apiKey: "AIzaSyD27a-WhhKdvblKUduPrZkBcmUr-uYkED4",
+    apiKey: "AIzaSyDb5bjaL2NukA5DNHzDXUxpvTm1TirLS9s",
     authDomain: "ark-tools.firebaseapp.com",
     projectId: "ark-tools",
     storageBucket: "ark-tools.firebasestorage.app",
