@@ -1,5 +1,5 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
-import { getFirestore, collection, addDoc, onSnapshot, doc, updateDoc, increment, arrayUnion, query, deleteDoc, getDoc, setDoc } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+import { getFirestore, collection, addDoc, onSnapshot, doc, updateDoc, increment, arrayUnion, query, deleteDoc, getDoc, setDoc, deleteField } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
 
 const firebaseConfig = {
     apiKey: "AIzaSyD27a-WhhKdvblKUduPrZkBcmUr-uYkED4",
@@ -16,6 +16,14 @@ const db = getFirestore(app);
 
 let allIssues = [];
 let isAdminLoggedIn = false;
+
+// دالة تشفير SHA-256 (تشتغل بالمتصفح مباشرة بدون أي مكتبة خارجية)
+async function sha256Hex(text) {
+    const enc = new TextEncoder();
+    const data = enc.encode(text);
+    const hashBuffer = await crypto.subtle.digest('SHA-256', data);
+    return Array.from(new Uint8Array(hashBuffer)).map(b => b.toString(16).padStart(2, '0')).join('');
+}
 let currentTab = 'solutions'; // 'solutions' أو 'questions'
 let currentPage = 1;
 const itemsPerPage = 6;
@@ -426,13 +434,18 @@ window.verifyAdminPass = async function() {
     const inputPass = document.getElementById('adminPasswordInput').value;
     const settingsRef = doc(db, "admin_settings", "config");
     const settingsSnap = await getDoc(settingsRef);
-    
-    let actualPass = "123456";
-    if (settingsSnap.exists() && settingsSnap.data().password) {
-        actualPass = settingsSnap.data().password;
+
+    let storedHash = "8d969eef6ecad3c29a3a629280e686cf0c3f5d5a86aff3ca12020c923adc6c92"; // hash افتراضي لكلمة "123456" بدون salt
+    let storedSalt = "";
+
+    if (settingsSnap.exists() && settingsSnap.data().hash) {
+        storedHash = settingsSnap.data().hash;
+        storedSalt = settingsSnap.data().salt || "";
     }
 
-    if (inputPass === actualPass) {
+    const inputHash = await sha256Hex(inputPass + storedSalt);
+
+    if (inputHash === storedHash) {
         isAdminLoggedIn = true;
         alert('تم تسجيل دخول الأدمن بنجاح!');
         document.getElementById('adminLoginState').style.display = 'none';
@@ -449,8 +462,13 @@ window.updateAdminPassword = async function() {
         alert("يرجى إدخال كلمة سر جديدة!");
         return;
     }
+
+    const salt = crypto.randomUUID();
+    const newHash = await sha256Hex(newPass + salt);
+
     const settingsRef = doc(db, "admin_settings", "config");
-    await setDoc(settingsRef, { password: newPass }, { merge: true });
+    await setDoc(settingsRef, { hash: newHash, salt: salt, pass: deleteField() }, { merge: true });
+
     alert("تم تغيير كلمة سر الأدمن ومزامنتها في الفايربيس بنجاح!");
     document.getElementById('newAdminPasswordInput').value = '';
 };
