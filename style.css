@@ -205,6 +205,12 @@ body {
   background-color: var(--card-bg);
   border-top: 1px solid var(--border-color);
   padding: 12px 0;
+  display: none;
+  transition: all 0.3s ease;
+}
+
+.analytics-bar.show {
+  display: block;
 }
 
 .analytics-container {

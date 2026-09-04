@@ -30,22 +30,34 @@ async function initAnalytics() {
   const userRef = doc(db, "online_users", sessionId);
   const viewsRef = doc(db, "analytics", "views");
 
-  await setDoc(userRef, {
-    lastSeen: serverTimestamp()
-  });
-
-  await setDoc(viewsRef, {
-    count: increment(1)
-  }, { merge: true });
-
-  setInterval(async () => {
+  try {
     await setDoc(userRef, {
       lastSeen: serverTimestamp()
     });
+
+    await setDoc(viewsRef, {
+      count: increment(1)
+    }, { merge: true });
+  } catch (err) {
+    console.error("خطأ في تحديث البيانات الأولية:", err);
+  }
+
+  setInterval(async () => {
+    try {
+      await setDoc(userRef, {
+        lastSeen: serverTimestamp()
+      });
+    } catch (err) {
+      console.error("خطأ في تحديث التواجد:", err);
+    }
   }, 30000);
 
   window.addEventListener("beforeunload", async () => {
-    await deleteDoc(userRef);
+    try {
+      await deleteDoc(userRef);
+    } catch (err) {
+      console.error("خطأ في حذف الجلسة:", err);
+    }
   });
 
   fetchTotalViews();

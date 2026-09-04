@@ -25,6 +25,7 @@ const db = getFirestore(app);
 
 let isAdmin = false;
 
+// إدارة التبويبات
 document.querySelectorAll('.tab-btn').forEach(btn => {
   btn.addEventListener('click', () => {
     document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
@@ -32,10 +33,12 @@ document.querySelectorAll('.tab-btn').forEach(btn => {
     
     btn.classList.add('active');
     const tabId = btn.getAttribute('data-tab');
-    document.getElementById(tabId).classList.add('active');
+    const targetTab = document.getElementById(tabId);
+    if (targetTab) targetTab.classList.add('active');
   });
 });
 
+// إظهار/إخفاء شريط الإحصائيات
 const toggleStatsBtn = document.getElementById('toggleStatsBtn');
 const analyticsBar = document.querySelector('.analytics-bar');
 
@@ -45,6 +48,7 @@ if (toggleStatsBtn && analyticsBar) {
   });
 }
 
+// تحميل قائمة المشاكل
 async function loadIssues() {
   const issuesList = document.getElementById('issuesList');
   if (!issuesList) return;
@@ -76,13 +80,18 @@ async function loadIssues() {
       issuesList.appendChild(card);
     });
 
+    // تفعيل أزرار الحذف للأدمن
     if (isAdmin) {
       document.querySelectorAll('.delete-btn').forEach(btn => {
         btn.addEventListener('click', async (e) => {
           const id = e.currentTarget.getAttribute('data-id');
           if (confirm('هل أنت تأكد من حذف هذه المشكلة؟')) {
-            await deleteDoc(doc(docSnap.db || db, "ark_issues", id));
-            loadIssues();
+            try {
+              await deleteDoc(doc(db, "ark_issues", id));
+              loadIssues();
+            } catch (err) {
+              console.error("خطأ في الحذف:", err);
+            }
           }
         });
       });
@@ -94,6 +103,7 @@ async function loadIssues() {
   }
 }
 
+// زر الأدمن
 const adminBtn = document.getElementById('adminBtn');
 if (adminBtn) {
   adminBtn.addEventListener('click', async () => {
@@ -128,6 +138,32 @@ if (adminBtn) {
     } catch (err) {
       console.error("خطأ في التحقق من كلمة السر:", err);
       alert('حدث خطأ أثناء التحقق.');
+    }
+  });
+}
+
+// إضافة مشكلة جديدة
+const openAddIssueModal = document.getElementById('openAddIssueModal');
+if (openAddIssueModal) {
+  openAddIssueModal.addEventListener('click', async () => {
+    const title = prompt('أدخل عنوان المشكلة:');
+    if (!title) return;
+    
+    const description = prompt('أدخل وصف المشكلة:');
+    const solution = prompt('أدخل الحل (اختياري):');
+
+    try {
+      await addDoc(collection(db, "ark_issues"), {
+        title: title,
+        description: description || '',
+        solution: solution || '',
+        createdAt: serverTimestamp()
+      });
+      alert('تمت إضافة المشكلة بنجاح!');
+      loadIssues();
+    } catch (err) {
+      console.error("خطأ في إضافة المشكلة:", err);
+      alert('حدث خطأ أثناء حفظ البيانات.');
     }
   });
 }
