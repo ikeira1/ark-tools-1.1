@@ -218,6 +218,61 @@
                     </div>
                 </div>
             </div>
+
+            <!-- أداة رسبون أي حيوان في أي ماب (Game.ini) -->
+            <div class="tool-card">
+                <div class="tool-header" onclick="toggleTool(this)">
+                    <h3><i class="fas fa-map-marked-alt"></i> أداة رسبون أي حيوان في أي ماب (game.ini)</h3>
+                    <i class="fas fa-chevron-down"></i>
+                </div>
+                <div class="tool-content">
+                    <div class="input-group">
+                        <div class="input-row">
+                            <div class="input-field">
+                                <label for="spawnDisplayName"><i class="fas fa-tag"></i> اسم العرض (Display Name)</label>
+                                <input type="text" id="spawnDisplayName" placeholder="مثال: Karkinos">
+                            </div>
+                            <div class="input-field">
+                                <label for="spawnDinoClass"><i class="fas fa-dragon"></i> Dino Blueprint Class String</label>
+                                <input type="text" id="spawnDinoClass" placeholder="مثال: Crab_Character_BP_C">
+                            </div>
+                        </div>
+                        <div class="input-row">
+                            <div class="input-field">
+                                <label for="spawnEntryString"><i class="fas fa-map"></i> Spawn Entry String (اسم منطقة الرسبون في الماب)</label>
+                                <input type="text" id="spawnEntryString" placeholder="مثال: DinoSpawnEntries_InlandWater_C">
+                            </div>
+                        </div>
+                        <div class="input-row">
+                            <div class="input-field">
+                                <label for="spawnEntryWeight"><i class="fas fa-weight-hanging"></i> Entry Weight (نسبة الظهور)</label>
+                                <input type="number" id="spawnEntryWeight" min="0" step="0.01" value="0.1" placeholder="مثال: 0.1">
+                            </div>
+                            <div class="input-field">
+                                <label for="spawnMaxPercent"><i class="fas fa-percent"></i> Max Percentage Limit</label>
+                                <input type="number" id="spawnMaxPercent" min="0" step="0.01" value="0.05" placeholder="مثال: 0.05">
+                            </div>
+                        </div>
+
+                        <div class="input-row">
+                            <button class="btn btn-primary" onclick="generateSpawnEntryCode()">
+                                <i class="fas fa-code"></i> إنشاء الكود
+                            </button>
+                            <button class="btn btn-gray" onclick="window.open('https://ark.wiki.gg/wiki/Spawn_Map_Spawner_Overrides')">
+                                <i class="fas fa-external-link-alt"></i> Spawn Map
+                            </button>
+                            <button class="btn btn-gray" onclick="window.open('https://ark.wiki.gg/wiki/Spawn_Entries')">
+                                <i class="fas fa-external-link-alt"></i> Spawn Entries
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="code-container">
+                        <button class="copy-btn" onclick="copyCode(this)"><i class="fas fa-copy"></i> نسخ</button>
+                        <div class="code-box" id="spawnEntryOutput"></div>
+                    </div>
+                </div>
+            </div>
         </div>
 
         <!-- ==================== قسم مجتمع بنك المشاكل والحلول ==================== -->

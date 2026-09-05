@@ -571,6 +571,18 @@ window.generateDinoCode = function() {
     document.getElementById('dinoOutput').innerHTML = `cheat gmsummon "${dinoId}" ${level} 1 0`;
 };
 
+window.generateSpawnEntryCode = function() {
+    const displayName = document.getElementById('spawnDisplayName').value || 'Karkinos';
+    const dinoClass = document.getElementById('spawnDinoClass').value || 'Crab_Character_BP_C';
+    const entryString = document.getElementById('spawnEntryString').value || 'DinoSpawnEntries_InlandWater_C';
+    const weight = document.getElementById('spawnEntryWeight').value || '0.1';
+    const maxPercent = document.getElementById('spawnMaxPercent').value || '0.05';
+
+    const code = `ConfigAddNPCSpawnEntriesContainer=(NPCSpawnEntriesContainerClassString="${entryString}",NPCSpawnEntries=(NPCSpawnEntry=(AnEntryName="${displayName}",EntryWeight=${weight},NPCsToSpawnStrings=("${dinoClass}"))),NPCSpawnLimits=(NPCSpawnLimit=(NPCClassString="${dinoClass}",MaxPercentageOfDesiredNumToAllow=${maxPercent})))`;
+
+    document.getElementById('spawnEntryOutput').innerHTML = code;
+};
+
 window.copyCode = function(btn) {
     const text = btn.nextElementSibling.innerText;
     navigator.clipboard.writeText(text);
